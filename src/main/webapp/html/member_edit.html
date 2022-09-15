@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/member_edit.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>會員編輯資料</title>
+
+ 
+</head>
+
+<body>
+
+    <div class="topnav">
+
+        <a class="img_link" href="http://localhost:5500/html/home.html">
+            <img class="logoImg" src="../img/Simple_Fitness-logos_white.png" alt="">
+        </a>
+
+        <ul class="list-inline">
+            <li class="dropdown">
+                <a class="topnavBtn" id="home" href="http://localhost:5500/html/home.html">
+                    <img class="icon" src="../img/home.png" alt="" title="首頁">
+                </a>
+                <div class="dropdown-content">
+                    <ul>
+                        <li><a href="#">最新消息</a></li>
+                        <li><a href="#">場館資訊</a></li>
+                        <li><a href="#">課程資訊</a></li>
+                        <li><a href="#">收費方式</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li>
+                <a class="topnavBtn" id="cart" href="#cart">
+                    <img class="icon" src="../img/cart.png" alt="" title="購物車">
+                </a>
+            </li>
+            <li>
+                <a class="topnavBtn" id="notice" href="#notice">
+                    <img class="icon" src="../img/bell.png" alt="" title="通知中心">
+                </a>
+            </li>
+            <li class="dropdown">
+                <a class="topnavBtn" id="user" href="#user">
+                    <img class="icon" src="../img/user.png" alt="" title="會員">
+                </a>
+                <div class="dropdown-content">
+                    <ul>
+                        <li><a href="#">登出</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="contentArea">
+        <div class="side-menu">
+
+            <ul class="nav">
+                <li>
+                    <a href="#">
+                        <i class="fa fa-users" aria-hidden="true"></i>
+                        會員資料編輯
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-gavel" aria-hidden="true"></i>
+                        課程預約
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="http://localhost:5500/html/course_booking.html">
+                                預約團課
+                            </a>
+                        </li>
+                        <li>
+                            <a href="http://localhost:5500/html/coach_booking.html">
+                                預約教練課
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                我的預約
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-coins" aria-hidden="true"></i>
+                        租借用品
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="#">
+                                我的租借清單
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <!-- <li>
+                    <a href="#">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                        我的文章
+                    </a>
+                </li> -->
+            </ul>
+        </div>
+
+        <div class="member-edit">
+            <div class="content-body">
+                <div class="member-block">
+                    <div class="profile-pic">
+                        <img src="../img/巨石.jpg" alt=""><br>
+                    </div>
+                    <label for="name">姓名：</label><span id="name"></span><br>
+                    <label for="nickname">暱稱：</label><span id="nickname"></span><br>
+                    <label for="username">帳號：</label><span id="username"></span><br>
+                    <label for="password">密碼：</label>
+                    <button type="button" id="change-password">更改密碼</button><br>
+                    <label for="email">Email信箱：</label><span id="email"></span><br>
+                    <label for="phone">手機號碼：</label><span id="phone"></span><br>
+                    <label for="gender">性別：</label><span id="gender"></span><br>
+                    <label for="birth">生日：</label><span id="birth"></span><br>
+                    <label for="register-date">註冊時間：</label><span id="register"></span><br>
+                    <label for="start-date">會籍開始日：</label><span id="start"></span><br>
+                    <label for="expire-date">會籍到期日：</label><span id="expire"></span><br>
+                    <label for="last-login">上一次登入：</label><span id="lastlogin"></span><br>
+                    <label for="status">會員身分：</label><span id="status"></span><br>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">編輯資料</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">會員資料編輯</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                    <label for="name">姓名：</label>
+                    <input type="text" id="name-input"><br>
+                    <label for="nickname">暱稱：</label>
+                    <input type="text" id="nickname-input"><br>
+                    <label for="email">Email信箱：</label>
+                    <input type="text" id="email-input"><br>
+                    <label for="phone">手機號碼：</label>
+                    <input type="text" id="phone-input"><br>
+                    <label for="gender">性別：</label>
+                    <input type="radio" name="gender" value="0" id="male-input">男
+                    <input type="radio" name="gender" value="1" id="female-input">女<br>
+                    <label for="birth">生日：</label>
+                    <input type="date" id="birth-input">
+                    <div id="errMsg" class="error" style="color: red;"></div>
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                <button type="button" class="btn btn-primary" id="edit">儲存編輯</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script>
+        $('#myModal').on('shown.bs.modal', function () {
+            $('#myInput').trigger('focus')
+        })
+
+        fetch("http://localhost:8080/simplefitness-servlet/session")
+        .then(resp => resp.json())
+        .then(member => {
+            document.querySelector('#name').textContent = member.memName;
+            document.querySelector('#nickname').textContent = member.memNickname;
+            document.querySelector('#username').textContent = member.memUsername;
+            document.querySelector('#email').textContent = member.memEmail;
+            document.querySelector('#phone').textContent = member.memPhone;
+            if (member.memGender == "0") {
+                document.querySelector('#gender').textContent = "男";
+            } else if (member.memGender == "1") {
+                document.querySelector('#gender').textContent = "女";
+            } else {
+                document.querySelector('#gender').textContent = "";
+            }
+            document.querySelector('#birth').textContent = member.memBirth;
+            document.querySelector('#register').textContent = member.memRegister;
+            document.querySelector('#start').textContent = member.memStart;
+            document.querySelector('#expire').textContent = member.memExpire;
+            document.querySelector('#lastlogin').textContent = member.memLogin;
+            if (member.memStatus == "0") {
+                document.querySelector('#status').textContent = "無會籍";
+            } else if (member.memStatus == "1") {
+                document.querySelector('#status').textContent = "有會籍";
+            } else {
+                document.querySelector('#status').textContent = "";
+            }
+            document.getElementById("name-input").value = member.memName;
+            document.getElementById("nickname-input").value = member.memNickname;
+            document.getElementById("email-input").value = member.memEmail;
+            document.getElementById("phone-input").value = member.memPhone;
+            if (member.memGender == "0") {
+                document.getElementById("male-input").checked = true;
+            } else if (member.memGender == "1") {
+                document.getElementById("female-input").checked = true;
+            } 
+            document.getElementById("birth-input").value = member.memBirth;
+        })
+        
+        document.getElementById('change-password').addEventListener('click', () => {
+        	location = './change_pass.html';
+        });
+
+
+        const Mname = document.querySelector('#name-input');
+        const nickname = document.querySelector('#nickname-input');
+        const email = document.querySelector('#email-input');
+        const phone = document.querySelector('#phone-input');
+        const gender = document.getElementsByName('gender');
+        const birth = document.querySelector('#birth-input');
+        const errMsg = document.querySelector('#errMsg');
+        document.getElementById('edit').addEventListener('click', () => {
+        	let selected_gender;
+            if (gender[0].checked == true) {
+            	selected_gender = gender[0];
+            } else if (gender[1].checked == true) {
+            	selected_gender = gender[1];
+            }
+            fetch('http://localhost:8080/simplefitness-servlet/member/edit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                memName: Mname.value,
+                memNickname: nickname.value,
+                memEmail: email.value,
+                memPhone: phone.value,
+                memGender: selected_gender.value,
+                memBirthStr: birth.value
+            }),
+            })
+            .then(resp => resp.json())
+            .then(body => {
+                errMsg.textContent = '';
+                const { successful, message } = body;
+                if (successful) {
+                    location = './member_edit.html';
+                } else {
+                errMsg.textContent = message;
+                }
+            });
+        });
+
+    </script>
+
+</body>
+
+</html>

@@ -3,9 +3,6 @@ package com.mem.controller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Date;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,7 +21,7 @@ import com.mem.vo.Member;
 public class EditServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MemServiceIntf SERVICE = new MemServiceImpl();
-	private Gson GSON = new GsonBuilder().create();
+	private Gson GSON = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -44,14 +41,15 @@ public class EditServlet extends HttpServlet {
         Member member = GSON.fromJson(json, Member.class);
         member.setMemUsername(username);
         
-        try {
-        	 // 日期格式
-            String birthStr = member.getMemBirthStr();
-            Date birth = Date.valueOf(birthStr);
-            member.setMemBirth(birth);
-		} catch (Exception e) {
-			member.setMemBirth(null);
-		}
+//        已有替代方案
+//        try {
+//        	 // 日期格式
+//            String birthStr = member.getMemBirthStr();
+//            Date birth = Date.valueOf(birthStr);
+//            member.setMemBirth(birth);
+//		} catch (Exception e) {
+//			member.setMemBirth(null);
+//		}
         
         member = SERVICE.memEdit(member);
         

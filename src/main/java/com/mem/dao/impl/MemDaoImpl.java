@@ -143,7 +143,6 @@ public class MemDaoImpl implements MemDaoIntf {
 	public List<Member> selectAll() {
 		
 		List<Member> list = new ArrayList<Member>();
-		Member mem = null;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SELECT_ALL);) {
 			
@@ -152,7 +151,7 @@ public class MemDaoImpl implements MemDaoIntf {
 			try (ResultSet rs = pstmt.executeQuery()) {
 				
 				while (rs.next()) {
-					mem = new Member();
+					Member mem = new Member();
 					mem.setMemId(rs.getInt("mem_id"));
 					mem.setMemName(rs.getString("mem_name"));
 					mem.setMemNickname(rs.getString("nickname"));

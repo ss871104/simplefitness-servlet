@@ -22,7 +22,11 @@
 			document.querySelector('#register').textContent = member.memRegister;
 			document.querySelector('#start').textContent = member.memStart;
 			document.querySelector('#expire').textContent = member.memExpire;
-			document.querySelector('#lastlogin').textContent = member.memLogin;
+			if (member.memLogin == null) {
+				document.querySelector('#lastlogin').textContent = "第一次登入";
+			} else {
+				document.querySelector('#lastlogin').textContent = member.memLogin.replace('T', ' ');
+			}
 			if (member.memStatus == "0") {
 				document.querySelector('#status').textContent = "無會籍";
 			} else if (member.memStatus == "1") {

@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -126,10 +127,11 @@ public class MemDaoImpl implements MemDaoIntf {
 					mem.setMemRegister(rs.getDate("register_date"));
 					mem.setMemStart(rs.getDate("start_date"));
 					mem.setMemExpire(rs.getDate("expire_date"));
-					mem.setMemLogin(rs.getDate("last_login"));
+					mem.setMemLogin(rs.getObject("last_login", LocalDateTime.class));
 					mem.setMemStatus(rs.getString("status"));
 					mem.setMemPic(rs.getBytes("pic"));
 					mem.setMemQrCode(rs.getString("qr_code"));
+					mem.setMemCurrentLogin(rs.getObject("current_login", LocalDateTime.class));
 				}
 			}
 		} catch (SQLException e) {
@@ -162,10 +164,11 @@ public class MemDaoImpl implements MemDaoIntf {
 					mem.setMemRegister(rs.getDate("register_date"));
 					mem.setMemStart(rs.getDate("start_date"));
 					mem.setMemExpire(rs.getDate("expire_date"));
-					mem.setMemLogin(rs.getDate("last_login"));
+					mem.setMemLogin(rs.getObject("last_login", LocalDateTime.class));
 					mem.setMemStatus(rs.getString("status"));
 					mem.setMemPic(rs.getBytes("pic"));
 					mem.setMemQrCode(rs.getString("qr_code"));
+					mem.setMemCurrentLogin(rs.getObject("current_login", LocalDateTime.class));
 					list.add(mem);	
 				}
 			}
@@ -202,10 +205,11 @@ public class MemDaoImpl implements MemDaoIntf {
 					mem.setMemRegister(rs.getDate("register_date"));
 					mem.setMemStart(rs.getDate("start_date"));
 					mem.setMemExpire(rs.getDate("expire_date"));
-					mem.setMemLogin(rs.getDate("last_login"));
+					mem.setMemLogin(rs.getObject("last_login", LocalDateTime.class));
 					mem.setMemStatus(rs.getString("status"));
 					mem.setMemPic(rs.getBytes("pic"));
 					mem.setMemQrCode(rs.getString("qr_code"));
+					mem.setMemCurrentLogin(rs.getObject("current_login", LocalDateTime.class));
 				} else {
 					mem = null;
 				}
@@ -243,10 +247,11 @@ public class MemDaoImpl implements MemDaoIntf {
 					mem.setMemRegister(rs.getDate("register_date"));
 					mem.setMemStart(rs.getDate("start_date"));
 					mem.setMemExpire(rs.getDate("expire_date"));
-					mem.setMemLogin(rs.getDate("last_login"));
+					mem.setMemLogin(rs.getObject("last_login", LocalDateTime.class));
 					mem.setMemStatus(rs.getString("status"));
 					mem.setMemPic(rs.getBytes("pic"));
 					mem.setMemQrCode(rs.getString("qr_code"));
+					mem.setMemCurrentLogin(rs.getObject("current_login", LocalDateTime.class));
 				} else {
 					mem = null;
 				}
@@ -285,11 +290,11 @@ public class MemDaoImpl implements MemDaoIntf {
 					mem.setMemRegister(rs.getDate("register_date"));
 					mem.setMemStart(rs.getDate("start_date"));
 					mem.setMemExpire(rs.getDate("expire_date"));
-					mem.setMemLogin(rs.getDate("last_login"));
+					mem.setMemLogin(rs.getObject("last_login", LocalDateTime.class));
 					mem.setMemStatus(rs.getString("status"));
 					mem.setMemPic(rs.getBytes("pic"));
 					mem.setMemQrCode(rs.getString("qr_code"));
-					
+					mem.setMemCurrentLogin(rs.getObject("current_login", LocalDateTime.class));
 				} else {
 					mem = null;
 				}
@@ -373,11 +378,11 @@ public class MemDaoImpl implements MemDaoIntf {
 					mem.setMemRegister(rs.getDate("register_date"));
 					mem.setMemStart(rs.getDate("start_date"));
 					mem.setMemExpire(rs.getDate("expire_date"));
-					mem.setMemLogin(rs.getDate("last_login"));
+					mem.setMemLogin(rs.getObject("last_login", LocalDateTime.class));
 					mem.setMemStatus(rs.getString("status"));
 					mem.setMemPic(rs.getBytes("pic"));
 					mem.setMemQrCode(rs.getString("qr_code"));
-					
+					mem.setMemCurrentLogin(rs.getObject("current_login", LocalDateTime.class));
 				} else {
 					mem = null;
 				}
@@ -387,6 +392,26 @@ public class MemDaoImpl implements MemDaoIntf {
 			e.printStackTrace();
 		}
 		return mem;
+	}
+	
+	@Override
+	public boolean updateLastLogin(Member memVo) {
+		
+		int rowCount = 0;
+		
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(UPDATE_LAST_LOGIN);) {
+			
+			System.out.println("連線成功");
+			
+			pstmt.setObject(1, memVo.getMemLogin());
+			pstmt.setObject(2, memVo.getMemCurrentLogin());
+			pstmt.setString(3, memVo.getMemUsername());
+			
+			rowCount = pstmt.executeUpdate();	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rowCount != 0;
 	}
 
 

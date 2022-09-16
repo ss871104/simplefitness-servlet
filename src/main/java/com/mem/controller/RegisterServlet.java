@@ -20,7 +20,7 @@ import com.mem.vo.Member;
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MemServiceIntf SERVICE = new MemServiceImpl();
-	private Gson GSON = new GsonBuilder().create();
+	private Gson gson = new GsonBuilder().create();
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -33,10 +33,10 @@ public class RegisterServlet extends HttpServlet {
 		
         BufferedReader br = request.getReader();
         String json = br.readLine();
-        Member member = GSON.fromJson(json, Member.class);
+        Member member = gson.fromJson(json, Member.class);
         
         PrintWriter pw = response.getWriter();
-        pw.print(GSON.toJson(SERVICE.register(member)));
+        pw.print(gson.toJson(SERVICE.register(member)));
 	}
 	
 	@Override

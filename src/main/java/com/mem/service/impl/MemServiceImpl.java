@@ -1,8 +1,8 @@
 package com.mem.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
-import com.common.util.JavaMail;
 import com.mem.dao.impl.MemDaoImpl;
 import com.mem.dao.intf.MemDaoIntf;
 import com.mem.service.intf.MemServiceIntf;
@@ -87,7 +87,19 @@ public class MemServiceImpl implements MemServiceIntf {
 			mem.setMessage("帳號或密碼錯誤！");
 			return mem;
 		}
+		
+		// 登入後有完整資料
 		mem = dao.selectForLogin(username, password);
+
+		// 上一次登入變成上一次的這一次登入
+		if (mem.getMemCurrentLogin() != null) {
+			mem.setMemLogin(mem.getMemCurrentLogin());
+		}
+		// 新的這一次登入時間
+		mem.setMemCurrentLogin(LocalDateTime.now());
+		// 更新資料庫上一次登入和這一次登入
+		dao.updateLastLogin(mem);
+		
 		mem.setSuccessful(true);
 		return mem;	
 	}

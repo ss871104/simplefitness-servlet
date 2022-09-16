@@ -1,8 +1,8 @@
 (() => {
 	document.getElementById('logout').addEventListener('click', () => {
-		fetch("http://localhost:8080/simplefitness-servlet/member/logout")
+		fetch("http://localhost:8080/simplefitness-servlet/staff/logout")
 			.then(body => {
-				location = './home.html';
+				location = '../guest/home.html';
 			});
 	});
 })();

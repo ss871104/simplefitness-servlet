@@ -1,0 +1,424 @@
+@import url("https://fonts.googleapis.com/css?family=Noto+Sans+TC:100,300,400,500,700,900&display=swap");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css");
+
+
+* {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+html,
+body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	background-color: #fefee3;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+/* 功能列 */
+.topnav {
+	position: sticky;
+	top: 0;
+	left: 0;
+	background-color: #2c6e49;
+	height: 4.1em;
+	z-index: 9999;
+	/* display: inline-block; */
+}
+
+.logoImg {
+	display: inline-block;
+	margin-top: 0;
+	width: 280px;
+	height: 100%;
+	cursor: pointer;
+}
+
+.img_link{
+	box-sizing: border-box;
+    margin: 0;
+    padding: 0!important;
+    display: contents;
+}
+
+.icon {
+	width: 30px;
+	height: 30px;
+}
+
+.topnav a {
+	float: left;
+	padding: 18px 16px;
+	text-decoration: none;
+	font-size: 17px;
+	font-weight: 800;
+	/* text-align: center; */
+}
+
+.topnav .list-inline {
+	position: fixed;
+	top: 0;
+	right: 0;
+	float: right;
+	display: flex;
+	margin-bottom: 0 !important;
+}
+
+.topnav a:hover {
+	background-color: rgb(154, 153, 153);
+	/* color: black; */
+}
+
+.topnavBtn {
+	color: rgb(254, 254, 254) !important;
+}
+
+.dropdown {
+	position: relative;
+	display: inline-block;
+}
+
+.dropdown-content {
+	color: rgb(2, 2, 97) !important;
+	display: none;
+	position: absolute;
+	top: 65px;
+	background-color: #f7f0f0;
+	min-width: 9em;
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+}
+
+.dropdown-content>ul {
+	justify-content: center;
+	display: grid;
+}
+
+.dropdown:hover .dropdown-content {
+	display: block;
+	right: 0 !important;
+	left: revert;
+}
+
+
+.topnav a.active {
+	height: 3.8em;
+	background-color: #b3acac;
+	color: rgb(249, 249, 249);
+}
+
+
+
+/* .tab_css {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+} */
+
+/* .tab_css input {
+	display: none
+} */
+
+/* .tab_css label {
+	margin: 0 5px 0px 0;
+	padding: 10px 16px;
+	cursor: pointer;
+	border-radius: 20px; 
+	background: #999;
+	color: #fff !important;
+	opacity: 0.5;
+} */
+
+/* .tab_content {
+	order: 1;
+	display: none;
+	width: 100%;
+	border-bottom: 3px solid #ddd;
+	line-height: 1.6;
+	font-size: .9em;
+	padding: 15px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+} */
+
+/* .tab_css input:checked+label,
+.tab_css label:hover {
+	opacity: 1;
+	font-weight: bold;
+}
+
+.tab_css input:checked+label+.tab_content {
+	display: initial;
+} */
+
+.contentArea {
+	/* min-height: calc(100vh - 4.1em); */
+	height: 100%;
+}
+
+ul {
+	list-style: none;
+
+}
+
+.title {
+	margin-top: 50px;
+	text-align: center;
+	/* background-color: #6a8d79; */
+}
+.title a{
+	color: rgb(2, 2, 97);
+	text-align: center;
+	text-decoration: none;
+	font-size: 30px;
+	font-weight: 1000px !important;
+}
+
+/* 最新消息 */
+.news {
+	display: grid;
+	text-align: center;
+	text-decoration: none;
+	font-size: 30px;
+	font-weight: 1000px !important;
+	color: rgb(10, 10, 108);
+}
+
+/* 場館資訊 */
+.gym {
+	display: grid;
+	text-align: center;
+	text-decoration: none;
+	font-size: 30px;
+	font-weight: 1000px !important;
+	color: rgb(2, 2, 97);
+}
+
+.gym_list {
+	list-style: none;
+	margin: 0;
+	padding: 0, 20px, 20px, 20px;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.gym_list>li {
+	width: calc((100% - 80px)/3);
+	margin-right: 20px;
+	margin-bottom: 20px;
+}
+
+.gym_list>li:nth-child(3n) {
+	margin-right: 20px;
+}
+
+.gym_list>li:nth-child(1) {
+	margin-left: 10px;
+}
+
+.gym_list>li a {
+	display: block;
+	text-decoration: none;
+}
+
+.gym_list>li a img {
+	width: 100%;
+	font-size: 0;
+	z-index: -1;
+}
+
+.gym_list>li a .gym_text {
+	display: block;
+	text-align: center;
+	font-weight: 1000px !important;
+	color: #256c44;
+	font-size: 18px;
+}
+
+.more_gym{
+	display: flex;
+	position:absolute;
+	right: 30px;
+	margin-bottom: 20px;
+}
+
+.btn_more_gym{
+	display:inline-block;
+	background-color: #7ccc9e;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+/* 教練資訊 */
+.coach {
+	display: inline-block;
+}
+.coach a{
+	color: rgb(2, 2, 97);
+	text-align: center;
+	text-decoration: none;
+	font-size: 30px;
+	font-weight: 1000px !important;
+}
+
+.btn_gym{
+	display:inline-block;
+	background-color: #7ccc9e;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+.coach_list {
+	list-style: none;
+	margin: 0;
+	padding: 0, 20px, 20px, 20px;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.coach_list>li {
+	width: calc((100% - 80px)/3);
+	margin-right: 20px;
+	margin-bottom: 20px;
+}
+
+.coach_list>li:nth-child(3n) {
+	margin-right: 20px;
+}
+
+.coach_list>li:nth-child(1) {
+	margin-left: 10px;
+}
+
+.coach_list>li a {
+	display: block;
+	text-decoration: none;
+}
+
+.coach_list>li a img {
+	width: 100%;
+	font-size: 0;
+	z-index: -1;
+}
+
+.coach_list>li a .coach_text {
+	display: block;
+	text-align: center;
+	font-weight: 1000px !important;
+	color: #256c44;
+	font-size: 18px;
+}
+
+.more_coach{
+	display: flex;
+	position:absolute;
+	right: 30px;
+	margin-bottom: 20px;
+}
+
+.btn_more_coach{
+	display:inline-block;
+	background-color: #7ccc9e;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+/* 課程資訊 */
+.course {
+	display: inline-block;
+}
+.course a{
+	color: rgb(2, 2, 97);
+	text-align: center;
+	text-decoration: none;
+	font-size: 30px;
+	font-weight: 1000px !important;
+}
+
+.course_list {
+	list-style: none;
+	margin: 0;
+	padding: 0, 20px, 20px, 20px;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.course_list>li {
+	width: calc((100% - 100px)/4);
+	margin-right: 20px;
+	margin-bottom: 20px;
+}
+
+.course_list>li:nth-child(3n) {
+	margin-right: 20px;
+}
+
+.course_list>li:nth-child(1) {
+	margin-left: 20px;
+}
+
+.course_list>li a {
+	display: block;
+	text-decoration: none;
+}
+
+.course_list>li a img {
+	width: 100%;
+	font-size: 0;
+	z-index: -1;
+}
+
+.course_list>li a .course_text {
+	display: block;
+	text-align: center;
+	font-weight: 1000px !important;
+	color: #256c44;
+	font-size: 18px;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #256c44 !important;
+    border-color: #1b5132 !important;
+}
+
+.more_course{
+	display: flex;
+	position:absolute;
+	right: 30px;
+	margin-bottom: 20px;
+}
+
+.btn_more_course{
+	display:inline-block;
+	background-color: #7ccc9e;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+/* 收費方式 */
+.fee{
+	color: rgb(2, 2, 97);
+	text-align: center;
+	text-decoration: none;
+	font-size: 26px;
+	font-weight: 1000px !important;
+}
+
+/* footer */
+.footer{
+	background-color:#2c6e49 ;
+	height: 12em;
+}
+.footer_img{
+	width: 50%;
+}
+.footer_content{
+	display: inline-block;
+	vertical-align: middle;
+	font-size: 24px;
+	margin-top: 20px;
+}

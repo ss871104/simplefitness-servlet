@@ -5,10 +5,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/boostrap/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/forget_pass.css">
+    <link rel="stylesheet" href="../../css/boostrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/guest/login.css">
 
-    <title>忘記密碼</title>
+    <title>登入頁面</title>
 
 </head>
 
@@ -16,7 +16,7 @@
 
     <div class="topnav">
 
-        <img class="logoImg" href="home.html" src="../img/Simple_Fitness-logos_white.png" alt="">
+        <img class="logoImg" href="home.html" src="../../img/Simple_Fitness-logos_white.png" alt="">
         <ul class="list-inline">
             <li>
                 <a class="topnavBtn" id="news" href="#">最新消息</a>
@@ -38,7 +38,7 @@
             </li> -->
             <li class="dropdown">
                 <a class="topnavBtn" id="user" href="#user">
-                    <img class="icon" src="../img/user.png" alt="" title="會員">
+                    <img class="icon" src="../../img/user.png" alt="" title="會員">
                 </a>
                 <div class="dropdown-content">
                     <ul>
@@ -52,18 +52,20 @@
     <div class="contentArea">
         <div class="login-block">
             <div class="login-input">
-                <h4>忘記密碼</h4>
+                <h4>會員登入</h4>
                 會員帳號
                 <input type="text" class="form-control" placeholder="帳號" id="username"><br>
-                會員信箱
-                <input type="text" class="form-control" placeholder="信箱" id="email"><br>
-                <button type="button" class="btn-submit" id="send">傳送驗證信至信箱</button>
+                密碼
+                <input type="password" class="form-control" placeholder="密碼" id="password"><br>
+                <a href="register.html" class="sign-in">註冊帳號</a>
+                <a href="forget_pass.html" class="forget">忘記密碼</a><br>
+                <button type="button" class="btn-submit" id="login">登入</button>
                 <div id="errMsg" class="error" style="color: red;"></div>
             </div>
         </div>   
     </div>
 
-    <script src="../js/forget_pass.js"></script>
+    <script src="../../js/guest/login.js"></script>
 
 </body>
 

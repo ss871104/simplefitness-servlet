@@ -16,7 +16,7 @@
 				errMsg.textContent = '';
 				const { successful, message } = body;
 				if (successful) {
-					location = './member_home.html';
+					location = '../member/member_home.html';
 				} else {
 					errMsg.textContent = message;
 				}

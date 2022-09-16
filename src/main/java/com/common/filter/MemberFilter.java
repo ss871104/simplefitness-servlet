@@ -11,9 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 @WebFilter(urlPatterns = {
-	"/html/member_home.html",
-	"/html/member_edit.html",
-	"/html/change_pass.html"
+	"/html/member/*"
 })
 public class MemberFilter extends HttpFilter {
 
@@ -26,7 +24,7 @@ public class MemberFilter extends HttpFilter {
 			chain.doFilter(req, res);
 		} else {
 			// TODO 登入頁
-			req.getRequestDispatcher("login.html").forward(req, res);
+			req.getRequestDispatcher("../guest/login.html").forward(req, res);
 		}
 	}
 }

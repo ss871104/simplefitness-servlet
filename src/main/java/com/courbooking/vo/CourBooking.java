@@ -1,12 +1,12 @@
 package com.courbooking.vo;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class CourBooking {
 	private Integer courbookId;
 	private Integer memId;
 	private Integer courId;
-	private Date courbookTime;
+	private Timestamp courbookTime;
 	private String courbookStatus;
 	
 	
@@ -28,10 +28,10 @@ public class CourBooking {
 	public void setCourId(Integer courId) {
 		this.courId = courId;
 	}
-	public Date getCourbookTime() {
+	public Timestamp getCourbookTime() {
 		return courbookTime;
 	}
-	public void setCourbookTime(Date courbookTime) {
+	public void setCourbookTime(Timestamp courbookTime) {
 		this.courbookTime = courbookTime;
 	}
 	public String getCourbookStatus() {

@@ -1,10 +1,11 @@
 package com.courbooking.dao.sql;
 
 public class CourBookingDaoSQL {
-	public static final String INSERT = "INSERT INTO COUR_BOOKING (memId,courId,courbookTime,courbookStatus) VALUES (?, ?, ?, ?)";
-	public static final String SELECT_ALL = "SELECT courbookId,memId,courId,courbookTime,courbookStatus FROM COUR_BOOKING order by courbookId";
-	public static final String SELECT_BY_ID = "SELECT courbookId,memId,courId,courbookTime,courbookStatus FROM COUR_BOOKING where courbookId = ?";
-	public static final String DELETE = "DELETE FROM COUR_BOOKING where coabookId = ?";
-	public static final String UPDATE = "UPDATE COUR_BOOKING set memId=?, courId=?, courbookTime=?, courbookStatus=? where courbookId = ?";
-	
+	public static final String INSERT = "insert into cour_booking ( mem_id, cour_id, status) values (?, ?, ?)";
+	public static final String SELECT_ALL = "select cour_book_id ,mem_id, cour_id,booking_time ,status from cour_booking order by cour_book_id ";
+	public static final String SELECT_BY_ID = "select cour_book_id ,mem_id,cour_id,booking_time ,status from cour_booking where cour_book_id  = ?";
+	public static final String DELETE = "delete from cour_booking where cour_book_id = ?";
+	public static final String UPDATE = "update cour_booking set mem_id=?, cour_id=?, status=? where cour_book_id  = ?";
+	public static final String SELECT_BY_MEM = "select cour_book_id ,mem_id,cour_id,booking_time ,status from cour_booking where mem_id = ?";
+	public static final String UPDATE_STATUS = "update cour_booking set status=? where cour_book_id  = ?";
 }

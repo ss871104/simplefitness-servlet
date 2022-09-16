@@ -1,14 +1,14 @@
 package com.coabooking.vo;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class CoaBooking {
 	private Integer coabookId;
 	private Integer memId;
 	private Integer coaId;
-	private Date coabookTime;
+	private Timestamp coabookTime;
 	private String coabookStatus;
-	private Date checkTime;
+	private Timestamp checkTime;
 	
 	public Integer getCoabookId() {
 		return coabookId;
@@ -28,10 +28,10 @@ public class CoaBooking {
 	public void setCoaId(Integer coaId) {
 		this.coaId = coaId;
 	}
-	public Date getCoabookTime() {
+	public Timestamp getCoabookTime() {
 		return coabookTime;
 	}
-	public void setCoabookTime(Date coabookTime) {
+	public void setCoabookTime(Timestamp coabookTime) {
 		this.coabookTime = coabookTime;
 	}
 	public String getCoabookStatus() {
@@ -40,10 +40,10 @@ public class CoaBooking {
 	public void setCoabookStatus(String coabookStatus) {
 		this.coabookStatus = coabookStatus;
 	}
-	public Date getCheckTime() {
+	public Timestamp getCheckTime() {
 		return checkTime;
 	}
-	public void setCheckTime(Date checkTime) {
+	public void setCheckTime(Timestamp checkTime) {
 		this.checkTime = checkTime;
 	}
 }

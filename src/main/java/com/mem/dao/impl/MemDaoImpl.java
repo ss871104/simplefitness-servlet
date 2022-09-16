@@ -119,7 +119,6 @@ public class MemDaoImpl implements MemDaoIntf {
 					mem.setMemName(rs.getString("mem_name"));
 					mem.setMemNickname(rs.getString("nickname"));
 					mem.setMemUsername(rs.getString("username"));
-					mem.setMemPassword(rs.getString("pass"));
 					mem.setMemPhone(rs.getString("phone"));
 					mem.setMemEmail(rs.getString("email"));
 					mem.setMemGender(rs.getString("gender"));
@@ -156,7 +155,6 @@ public class MemDaoImpl implements MemDaoIntf {
 					mem.setMemName(rs.getString("mem_name"));
 					mem.setMemNickname(rs.getString("nickname"));
 					mem.setMemUsername(rs.getString("username"));
-					mem.setMemPassword(rs.getString("pass"));
 					mem.setMemPhone(rs.getString("phone"));
 					mem.setMemEmail(rs.getString("email"));
 					mem.setMemGender(rs.getString("gender"));
@@ -197,7 +195,6 @@ public class MemDaoImpl implements MemDaoIntf {
 					mem.setMemName(rs.getString("mem_name"));
 					mem.setMemNickname(rs.getString("nickname"));
 					mem.setMemUsername(rs.getString("username"));
-					mem.setMemPassword(rs.getString("pass"));
 					mem.setMemPhone(rs.getString("phone"));
 					mem.setMemEmail(rs.getString("email"));
 					mem.setMemGender(rs.getString("gender"));
@@ -239,7 +236,6 @@ public class MemDaoImpl implements MemDaoIntf {
 					mem.setMemName(rs.getString("mem_name"));
 					mem.setMemNickname(rs.getString("nickname"));
 					mem.setMemUsername(rs.getString("username"));
-					mem.setMemPassword(rs.getString("pass"));
 					mem.setMemPhone(rs.getString("phone"));
 					mem.setMemEmail(rs.getString("email"));
 					mem.setMemGender(rs.getString("gender"));
@@ -282,7 +278,6 @@ public class MemDaoImpl implements MemDaoIntf {
 					mem.setMemName(rs.getString("mem_name"));
 					mem.setMemNickname(rs.getString("nickname"));
 					mem.setMemUsername(rs.getString("username"));
-					mem.setMemPassword(rs.getString("pass"));
 					mem.setMemPhone(rs.getString("phone"));
 					mem.setMemEmail(rs.getString("email"));
 					mem.setMemGender(rs.getString("gender"));
@@ -350,6 +345,49 @@ public class MemDaoImpl implements MemDaoIntf {
 		return rowCount != 0;
 	}
 
-	
+	@Override
+	public Member selectForPass(String memUsername, String memEmail) {
+		
+		Member mem = null;
+		
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SELECT_FOR_PASS);) {
+			
+			System.out.println("連線成功");
+			
+			pstmt.setString(1, memUsername);
+			pstmt.setString(2, memEmail);
+			
+			try (ResultSet rs = pstmt.executeQuery()) {
+				
+				mem = new Member();
+				
+				if (rs.next()) {
+					mem.setMemId(rs.getInt("mem_id"));
+					mem.setMemName(rs.getString("mem_name"));
+					mem.setMemNickname(rs.getString("nickname"));
+					mem.setMemUsername(rs.getString("username"));
+					mem.setMemPhone(rs.getString("phone"));
+					mem.setMemEmail(rs.getString("email"));
+					mem.setMemGender(rs.getString("gender"));
+					mem.setMemBirth(rs.getDate("birth"));
+					mem.setMemRegister(rs.getDate("register_date"));
+					mem.setMemStart(rs.getDate("start_date"));
+					mem.setMemExpire(rs.getDate("expire_date"));
+					mem.setMemLogin(rs.getDate("last_login"));
+					mem.setMemStatus(rs.getString("status"));
+					mem.setMemPic(rs.getBytes("pic"));
+					mem.setMemQrCode(rs.getString("qr_code"));
+					
+				} else {
+					mem = null;
+				}
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return mem;
+	}
+
 
 }

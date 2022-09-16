@@ -6,9 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/boostrap/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/change_pass_forget.css">
 
-    <title>登入頁面</title>
+    <title>更改密碼</title>
 
 </head>
 
@@ -54,30 +54,54 @@
     <div class="contentArea">
         <div class="login-block">
             <div class="login-input">
-                <h4>會員登入</h4>
-                會員帳號
-                <input type="text" class="form-control" placeholder="帳號" id="username"><br>
-                密碼
-                <input type="password" class="form-control" placeholder="密碼" id="password"><br>
-                <a href="register.html" class="sign-in">註冊帳號</a>
-                <a href="forget_pass.html" class="forget">忘記密碼</a><br>
-                <button type="button" class="btn-submit" id="login">登入</button>
+                <h4>更改密碼</h4>
+                新密碼
+                <input type="password" class="form-control" placeholder="新密碼" id="nPassword"><br>
+                新密碼確認
+                <input type="password" class="form-control" placeholder="新密碼確認" id="confirm-nPassword"><br>
+                <button type="button" class="btn-submit" id="change">確認</button>
                 <div id="errMsg" class="error" style="color: red;"></div>
             </div>
         </div>   
     </div>
 
     <script>
-        const username = document.querySelector('#username');
-        const password = document.querySelector('#password');
+        const password = document.querySelector('#nPassword');
+        const confirm_password = document.querySelector('#confirm-nPassword');
         const errMsg = document.querySelector('#errMsg');
-        document.getElementById('login').addEventListener('click', () => {
-            fetch('http://localhost:8080/simplefitness-servlet/member/login', {
+
+        password.addEventListener('input', () => {
+            const pwdLength = password.value.length;
+            if (pwdLength < 8 || pwdLength > 50) {
+                errMsg.textContent = '密碼長度須介於8~50字元';
+                return;
+            } else {
+                errMsg.textContent = '';
+            }
+        });
+        confirm_password.addEventListener('input', () => {
+            if (confirm_password.value !== password.value) {
+                errMsg.textContent = '密碼與確認密碼不相符';
+                return;
+            } else {
+                errMsg.textContent = '';
+            }
+        });
+        document.getElementById('change').addEventListener('click', () => {
+            const pwdLength = password.value.length;
+            if (pwdLength < 8 || pwdLength > 50) {
+                errMsg.textContent = '密碼長度須介於8~50字元';
+                return;
+            }
+            if (confirm_password.value !== password.value) {
+                errMsg.textContent = '密碼與確認密碼不相符';
+                return;
+            }
+            fetch('http://localhost:8080/simplefitness-servlet/member/changeforgetpass', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                memUsername: username.value,
-                memPassword: password.value
+                memNewPassword: password.value
             }),
             })
             .then(resp => resp.json())
@@ -85,7 +109,8 @@
                 errMsg.textContent = '';
                 const { successful, message } = body;
                 if (successful) {
-                    location = './member_home.html';
+                	window.alert("密碼修改成功！跳轉至登入畫面");
+                    location = './login.html';
                 } else {
                 errMsg.textContent = message;
                 }

@@ -135,8 +135,9 @@
     	const old_password = document.querySelector('#oPassword');
         const password = document.querySelector('#nPassword');
         const confirm_pass = document.querySelector('#confirm-nPassword');
+        const errMsg = document.querySelector('#errMsg');
 
-        document.getElementById('nPassword').addEventListener('input', () => {
+        password.addEventListener('input', () => {
             const pwdLength = password.value.length;
             if (pwdLength < 8 || pwdLength > 50) {
                 errMsg.textContent = '密碼長度須介於8~50字元';
@@ -145,7 +146,7 @@
                 errMsg.textContent = '';
             }
         });
-        document.getElementById('confirm-nPassword').addEventListener('input', () => {
+        confirm_pass.addEventListener('input', () => {
             if (confirm_pass.value !== password.value) {
                 errMsg.textContent = '密碼與確認密碼不相符';
                 return;

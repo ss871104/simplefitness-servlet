@@ -16,6 +16,12 @@ public interface MemServiceIntf {
 	
 	Member passChange(Member mem);
 	
+	Member forgetPass(Member mem);
+	
+	Member checkCode(Member mem);
+	
+	Member forgetPassChange(Member mem);
+	
 	List<Member> findAll();
 		
 	

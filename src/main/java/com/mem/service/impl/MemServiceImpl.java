@@ -2,6 +2,7 @@ package com.mem.service.impl;
 
 import java.util.List;
 
+import com.common.util.JavaMail;
 import com.mem.dao.impl.MemDaoImpl;
 import com.mem.dao.intf.MemDaoIntf;
 import com.mem.service.intf.MemServiceIntf;
@@ -141,7 +142,7 @@ public class MemServiceImpl implements MemServiceIntf {
 		final String username = mem.getMemUsername();
 		final String pass = dao.selectByUsername(username).getMemPassword();
 		if ("".equals(password)) {
-			mem.setMessage("密碼未輸入");
+			mem.setMessage("舊密碼未輸入");
 			mem.setSuccessful(false);
 			return mem;
 		}
@@ -163,6 +164,68 @@ public class MemServiceImpl implements MemServiceIntf {
 		}
 		// 回會員編輯有完整session
 		mem = dao.selectByUsername(mem.getMemUsername());
+		
+		mem.setMessage("資料更改成功");
+		mem.setSuccessful(true);
+		return mem;
+	}
+	
+	@Override
+	public Member forgetPass(Member mem) {
+		final String username = mem.getMemUsername();
+		final String email = mem.getMemEmail();
+		
+		if ("".equals(username)) {
+			mem.setMessage("帳號未輸入");
+			mem.setSuccessful(false);
+			return mem;
+		}
+		if ("".equals(email)) {
+			mem.setMessage("信箱未輸入");
+			mem.setSuccessful(false);
+			return mem;
+		}
+		if (dao.selectForPass(username, email) == null) {
+			mem.setSuccessful(false);
+			mem.setMessage("帳號或信箱錯誤！");
+			return mem;
+		}
+		
+		mem.setMemName(dao.selectForPass(username, email).getMemName());
+		mem.setSuccessful(true);
+		return mem;
+	}
+	
+	public Member checkCode(Member mem) {
+		final String input = mem.getMemInputCode();
+		final String verification = mem.getMemVerification();
+		
+		if ("".equals(input)) {
+			mem.setMessage("驗證碼未輸入");
+			mem.setSuccessful(false);
+			return mem;
+		}
+		if (!input.equals(verification)) {
+			mem.setMessage("驗證碼輸入錯誤");
+			mem.setSuccessful(false);
+			return mem;
+		}
+		
+		mem.setSuccessful(true);
+		return mem;
+	}
+	
+	public Member forgetPassChange(Member mem) {
+		final String newPass = mem.getMemNewPassword();
+		System.out.println(newPass);
+		
+		mem.setMemPassword(newPass);
+		System.out.println(mem.getMemPassword());
+		if (dao.updatePassByUsername(mem) == false) {
+			mem.setSuccessful(false);
+			mem.setMessage("密碼更改出現錯誤，請聯絡管理員!");
+			return mem;
+		}
 		
 		mem.setMessage("資料更改成功");
 		mem.setSuccessful(true);

@@ -6,9 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/boostrap/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/verification.css">
 
-    <title>登入頁面</title>
+    <title>驗證碼確認</title>
 
 </head>
 
@@ -54,30 +54,24 @@
     <div class="contentArea">
         <div class="login-block">
             <div class="login-input">
-                <h4>會員登入</h4>
-                會員帳號
-                <input type="text" class="form-control" placeholder="帳號" id="username"><br>
-                密碼
-                <input type="password" class="form-control" placeholder="密碼" id="password"><br>
-                <a href="register.html" class="sign-in">註冊帳號</a>
-                <a href="forget_pass.html" class="forget">忘記密碼</a><br>
-                <button type="button" class="btn-submit" id="login">登入</button>
+                <h4>忘記密碼</h4>
+                驗證碼
+                <input type="text" class="form-control" placeholder="驗證碼" id="ver-code"><br>
+                <button type="button" class="btn-submit" id="confirm">驗證碼確認</button>
                 <div id="errMsg" class="error" style="color: red;"></div>
             </div>
         </div>   
     </div>
 
     <script>
-        const username = document.querySelector('#username');
-        const password = document.querySelector('#password');
+        const ver_code = document.querySelector('#ver-code');
         const errMsg = document.querySelector('#errMsg');
-        document.getElementById('login').addEventListener('click', () => {
-            fetch('http://localhost:8080/simplefitness-servlet/member/login', {
+        document.getElementById('confirm').addEventListener('click', () => {
+            fetch('http://localhost:8080/simplefitness-servlet/member/verification', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                memUsername: username.value,
-                memPassword: password.value
+                memInputCode: ver_code.value,
             }),
             })
             .then(resp => resp.json())
@@ -85,9 +79,10 @@
                 errMsg.textContent = '';
                 const { successful, message } = body;
                 if (successful) {
-                    location = './member_home.html';
+                    window.alert("驗證碼輸入正確！跳轉至修改密碼");
+                    location = './change_pass_forget.html';
                 } else {
-                errMsg.textContent = message;
+                    errMsg.textContent = message;
                 }
             });
         });

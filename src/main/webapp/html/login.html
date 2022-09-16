@@ -16,22 +16,22 @@
 
     <div class="topnav">
 
-        <img class="logoImg" href="#home" src="../img/Simple_Fitness-logos_white.png" alt="">
+        <img class="logoImg" href="home.html" src="../img/Simple_Fitness-logos_white.png" alt="">
         <ul class="list-inline">
             <li>
-                <a class="topnavBtn" id="home" href="#home">最新消息</a>
+                <a class="topnavBtn" id="news" href="#">最新消息</a>
             </li>
             <li>
-                <a class="topnavBtn" id="news" href="#news">場館資訊</a>
+                <a class="topnavBtn" id="gym" href="#">場館資訊</a>
             </li>
             <li>
-                <a class="topnavBtn" id="content" href="#contact">教練資訊</a>
+                <a class="topnavBtn" id="coach" href="#">教練資訊</a>
             </li>
             <li>
-                <a class="topnavBtn" id="about" href="#about">課程資訊</a>
+                <a class="topnavBtn" id="course" href="#">課程資訊</a>
             </li>
             <li>
-                <a class="topnavBtn" id="about" href="#about">收費方式</a>
+                <a class="topnavBtn" id="pay" href="#">收費方式</a>
             </li>
             <!-- <li>
                 <a class="topnavBtn" id="about" href="#about">討論區</a>
@@ -43,8 +43,6 @@
                 <div class="dropdown-content">
                     <ul>
                         <li><a href="#">會員中心</a></li>
-                        <li><a href="#">登入</a></li>
-                        <li><a href="#">登出</a></li>
                     </ul>
                 </div>
             </li>
@@ -67,32 +65,7 @@
         </div>   
     </div>
 
-    <script>
-        const username = document.querySelector('#username');
-        const password = document.querySelector('#password');
-        const errMsg = document.querySelector('#errMsg');
-        document.getElementById('login').addEventListener('click', () => {
-            fetch('http://localhost:8080/simplefitness-servlet/member/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                memUsername: username.value,
-                memPassword: password.value
-            }),
-            })
-            .then(resp => resp.json())
-            .then(body => {
-                errMsg.textContent = '';
-                const { successful, message } = body;
-                if (successful) {
-                    location = './member_home.html';
-                } else {
-                errMsg.textContent = message;
-                }
-            });
-        });
-
-    </script>
+    <script src="../js/login.js"></script>
 
 </body>
 

@@ -41,8 +41,7 @@ public class CourBookingDaoImpl implements CourBookingDaoIntf {
 
 			pstmt.setInt(1, courbookVo.getMemId());
 			pstmt.setInt(2, courbookVo.getCourId());
-			pstmt.setDate(3, courbookVo.getCourbookTime());
-			pstmt.setString(4, courbookVo.getCourbookStatus());
+			pstmt.setString(3, courbookVo.getCourbookStatus());
 
 			rowCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -61,9 +60,8 @@ public class CourBookingDaoImpl implements CourBookingDaoIntf {
 
 			pstmt.setInt(1, courbookVo.getMemId());
 			pstmt.setInt(2, courbookVo.getCourId());
-			pstmt.setDate(3, courbookVo.getCourbookTime());
-			pstmt.setString(4, courbookVo.getCourbookStatus());
-			pstmt.setInt(5, courbookVo.getCourbookId());
+			pstmt.setString(3, courbookVo.getCourbookStatus());
+			pstmt.setInt(4, courbookVo.getCourbookId());
 
 			rowCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -108,7 +106,7 @@ public class CourBookingDaoImpl implements CourBookingDaoIntf {
 					courbook.setCourbookId(rs.getInt("courbookId"));
 					courbook.setMemId(rs.getInt("memId"));
 					courbook.setCourId(rs.getInt("courId"));
-					courbook.setCourbookTime(rs.getDate("courbookTime"));
+					courbook.setCourbookTime(rs.getTimestamp("courbookTime"));
 					courbook.setCourbookStatus(rs.getString("courbookStatus"));
 				}
 			}
@@ -134,7 +132,7 @@ public class CourBookingDaoImpl implements CourBookingDaoIntf {
 					courbook.setCourbookId(rs.getInt("courbookId"));
 					courbook.setMemId(rs.getInt("memId"));
 					courbook.setCourId(rs.getInt("courId"));
-					courbook.setCourbookTime(rs.getDate("courbookTime"));
+					courbook.setCourbookTime(rs.getTimestamp("courbookTime"));
 					courbook.setCourbookStatus(rs.getString("courbookStatus"));
 					list.add(courbook);
 				}
@@ -145,4 +143,53 @@ public class CourBookingDaoImpl implements CourBookingDaoIntf {
 		return list;
 	}
 
+	@Override
+	public CourBooking selectByMem(Integer memId) {
+		CourBooking courbook = null;
+
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.SELECT_BY_MEM);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setInt(1, memId);
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+
+				courbook = new CourBooking();
+
+				while (rs.next()) {
+					courbook = new CourBooking();
+					courbook.setCourbookId(rs.getInt("courbookId"));
+					courbook.setMemId(rs.getInt("memId"));
+					courbook.setCourId(rs.getInt("courId"));
+					courbook.setCourbookTime(rs.getTimestamp("courbookTime"));
+					courbook.setCourbookStatus(rs.getString("courbookStatus"));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return courbook;
+	}
+
+	@Override
+	public boolean updateStatus(CourBooking courbookVo) {
+		int rowCount = 0;
+
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.UPDATE_STATUS);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setString(1, courbookVo.getCourbookStatus());
+			pstmt.setInt(2, courbookVo.getCourbookId());
+
+			rowCount = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rowCount != 0;
+	}
+
+	
+	
 }

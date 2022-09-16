@@ -101,8 +101,6 @@ public class CourPicDaoImpl implements CourPicDaoIntf {
 
 				while (rs.next()) {
 					courpic = new CourPic();
-					courpic.setCourpicId(rs.getInt("courpicId"));
-					courpic.setCourlistId(rs.getInt("courlistId"));
 					courpic.setCourPic(rs.getBytes("courPic"));
 				}
 			}

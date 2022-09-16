@@ -41,9 +41,7 @@ public class CoaBookingDaoImpl implements CoaBookingDaoIntf {
 
 			pstmt.setInt(1, coabookVo.getMemId());
 			pstmt.setInt(2, coabookVo.getCoaId());
-			pstmt.setDate(3, coabookVo.getCoabookTime());
-			pstmt.setString(4, coabookVo.getCoabookStatus());
-			pstmt.setDate(5, coabookVo.getCheckTime());
+			pstmt.setString(3, coabookVo.getCoabookStatus());
 
 			rowCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -62,10 +60,8 @@ public class CoaBookingDaoImpl implements CoaBookingDaoIntf {
 
 			pstmt.setInt(1, coabookVo.getMemId());
 			pstmt.setInt(2, coabookVo.getCoaId());
-			pstmt.setDate(3, coabookVo.getCoabookTime());
-			pstmt.setString(4, coabookVo.getCoabookStatus());
-			pstmt.setDate(5, coabookVo.getCheckTime());
-			pstmt.setInt(6, coabookVo.getCoabookId());
+			pstmt.setString(3, coabookVo.getCoabookStatus());
+			pstmt.setInt(4, coabookVo.getCoabookId());
 
 			rowCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -110,9 +106,9 @@ public class CoaBookingDaoImpl implements CoaBookingDaoIntf {
 					coabook.setCoabookId(rs.getInt("coabookId"));
 					coabook.setMemId(rs.getInt("memId"));
 					coabook.setCoaId(rs.getInt("coaId"));
-					coabook.setCoabookTime(rs.getDate("coabookTime"));
+					coabook.setCoabookTime(rs.getTimestamp("coabookTime"));
 					coabook.setCoabookStatus(rs.getString("coabookStatus"));
-					coabook.setCheckTime(rs.getDate("checkTime"));
+					coabook.setCheckTime(rs.getTimestamp("checkTime"));
 				}
 			}
 		} catch (SQLException e) {
@@ -137,9 +133,9 @@ public class CoaBookingDaoImpl implements CoaBookingDaoIntf {
 					coabook.setCoabookId(rs.getInt("coabookId"));
 					coabook.setMemId(rs.getInt("memId"));
 					coabook.setCoaId(rs.getInt("coaId"));
-					coabook.setCoabookTime(rs.getDate("coabookTime"));
+					coabook.setCoabookTime(rs.getTimestamp("coabookTime"));
 					coabook.setCoabookStatus(rs.getString("coabookStatus"));
-					coabook.setCheckTime(rs.getDate("checkTime"));
+					coabook.setCheckTime(rs.getTimestamp("checkTime"));
 					list.add(coabook);	
 				}
 			}

@@ -11,17 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.common.util.JavaMail;
+import com.common.util.VerificationCode;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mem.service.impl.MemServiceImpl;
 import com.mem.service.intf.MemServiceIntf;
 import com.mem.vo.Member;
 
-@WebServlet("/member/edit")
-public class EditServlet extends HttpServlet {
+@WebServlet("/member/forgetpass")
+public class ForgetPassServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MemServiceIntf SERVICE = new MemServiceImpl();
-	private Gson GSON = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+	private Gson GSON = new GsonBuilder().create();
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -32,34 +34,33 @@ public class EditServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		
-		final HttpSession session = request.getSession();
-		
-		final String username = ((Member) session.getAttribute("member")).getMemUsername();
-		
 		BufferedReader br = request.getReader();
         String json = br.readLine();
         Member member = GSON.fromJson(json, Member.class);
-        member.setMemUsername(username);
         
-//        已有替代方案
-//        try {
-//        	 // 日期格式
-//            String birthStr = member.getMemBirthStr();
-//            Date birth = Date.valueOf(birthStr);
-//            member.setMemBirth(birth);
-//		} catch (Exception e) {
-//			member.setMemBirth(null);
-//		}
-        
-        member = SERVICE.memEdit(member);
-        
-        if (member.isSuccessful()) {
-			session.setAttribute("member", member);
+        member = SERVICE.forgetPass(member);
+		
+		if (member.isSuccessful()) {
+			String to = member.getMemEmail();
+
+			String subject = "忘記密碼確認信";
+
+			String ch_name = member.getMemName();
+			VerificationCode code = new VerificationCode();
+			String passRandom = code.getRandom();
+			member.setMemVerification(passRandom);
+			String messageText = "Hello! " + ch_name + " 請謹記此密碼: " + passRandom + "\n" + "(30分鐘後過期)";
+	        
+	        JavaMail mailService = new JavaMail();
+			mailService.sendMail(to, subject, messageText);
+			
+			final HttpSession session = request.getSession();
+			session.setAttribute("forget", member);
 		}
         
         PrintWriter pw = response.getWriter();
         pw.print(GSON.toJson(member));
-		
+        
 	}
 	
 	@Override

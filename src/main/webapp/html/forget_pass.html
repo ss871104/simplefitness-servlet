@@ -6,9 +6,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../css/boostrap/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/login.css">
+    <link rel="stylesheet" href="../css/forget_pass.css">
 
-    <title>登入頁面</title>
+    <title>忘記密碼</title>
 
 </head>
 
@@ -54,14 +54,12 @@
     <div class="contentArea">
         <div class="login-block">
             <div class="login-input">
-                <h4>會員登入</h4>
+                <h4>忘記密碼</h4>
                 會員帳號
                 <input type="text" class="form-control" placeholder="帳號" id="username"><br>
-                密碼
-                <input type="password" class="form-control" placeholder="密碼" id="password"><br>
-                <a href="register.html" class="sign-in">註冊帳號</a>
-                <a href="forget_pass.html" class="forget">忘記密碼</a><br>
-                <button type="button" class="btn-submit" id="login">登入</button>
+                會員信箱
+                <input type="text" class="form-control" placeholder="信箱" id="email"><br>
+                <button type="button" class="btn-submit" id="send">傳送驗證信至信箱</button>
                 <div id="errMsg" class="error" style="color: red;"></div>
             </div>
         </div>   
@@ -69,15 +67,18 @@
 
     <script>
         const username = document.querySelector('#username');
-        const password = document.querySelector('#password');
+        const email = document.querySelector('#email');
         const errMsg = document.querySelector('#errMsg');
-        document.getElementById('login').addEventListener('click', () => {
-            fetch('http://localhost:8080/simplefitness-servlet/member/login', {
+
+        document.getElementById('send').addEventListener('click', () => {
+        	console.log(username.value);
+            console.log(email.value);
+            fetch('http://localhost:8080/simplefitness-servlet/member/forgetpass', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 memUsername: username.value,
-                memPassword: password.value
+                memEmail: email.value
             }),
             })
             .then(resp => resp.json())
@@ -85,9 +86,10 @@
                 errMsg.textContent = '';
                 const { successful, message } = body;
                 if (successful) {
-                    location = './member_home.html';
+                    window.alert("驗證碼已寄出，請至信箱查詢！點擊確認跳轉至驗證碼頁面");
+                    location = './verifivation.html';
                 } else {
-                errMsg.textContent = message;
+                    errMsg.textContent = message;
                 }
             });
         });

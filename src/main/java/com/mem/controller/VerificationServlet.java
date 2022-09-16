@@ -17,14 +17,14 @@ import com.mem.service.impl.MemServiceImpl;
 import com.mem.service.intf.MemServiceIntf;
 import com.mem.vo.Member;
 
-@WebServlet("/member/edit")
-public class EditServlet extends HttpServlet {
+@WebServlet("/member/verification")
+public class VerificationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MemServiceIntf SERVICE = new MemServiceImpl();
-	private Gson GSON = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+	private Gson GSON = new GsonBuilder().create();
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -34,32 +34,17 @@ public class EditServlet extends HttpServlet {
 		
 		final HttpSession session = request.getSession();
 		
-		final String username = ((Member) session.getAttribute("member")).getMemUsername();
+		final String veri = ((Member) session.getAttribute("forget")).getMemVerification();
 		
 		BufferedReader br = request.getReader();
         String json = br.readLine();
         Member member = GSON.fromJson(json, Member.class);
-        member.setMemUsername(username);
+        member.setMemVerification(veri);
         
-//        已有替代方案
-//        try {
-//        	 // 日期格式
-//            String birthStr = member.getMemBirthStr();
-//            Date birth = Date.valueOf(birthStr);
-//            member.setMemBirth(birth);
-//		} catch (Exception e) {
-//			member.setMemBirth(null);
-//		}
-        
-        member = SERVICE.memEdit(member);
-        
-        if (member.isSuccessful()) {
-			session.setAttribute("member", member);
-		}
+        SERVICE.checkCode(member);
         
         PrintWriter pw = response.getWriter();
         pw.print(GSON.toJson(member));
-		
 	}
 	
 	@Override

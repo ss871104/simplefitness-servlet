@@ -23,8 +23,25 @@ public class Member extends Common {
 	private String memStatus;
 	private byte[] memPic;
 	private String memQrCode;
-	private String memBirthStr;
 	private String memNewPassword;
+	private String memVerification;
+	private String memInputCode;
+
+	public String getMemInputCode() {
+		return memInputCode;
+	}
+
+	public void setMemInputCode(String memInputCode) {
+		this.memInputCode = memInputCode;
+	}
+
+	public String getMemVerification() {
+		return memVerification;
+	}
+
+	public void setMemVerification(String memVerification) {
+		this.memVerification = memVerification;
+	}
 
 	public String getMemNewPassword() {
 		return memNewPassword;
@@ -32,14 +49,6 @@ public class Member extends Common {
 
 	public void setMemNewPassword(String memNewPassword) {
 		this.memNewPassword = memNewPassword;
-	}
-	
-	public String getMemBirthStr() {
-		return memBirthStr;
-	}
-
-	public void setMemBirthStr(String memBirthStr) {
-		this.memBirthStr = memBirthStr;
 	}
 
 	public Member() {

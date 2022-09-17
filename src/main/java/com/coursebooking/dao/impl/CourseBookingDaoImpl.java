@@ -1,4 +1,4 @@
-package com.courbooking.dao.impl;
+package com.coursebooking.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,36 +12,36 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.courbooking.dao.intf.CourBookingDaoIntf;
-import com.courbooking.dao.sql.CourBookingDaoSQL;
-import com.courbooking.vo.CourBooking;
+import com.coursebooking.dao.intf.CourseBookingDaoIntf;
+import com.coursebooking.dao.sql.CourseBookingDaoSQL;
+import com.coursebooking.vo.CourseBooking;
 
-public class CourBookingDaoImpl implements CourBookingDaoIntf {
+public class CourseBookingDaoImpl implements CourseBookingDaoIntf {
 
 	private static DataSource ds = null;
-	private static CourBookingDaoSQL SQL = null;
+	private static CourseBookingDaoSQL SQL = null;
 
 	static {
 		try {
 			Context ctx = new InitialContext();
 			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Test");
-			SQL = new CourBookingDaoSQL();
+			SQL = new CourseBookingDaoSQL();
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public boolean insert(CourBooking courbookVo) {
+	public boolean insert(CourseBooking coursebookVo) {
 		int rowCount = 0;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.INSERT);) {
 
 			System.out.println("連線成功");
 
-			pstmt.setInt(1, courbookVo.getMemId());
-			pstmt.setInt(2, courbookVo.getCourId());
-			pstmt.setString(3, courbookVo.getCourbookStatus());
+			pstmt.setInt(1, coursebookVo.getMemId());
+			pstmt.setInt(2, coursebookVo.getCourseId());
+			pstmt.setString(3, coursebookVo.getCoursebookStatus());
 
 			rowCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -51,17 +51,17 @@ public class CourBookingDaoImpl implements CourBookingDaoIntf {
 	}
 
 	@Override
-	public boolean update(CourBooking courbookVo) {
+	public boolean update(CourseBooking coursebookVo) {
 		int rowCount = 0;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.UPDATE);) {
 
 			System.out.println("連線成功");
 
-			pstmt.setInt(1, courbookVo.getMemId());
-			pstmt.setInt(2, courbookVo.getCourId());
-			pstmt.setString(3, courbookVo.getCourbookStatus());
-			pstmt.setInt(4, courbookVo.getCourbookId());
+			pstmt.setInt(1, coursebookVo.getMemId());
+			pstmt.setInt(2, coursebookVo.getCourseId());
+			pstmt.setString(3, coursebookVo.getCoursebookStatus());
+			pstmt.setInt(4, coursebookVo.getCoursebookId());
 
 			rowCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -71,14 +71,14 @@ public class CourBookingDaoImpl implements CourBookingDaoIntf {
 	}
 
 	@Override
-	public boolean delete(Integer courbookId) {
+	public boolean delete(Integer coursebookId) {
 		int rowCount = 0;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.DELETE);) {
 
 			System.out.println("連線成功");
 
-			pstmt.setInt(1, courbookId);
+			pstmt.setInt(1, coursebookId);
 
 			rowCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -88,38 +88,38 @@ public class CourBookingDaoImpl implements CourBookingDaoIntf {
 	}
 
 	@Override
-	public CourBooking selectById(Integer courbookId) {
-		CourBooking courbook = null;
+	public CourseBooking selectById(Integer coursebookId) {
+		CourseBooking coursebook = null;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.SELECT_BY_ID);) {
 
 			System.out.println("連線成功");
 
-			pstmt.setInt(1, courbookId);
+			pstmt.setInt(1, coursebookId);
 
 			try (ResultSet rs = pstmt.executeQuery()) {
 
-				courbook = new CourBooking();
+				coursebook = new CourseBooking();
 
 				while (rs.next()) {
-					courbook = new CourBooking();
-					courbook.setCourbookId(rs.getInt("courbookId"));
-					courbook.setMemId(rs.getInt("memId"));
-					courbook.setCourId(rs.getInt("courId"));
-					courbook.setCourbookTime(rs.getTimestamp("courbookTime"));
-					courbook.setCourbookStatus(rs.getString("courbookStatus"));
+					coursebook = new CourseBooking();
+					coursebook.setCoursebookId(rs.getInt("coursebookId"));
+					coursebook.setMemId(rs.getInt("memId"));
+					coursebook.setCourseId(rs.getInt("courseId"));
+					coursebook.setCoursebookTime(rs.getTimestamp("coursebookTime"));
+					coursebook.setCoursebookStatus(rs.getString("coursebookStatus"));
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return courbook;
+		return coursebook;
 	}
 
 	@Override
-	public List<CourBooking> selectAll() {
-		List<CourBooking> list = new ArrayList<CourBooking>();
-		CourBooking courbook = null;
+	public List<CourseBooking> selectAll() {
+		List<CourseBooking> list = new ArrayList<CourseBooking>();
+		CourseBooking coursebook = null;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.SELECT_ALL);) {
 
@@ -128,13 +128,13 @@ public class CourBookingDaoImpl implements CourBookingDaoIntf {
 			try (ResultSet rs = pstmt.executeQuery()) {
 
 				while (rs.next()) {
-					courbook = new CourBooking();
-					courbook.setCourbookId(rs.getInt("courbookId"));
-					courbook.setMemId(rs.getInt("memId"));
-					courbook.setCourId(rs.getInt("courId"));
-					courbook.setCourbookTime(rs.getTimestamp("courbookTime"));
-					courbook.setCourbookStatus(rs.getString("courbookStatus"));
-					list.add(courbook);
+					coursebook = new CourseBooking();
+					coursebook.setCoursebookId(rs.getInt("coursebookId"));
+					coursebook.setMemId(rs.getInt("memId"));
+					coursebook.setCourseId(rs.getInt("courseId"));
+					coursebook.setCoursebookTime(rs.getTimestamp("coursebookTime"));
+					coursebook.setCoursebookStatus(rs.getString("coursebookStatus"));
+					list.add(coursebook);
 				}
 			}
 		} catch (SQLException e) {
@@ -144,8 +144,8 @@ public class CourBookingDaoImpl implements CourBookingDaoIntf {
 	}
 
 	@Override
-	public CourBooking selectByMem(Integer memId) {
-		CourBooking courbook = null;
+	public CourseBooking selectByMem(Integer memId) {
+		CourseBooking coursebook = null;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.SELECT_BY_MEM);) {
 
@@ -155,33 +155,33 @@ public class CourBookingDaoImpl implements CourBookingDaoIntf {
 
 			try (ResultSet rs = pstmt.executeQuery()) {
 
-				courbook = new CourBooking();
+				coursebook = new CourseBooking();
 
 				while (rs.next()) {
-					courbook = new CourBooking();
-					courbook.setCourbookId(rs.getInt("courbookId"));
-					courbook.setMemId(rs.getInt("memId"));
-					courbook.setCourId(rs.getInt("courId"));
-					courbook.setCourbookTime(rs.getTimestamp("courbookTime"));
-					courbook.setCourbookStatus(rs.getString("courbookStatus"));
+					coursebook = new CourseBooking();
+					coursebook.setCoursebookId(rs.getInt("coursebookId"));
+					coursebook.setMemId(rs.getInt("memId"));
+					coursebook.setCourseId(rs.getInt("courseId"));
+					coursebook.setCoursebookTime(rs.getTimestamp("coursebookTime"));
+					coursebook.setCoursebookStatus(rs.getString("coursebookStatus"));
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return courbook;
+		return coursebook;
 	}
 
 	@Override
-	public boolean updateStatus(CourBooking courbookVo) {
+	public boolean updateStatus(CourseBooking coursebookVo) {
 		int rowCount = 0;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.UPDATE_STATUS);) {
 
 			System.out.println("連線成功");
 
-			pstmt.setString(1, courbookVo.getCourbookStatus());
-			pstmt.setInt(2, courbookVo.getCourbookId());
+			pstmt.setString(1, coursebookVo.getCoursebookStatus());
+			pstmt.setInt(2, coursebookVo.getCoursebookId());
 
 			rowCount = pstmt.executeUpdate();
 		} catch (SQLException e) {

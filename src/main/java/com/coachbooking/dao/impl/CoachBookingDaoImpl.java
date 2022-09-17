@@ -1,4 +1,4 @@
-package com.courpic.dao.impl;
+package com.coachbooking.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,35 +12,36 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.courpic.dao.intf.CourPicDaoIntf;
-import com.courpic.dao.sql.CourPicDaoSQL;
-import com.courpic.vo.CourPic;
+import com.coachbooking.dao.intf.CoachBookingDaoIntf;
+import com.coachbooking.dao.sql.CoachBookingDaoSQL;
+import com.coachbooking.vo.CoachBooking;
 
-public class CourPicDaoImpl implements CourPicDaoIntf {
+public class CoachBookingDaoImpl implements CoachBookingDaoIntf {
 
 	private static DataSource ds = null;
-	private static CourPicDaoSQL SQL = null;
+	private static CoachBookingDaoSQL SQL = null;
 
 	static {
 		try {
 			Context ctx = new InitialContext();
 			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Test");
-			SQL = new CourPicDaoSQL();
+			SQL = new CoachBookingDaoSQL();
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public boolean insert(CourPic courpicVo) {
+	public boolean insert(CoachBooking coachbookVo) {
 		int rowCount = 0;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.INSERT);) {
 
 			System.out.println("連線成功");
 
-			pstmt.setInt(1, courpicVo.getCourlistId());
-			pstmt.setBytes(2, courpicVo.getCourPic());
+			pstmt.setInt(1, coachbookVo.getMemId());
+			pstmt.setInt(2, coachbookVo.getCoachId());
+			pstmt.setString(3, coachbookVo.getCoachbookStatus());
 
 			rowCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -50,16 +51,17 @@ public class CourPicDaoImpl implements CourPicDaoIntf {
 	}
 
 	@Override
-	public boolean update(CourPic courpicVo) {
+	public boolean update(CoachBooking coachbookVo) {
 		int rowCount = 0;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.UPDATE);) {
 
 			System.out.println("連線成功");
 
-			pstmt.setInt(1, courpicVo.getCourlistId());
-			pstmt.setBytes(2, courpicVo.getCourPic());
-			pstmt.setInt(3, courpicVo.getCourpicId());
+			pstmt.setInt(1, coachbookVo.getMemId());
+			pstmt.setInt(2, coachbookVo.getCoachId());
+			pstmt.setString(3, coachbookVo.getCoachbookStatus());
+			pstmt.setInt(4, coachbookVo.getCoachbookId());
 
 			rowCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -69,14 +71,14 @@ public class CourPicDaoImpl implements CourPicDaoIntf {
 	}
 
 	@Override
-	public boolean delete(Integer courpicId) {
+	public boolean delete(Integer coachbookId) {
 		int rowCount = 0;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.DELETE);) {
 
 			System.out.println("連線成功");
 
-			pstmt.setInt(1, courpicId);
+			pstmt.setInt(1, coachbookId);
 
 			rowCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -86,52 +88,60 @@ public class CourPicDaoImpl implements CourPicDaoIntf {
 	}
 
 	@Override
-	public CourPic selectById(Integer courpicId) {
-		CourPic courpic = null;
+	public CoachBooking selectById(Integer coachbookId) {
+		CoachBooking coachbook = null;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.SELECT_BY_ID);) {
 
 			System.out.println("連線成功");
 
-			pstmt.setInt(1, courpicId);
+			pstmt.setInt(1, coachbookId);
 
 			try (ResultSet rs = pstmt.executeQuery()) {
 
-				courpic = new CourPic();
+				coachbook = new CoachBooking();
 
 				while (rs.next()) {
-					courpic = new CourPic();
-					courpic.setCourPic(rs.getBytes("courPic"));
+					coachbook = new CoachBooking();
+					coachbook.setCoachbookId(rs.getInt("coachbookId"));
+					coachbook.setMemId(rs.getInt("memId"));
+					coachbook.setCoachId(rs.getInt("coachId"));
+					coachbook.setCoachbookTime(rs.getTimestamp("coachbookTime"));
+					coachbook.setCoachbookStatus(rs.getString("coachbookStatus"));
+					coachbook.setCheckTime(rs.getTimestamp("checkTime"));
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return courpic;
+		return coachbook;
 	}
 
 	@Override
-	public List<CourPic> selectAll() {
-		List<CourPic> list = new ArrayList<CourPic>();
-		CourPic courpic = null;
+	public List<CoachBooking> selectAll() {
+		List<CoachBooking> list = new ArrayList<CoachBooking>();
+		CoachBooking coachbook = null;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.SELECT_ALL);) {
-
+			
 			System.out.println("連線成功");
-
+			
 			try (ResultSet rs = pstmt.executeQuery()) {
-
+				
 				while (rs.next()) {
-					courpic = new CourPic();
-					courpic.setCourpicId(rs.getInt("courpicId"));
-					courpic.setCourlistId(rs.getInt("courlistId"));
-					courpic.setCourPic(rs.getBytes("courPic"));
-					list.add(courpic);
+					coachbook = new CoachBooking();
+					coachbook.setCoachbookId(rs.getInt("coachbookId"));
+					coachbook.setMemId(rs.getInt("memId"));
+					coachbook.setCoachId(rs.getInt("coachId"));
+					coachbook.setCoachbookTime(rs.getTimestamp("coachbookTime"));
+					coachbook.setCoachbookStatus(rs.getString("coachbookStatus"));
+					coachbook.setCheckTime(rs.getTimestamp("checkTime"));
+					list.add(coachbook);	
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		} 
 		return list;
 	}
 

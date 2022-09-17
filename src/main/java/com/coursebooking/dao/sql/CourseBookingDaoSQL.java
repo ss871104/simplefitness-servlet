@@ -1,6 +1,6 @@
-package com.courbooking.dao.sql;
+package com.coursebooking.dao.sql;
 
-public class CourBookingDaoSQL {
+public class CourseBookingDaoSQL {
 	public static final String INSERT = "insert into cour_booking ( mem_id, cour_id, status) values (?, ?, ?)";
 	public static final String SELECT_ALL = "select cour_book_id ,mem_id, cour_id,booking_time ,status from cour_booking order by cour_book_id ";
 	public static final String SELECT_BY_ID = "select cour_book_id ,mem_id,cour_id,booking_time ,status from cour_booking where cour_book_id  = ?";

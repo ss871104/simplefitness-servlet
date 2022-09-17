@@ -1,4 +1,4 @@
-package com.coabooking.dao.impl;
+package com.coursepic.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,36 +12,35 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.coabooking.dao.intf.CoaBookingDaoIntf;
-import com.coabooking.dao.sql.CoaBookingDaoSQL;
-import com.coabooking.vo.CoaBooking;
+import com.coursepic.dao.intf.CoursePicDaoIntf;
+import com.coursepic.dao.sql.CoursePicDaoSQL;
+import com.coursepic.vo.CoursePic;
 
-public class CoaBookingDaoImpl implements CoaBookingDaoIntf {
+public class CoursePicDaoImpl implements CoursePicDaoIntf {
 
 	private static DataSource ds = null;
-	private static CoaBookingDaoSQL SQL = null;
+	private static CoursePicDaoSQL SQL = null;
 
 	static {
 		try {
 			Context ctx = new InitialContext();
 			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Test");
-			SQL = new CoaBookingDaoSQL();
+			SQL = new CoursePicDaoSQL();
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public boolean insert(CoaBooking coabookVo) {
+	public boolean insert(CoursePic coursepicVo) {
 		int rowCount = 0;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.INSERT);) {
 
 			System.out.println("連線成功");
 
-			pstmt.setInt(1, coabookVo.getMemId());
-			pstmt.setInt(2, coabookVo.getCoaId());
-			pstmt.setString(3, coabookVo.getCoabookStatus());
+			pstmt.setInt(1, coursepicVo.getCourselistId());
+			pstmt.setBytes(2, coursepicVo.getCoursePic());
 
 			rowCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -51,17 +50,16 @@ public class CoaBookingDaoImpl implements CoaBookingDaoIntf {
 	}
 
 	@Override
-	public boolean update(CoaBooking coabookVo) {
+	public boolean update(CoursePic coursepicVo) {
 		int rowCount = 0;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.UPDATE);) {
 
 			System.out.println("連線成功");
 
-			pstmt.setInt(1, coabookVo.getMemId());
-			pstmt.setInt(2, coabookVo.getCoaId());
-			pstmt.setString(3, coabookVo.getCoabookStatus());
-			pstmt.setInt(4, coabookVo.getCoabookId());
+			pstmt.setInt(1, coursepicVo.getCourselistId());
+			pstmt.setBytes(2, coursepicVo.getCoursePic());
+			pstmt.setInt(3, coursepicVo.getCoursepicId());
 
 			rowCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -71,14 +69,14 @@ public class CoaBookingDaoImpl implements CoaBookingDaoIntf {
 	}
 
 	@Override
-	public boolean delete(Integer coabookId) {
+	public boolean delete(Integer coursepicId) {
 		int rowCount = 0;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.DELETE);) {
 
 			System.out.println("連線成功");
 
-			pstmt.setInt(1, coabookId);
+			pstmt.setInt(1, coursepicId);
 
 			rowCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -88,60 +86,52 @@ public class CoaBookingDaoImpl implements CoaBookingDaoIntf {
 	}
 
 	@Override
-	public CoaBooking selectById(Integer coabookId) {
-		CoaBooking coabook = null;
+	public CoursePic selectById(Integer coursepicId) {
+		CoursePic coursepic = null;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.SELECT_BY_ID);) {
 
 			System.out.println("連線成功");
 
-			pstmt.setInt(1, coabookId);
+			pstmt.setInt(1, coursepicId);
 
 			try (ResultSet rs = pstmt.executeQuery()) {
 
-				coabook = new CoaBooking();
+				coursepic = new CoursePic();
 
 				while (rs.next()) {
-					coabook = new CoaBooking();
-					coabook.setCoabookId(rs.getInt("coabookId"));
-					coabook.setMemId(rs.getInt("memId"));
-					coabook.setCoaId(rs.getInt("coaId"));
-					coabook.setCoabookTime(rs.getTimestamp("coabookTime"));
-					coabook.setCoabookStatus(rs.getString("coabookStatus"));
-					coabook.setCheckTime(rs.getTimestamp("checkTime"));
+					coursepic = new CoursePic();
+					coursepic.setCoursePic(rs.getBytes("coursePic"));
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return coabook;
+		return coursepic;
 	}
 
 	@Override
-	public List<CoaBooking> selectAll() {
-		List<CoaBooking> list = new ArrayList<CoaBooking>();
-		CoaBooking coabook = null;
+	public List<CoursePic> selectAll() {
+		List<CoursePic> list = new ArrayList<CoursePic>();
+		CoursePic coursepic = null;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.SELECT_ALL);) {
-			
+
 			System.out.println("連線成功");
-			
+
 			try (ResultSet rs = pstmt.executeQuery()) {
-				
+
 				while (rs.next()) {
-					coabook = new CoaBooking();
-					coabook.setCoabookId(rs.getInt("coabookId"));
-					coabook.setMemId(rs.getInt("memId"));
-					coabook.setCoaId(rs.getInt("coaId"));
-					coabook.setCoabookTime(rs.getTimestamp("coabookTime"));
-					coabook.setCoabookStatus(rs.getString("coabookStatus"));
-					coabook.setCheckTime(rs.getTimestamp("checkTime"));
-					list.add(coabook);	
+					coursepic = new CoursePic();
+					coursepic.setCoursepicId(rs.getInt("coursepicId"));
+					coursepic.setCourselistId(rs.getInt("courselistId"));
+					coursepic.setCoursePic(rs.getBytes("coursePic"));
+					list.add(coursepic);
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} 
+		}
 		return list;
 	}
 

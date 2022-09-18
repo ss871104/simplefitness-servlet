@@ -10,14 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import static com.common.util.Constants.GSON;
 import com.mem.vo.Member;
 
 @WebServlet("/session")
 public class SessionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private Gson GSON = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");

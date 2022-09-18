@@ -22,6 +22,12 @@ public interface MemServiceIntf {
 	
 	Member forgetPassChange(Member mem);
 	
+	Member updateImg(Member mem);
+	
+	Member getBase64(Member mem);
+	
+//	List<Member>getBase64(List<Member> list);
+	
 	List<Member> findAll();
 		
 	

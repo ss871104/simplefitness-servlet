@@ -24,13 +24,18 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import javax.mail.internet.MimeUtility;
 
-public class JavaMail {
+public class JavaMailThread extends Thread{
 	private final static String HOST = "smtp.gmail.com";
 	private final static String AUTH = "true";
 	private final static String PORT = "587";
 	private final static String STARTTLE_ENABLE = "true";
 	private final static String SENDER = "testinghuang411@gmail.com";
 	private final static String PASSWORD = "ayvrqjjoquhbnwbk";
+	public static String to;
+	public static String subject = "忘記密碼確認信";
+	public static String ch_name;
+	public static String passRandom;
+	public static String messageText;
 
 //  設定傳送郵件:至收信人的Email信箱,Email主旨,Email內容
 	public void sendMail(String recipients, String mailSubject, String mailBody) {
@@ -105,6 +110,12 @@ public class JavaMail {
 			e.printStackTrace();
 		}
 	}
+	
+	@Override
+	public void run() {
+		JavaMailThread mailService = new JavaMailThread();
+		mailService.sendMail(to, subject, messageText);
+	}
 
 	// 測試用
 //	public static void main(String args[]) {
@@ -117,7 +128,7 @@ public class JavaMail {
 //		String passRandom = "123456";
 //		String messageText = "Hello! " + ch_name + " 請謹記此密碼: " + passRandom + "\n" + "(30分鐘後過期)";
 //
-//		JavaMail mailService = new JavaMail();
+//		JavaMailThread mailService = new JavaMailThread();
 //		mailService.sendMail(to, subject, messageText);
 //
 //	}

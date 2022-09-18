@@ -11,10 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import static com.common.util.Constants.GSON;
 import com.common.util.JavaMail;
 import com.common.util.VerificationCode;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.mem.service.impl.MemServiceImpl;
 import com.mem.service.intf.MemServiceIntf;
 import com.mem.vo.Member;
@@ -23,7 +22,6 @@ import com.mem.vo.Member;
 public class ForgetPassServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MemServiceIntf SERVICE = new MemServiceImpl();
-	private Gson GSON = new GsonBuilder().create();
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -41,19 +39,6 @@ public class ForgetPassServlet extends HttpServlet {
         member = SERVICE.forgetPass(member);
 		
 		if (member.isSuccessful()) {
-			String to = member.getMemEmail();
-
-			String subject = "忘記密碼確認信";
-
-			String ch_name = member.getMemName();
-			VerificationCode code = new VerificationCode();
-			String passRandom = code.getRandom();
-			member.setMemVerification(passRandom);
-			String messageText = "Hello! " + ch_name + " 請謹記此密碼: " + passRandom + "\n" + "(30分鐘後過期)";
-	        
-	        JavaMail mailService = new JavaMail();
-			mailService.sendMail(to, subject, messageText);
-			
 			final HttpSession session = request.getSession();
 			session.setAttribute("forget", member);
 		}

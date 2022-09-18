@@ -1,6 +1,8 @@
 package com.mem.vo;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import com.common.pojo.Common;
 
@@ -19,13 +21,31 @@ public class Member extends Common {
 	private Date memRegister;
 	private Date memStart;
 	private Date memExpire;
-	private Date memLogin;
+	private LocalDateTime memLogin;
 	private String memStatus;
 	private byte[] memPic;
 	private String memQrCode;
 	private String memNewPassword;
 	private String memVerification;
 	private String memInputCode;
+	private LocalDateTime memCurrentLogin;
+	private String memPicBase64;
+
+	public String getMemPicBase64() {
+		return memPicBase64;
+	}
+
+	public void setMemPicBase64(String memPicBase64) {
+		this.memPicBase64 = memPicBase64;
+	}
+
+	public LocalDateTime getMemCurrentLogin() {
+		return memCurrentLogin;
+	}
+
+	public void setMemCurrentLogin(LocalDateTime memCurrentLogin) {
+		this.memCurrentLogin = memCurrentLogin;
+	}
 
 	public String getMemInputCode() {
 		return memInputCode;
@@ -49,29 +69,6 @@ public class Member extends Common {
 
 	public void setMemNewPassword(String memNewPassword) {
 		this.memNewPassword = memNewPassword;
-	}
-
-	public Member() {
-		
-	}
-	
-	public Member(Integer memId, String memName, String memNickname, String memUsername, String memPassword, String memPhone, String memEmail, String memGender, Date memBirth, Date memRegister, Date memStart, Date memExpire, Date memLogin, String memStatus, byte[] memPic, String memQrCode) {
-		this.memId = memId;
-		this.memName = memName;
-		this.memNickname = memNickname;
-		this.memUsername = memUsername;
-		this.memPassword = memPassword;
-		this.memPhone = memPhone;
-		this.memEmail = memEmail;
-		this.memGender = memGender;
-		this.memBirth = memBirth;
-		this.memRegister = memRegister;
-		this.memStart = memStart;
-		this.memExpire = memExpire;
-		this.memLogin = memLogin;
-		this.memStatus = memStatus;
-		this.memPic = memPic;
-		this.memQrCode = memQrCode;
 	}
 
 	public Integer getMemId() {
@@ -146,10 +143,10 @@ public class Member extends Common {
 	public void setMemExpire(Date memExpire) {
 		this.memExpire = memExpire;
 	}
-	public Date getMemLogin() {
+	public LocalDateTime getMemLogin() {
 		return memLogin;
 	}
-	public void setMemLogin(Date memLogin) {
+	public void setMemLogin(LocalDateTime memLogin) {
 		this.memLogin = memLogin;
 	}
 	public String getMemStatus() {

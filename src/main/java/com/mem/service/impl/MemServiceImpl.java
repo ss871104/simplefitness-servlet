@@ -1,8 +1,12 @@
 package com.mem.service.impl;
 
+import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.List;
 
-import com.common.util.JavaMail;
+import static com.common.util.Constants.BASE64;
+import com.common.util.JavaMailThread;
+import com.common.util.VerificationCode;
 import com.mem.dao.impl.MemDaoImpl;
 import com.mem.dao.intf.MemDaoIntf;
 import com.mem.service.intf.MemServiceIntf;
@@ -87,14 +91,26 @@ public class MemServiceImpl implements MemServiceIntf {
 			mem.setMessage("帳號或密碼錯誤！");
 			return mem;
 		}
+		
+		// 登入後有完整資料
 		mem = dao.selectForLogin(username, password);
+
+		// 上一次登入變成上一次的這一次登入
+		if (mem.getMemCurrentLogin() != null) {
+			mem.setMemLogin(mem.getMemCurrentLogin());
+		}
+		// 新的這一次登入時間
+		mem.setMemCurrentLogin(LocalDateTime.now());
+		// 更新資料庫上一次登入和這一次登入
+		dao.updateLastLogin(mem);
+		
 		mem.setSuccessful(true);
 		return mem;	
 	}
 
 	@Override
 	public Member memEdit(Member mem) {
-		
+
 		if (dao.updateByMem(mem) == false || dao.selectByUsername(mem.getMemUsername()) == null) {
 			mem.setMessage("資料更改出現錯誤，請聯絡管理員!");
 			mem.setSuccessful(false);
@@ -190,8 +206,18 @@ public class MemServiceImpl implements MemServiceIntf {
 			mem.setMessage("帳號或信箱錯誤！");
 			return mem;
 		}
-		
+		// 讓信件可以抓到名字
 		mem.setMemName(dao.selectForPass(username, email).getMemName());
+		// JavaMail執行緒
+		JavaMailThread.to = mem.getMemEmail();
+		JavaMailThread.ch_name = mem.getMemName();
+		VerificationCode code = new VerificationCode();
+		JavaMailThread.passRandom = code.getRandom();
+		mem.setMemVerification(JavaMailThread.passRandom);
+		JavaMailThread.messageText = "Hello! " + JavaMailThread.ch_name + " 您的驗證碼為: " + JavaMailThread.passRandom + "\n" + "(30分鐘後過期)";
+		JavaMailThread jmt = new JavaMailThread();
+		jmt.start();
+		
 		mem.setSuccessful(true);
 		return mem;
 	}
@@ -231,6 +257,43 @@ public class MemServiceImpl implements MemServiceIntf {
 		mem.setSuccessful(true);
 		return mem;
 	}
+	
+	public Member updateImg(Member mem) {
+
+		mem.setMemPic(Base64.getDecoder().decode(mem.getMemPicBase64())); // 這個出事
+		if (dao.updateImg(mem) == false) {
+			mem.setSuccessful(false);
+			mem.setMessage("圖片更改出現錯誤，請聯絡管理員!");
+		}
+		// 回會員編輯有完整session
+		mem = dao.selectByUsername(mem.getMemUsername());
+		
+		mem.setMessage("資料更改成功");
+		mem.setSuccessful(true);
+		return mem;
+	}
+	
+	public Member getBase64(Member mem) {
+		var img = mem.getMemPic();
+		if (img != null) {
+			mem.setMemPicBase64(BASE64 + Base64.getEncoder().encodeToString(img));
+//			mem.setMemPic(null);
+		}
+		return mem;
+	}
+	
+//	public List<Member> getBase64(List<Member> list) {
+//
+//		for (Member mem : list) {
+//			var img = mem.getMemPic();
+//			if (img != null) {
+//				mem.setMemPicBase64(BASE64 + Base64.getEncoder().encodeToString(img));
+//				mem.setMemPic(null);
+//			}
+//		}
+//
+//		return list;
+//	}
 	
 	@Override
 	public List<Member> findAll() {

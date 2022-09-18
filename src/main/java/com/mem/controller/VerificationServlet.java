@@ -11,8 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import static com.common.util.Constants.GSON;
 import com.mem.service.impl.MemServiceImpl;
 import com.mem.service.intf.MemServiceIntf;
 import com.mem.vo.Member;
@@ -21,7 +20,6 @@ import com.mem.vo.Member;
 public class VerificationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MemServiceIntf SERVICE = new MemServiceImpl();
-	private Gson GSON = new GsonBuilder().create();
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -34,12 +32,12 @@ public class VerificationServlet extends HttpServlet {
 		
 		final HttpSession session = request.getSession();
 		
-		final String veri = ((Member) session.getAttribute("forget")).getMemVerification();
+		final String verification = ((Member) session.getAttribute("forget")).getMemVerification();
 		
 		BufferedReader br = request.getReader();
         String json = br.readLine();
         Member member = GSON.fromJson(json, Member.class);
-        member.setMemVerification(veri);
+        member.setMemVerification(verification);
         
         SERVICE.checkCode(member);
         

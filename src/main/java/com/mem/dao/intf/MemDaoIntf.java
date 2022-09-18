@@ -11,5 +11,7 @@ public interface MemDaoIntf extends CommonDao<Member, Integer> {
 	public boolean updateByMem(Member memVo);
 	public boolean updatePassByUsername(Member memVo);
 	public Member selectForPass(String memUsername, String memEmail);
+	public boolean updateLastLogin(Member memVo);
+	public boolean updateImg(Member memVo);
 
 }

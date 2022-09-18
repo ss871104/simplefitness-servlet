@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import static com.common.util.Constants.GSON;
+
+import com.common.util.Base64Adapter;
 import com.mem.service.impl.MemServiceImpl;
 import com.mem.service.intf.MemServiceIntf;
 import com.mem.vo.Member;
@@ -35,7 +37,6 @@ public class LoginServlet extends HttpServlet {
         Member member = GSON.fromJson(json, Member.class);
         
         member = SERVICE.login(member);
-        member = SERVICE.getBase64(member);
         
 		if (member.isSuccessful()) {
 			if (request.getSession(false) != null) {

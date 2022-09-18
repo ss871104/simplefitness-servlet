@@ -27,6 +27,6 @@ public class MemDaoSQL {
 	
 	public static final String UPDATE_LAST_LOGIN = "update mem set last_login = ?, current_login = ? where username = ?;";
 	
-	public static final String UPDATE_IMG = "update mem set pic = ? where mem_id = ?;";
+	public static final String UPDATE_IMG = "update mem set pic = ? where username = ?;";
 
 }

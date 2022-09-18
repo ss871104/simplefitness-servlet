@@ -153,4 +153,43 @@ public class CourseListDaoImpl implements CourseListDaoIntf {
 		return list;
 	}
 
+	/* *
+	 *  Func: 取得課程報名上限人數
+	 *  CreateBy: Iris
+	 *  CreateDate: 2022/09/18
+	 * */
+	@Override
+	public CourseList getCourseListByCourseId(Integer courseId) {
+		// TODO Auto-generated method stub
+		
+		
+		CourseList courseList= null;
+
+		var sqlStr= "select courseList.* from course course join cour_List courseList on course.cour_list_id = courseList.cour_list_id where cour_id=?";
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(sqlStr);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setInt(1, courseId);
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+
+				courseList = new CourseList();
+
+				if (rs.next()) {
+					courseList.setCourseListId(rs.getInt("cour_list_id"));
+					courseList.setCourseName(rs.getString("cour_name"));
+					courseList.setCourseType(rs.getString("cour_type"));
+					courseList.setCourseMaxP(rs.getInt("max_p"));
+					courseList.setCourseIntro(rs.getString("intro"));
+					courseList.setCourseStatus(rs.getString("status"));
+				} 
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return courseList;
+		
+	}
+
 }

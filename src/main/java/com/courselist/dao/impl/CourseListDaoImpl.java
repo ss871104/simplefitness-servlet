@@ -1,4 +1,4 @@
-package com.courlist.dao.impl;
+package com.courselist.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,28 +12,27 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.courlist.dao.intf.CourListDaoIntf;
-import com.courlist.dao.sql.CourListDaoSQL;
-import com.courlist.vo.CourList;
-import com.course.vo.Course;
+import com.courselist.dao.intf.CourseListDaoIntf;
+import com.courselist.dao.sql.CourseListDaoSQL;
+import com.courselist.vo.CourseList;
 
-public class CourListDaoImpl implements CourListDaoIntf {
+public class CourseListDaoImpl implements CourseListDaoIntf {
 
 	private static DataSource ds = null;
-	private static CourListDaoSQL SQL = null;
+	private static CourseListDaoSQL SQL = null;
 
 	static {
 		try {
 			Context ctx = new InitialContext();
 			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Test");
-			SQL = new CourListDaoSQL();
+			SQL = new CourseListDaoSQL();
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public boolean insert(CourList courListVo) {
+	public boolean insert(CourseList courseListVo) {
 
 		int rowCount = 0;
 
@@ -41,11 +40,11 @@ public class CourListDaoImpl implements CourListDaoIntf {
 
 			System.out.println("連線成功");
 
-			pstmt.setString(1, courListVo.getCourName());
-			pstmt.setString(2, courListVo.getCourType());
-			pstmt.setInt(3, courListVo.getCourMaxP());
-			pstmt.setString(4, courListVo.getCourIntro());
-			pstmt.setString(5, courListVo.getCourStatus());
+			pstmt.setString(1, courseListVo.getCourseName());
+			pstmt.setString(2, courseListVo.getCourseType());
+			pstmt.setInt(3, courseListVo.getCourseMaxP());
+			pstmt.setString(4, courseListVo.getCourseIntro());
+			pstmt.setString(5, courseListVo.getCourseStatus());
 
 			rowCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -55,7 +54,7 @@ public class CourListDaoImpl implements CourListDaoIntf {
 	}
 
 	@Override
-	public boolean update(CourList courListVo) {
+	public boolean update(CourseList courseListVo) {
 
 		int rowCount = 0;
 
@@ -63,11 +62,11 @@ public class CourListDaoImpl implements CourListDaoIntf {
 
 			System.out.println("連線成功");
 
-			pstmt.setString(1, courListVo.getCourName());
-			pstmt.setString(2, courListVo.getCourType());
-			pstmt.setInt(3, courListVo.getCourMaxP());
-			pstmt.setString(4, courListVo.getCourIntro());
-			pstmt.setString(5, courListVo.getCourStatus());
+			pstmt.setString(1, courseListVo.getCourseName());
+			pstmt.setString(2, courseListVo.getCourseType());
+			pstmt.setInt(3, courseListVo.getCourseMaxP());
+			pstmt.setString(4, courseListVo.getCourseIntro());
+			pstmt.setString(5, courseListVo.getCourseStatus());
 
 			rowCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -77,7 +76,7 @@ public class CourListDaoImpl implements CourListDaoIntf {
 	}
 
 	@Override
-	public boolean delete(Integer courListId) {
+	public boolean delete(Integer courseListId) {
 
 		int rowCount = 0;
 
@@ -85,7 +84,7 @@ public class CourListDaoImpl implements CourListDaoIntf {
 
 			System.out.println("連線成功");
 
-			pstmt.setInt(1, courListId);
+			pstmt.setInt(1, courseListId);
 
 			rowCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -95,41 +94,41 @@ public class CourListDaoImpl implements CourListDaoIntf {
 	}
 
 	@Override
-	public CourList selectById(Integer courListId) {
+	public CourseList selectById(Integer courseListId) {
 
-		CourList courList = null;
+		CourseList courseList = null;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.SELECT_BY_ID);) {
 
 			System.out.println("連線成功");
 
-			pstmt.setInt(1, courListId);
+			pstmt.setInt(1, courseListId);
 
 			try (ResultSet rs = pstmt.executeQuery()) {
 
-				courList = new CourList();
+				courseList = new CourseList();
 
 				if (rs.next()) {
-					courList.setCourListId(rs.getInt("cour_list_id"));
-					courList.setCourName(rs.getString("cour_name"));
-					courList.setCourType(rs.getString("cour_type"));
-					courList.setCourMaxP(rs.getInt("max_p"));
-					courList.setCourIntro(rs.getString("intro"));
-					courList.setCourStatus(rs.getString("status"));
+					courseList.setCourseListId(rs.getInt("cour_list_id"));
+					courseList.setCourseName(rs.getString("cour_name"));
+					courseList.setCourseType(rs.getString("cour_type"));
+					courseList.setCourseMaxP(rs.getInt("max_p"));
+					courseList.setCourseIntro(rs.getString("intro"));
+					courseList.setCourseStatus(rs.getString("status"));
 
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return courList;
+		return courseList;
 	}
 
 	@Override
-	public List<CourList> selectAll() {
+	public List<CourseList> selectAll() {
 		
-		List<CourList> list = new ArrayList<CourList>();
-		CourList courList = null;
+		List<CourseList> list = new ArrayList<CourseList>();
+		CourseList courseList = null;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.SELECT_ALL);) {
 
@@ -138,14 +137,14 @@ public class CourListDaoImpl implements CourListDaoIntf {
 			try (ResultSet rs = pstmt.executeQuery()) {
 
 				while (rs.next()) {
-					courList = new CourList();
-					courList.setCourListId(rs.getInt("cour_list_id"));
-					courList.setCourName(rs.getString("cour_name"));
-					courList.setCourType(rs.getString("cour_type"));
-					courList.setCourMaxP(rs.getInt("max_p"));
-					courList.setCourIntro(rs.getString("intro"));
-					courList.setCourStatus(rs.getString("status"));
-					list.add(courList);
+					courseList = new CourseList();
+					courseList.setCourseListId(rs.getInt("cour_list_id"));
+					courseList.setCourseName(rs.getString("cour_name"));
+					courseList.setCourseType(rs.getString("cour_type"));
+					courseList.setCourseMaxP(rs.getInt("max_p"));
+					courseList.setCourseIntro(rs.getString("intro"));
+					courseList.setCourseStatus(rs.getString("status"));
+					list.add(courseList);
 				}
 			}
 		} catch (SQLException e) {

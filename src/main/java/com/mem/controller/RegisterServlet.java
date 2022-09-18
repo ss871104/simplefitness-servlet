@@ -10,8 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import static com.common.util.Constants.GSON;
 import com.mem.service.impl.MemServiceImpl;
 import com.mem.service.intf.MemServiceIntf;
 import com.mem.vo.Member;
@@ -20,7 +19,6 @@ import com.mem.vo.Member;
 public class RegisterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MemServiceIntf SERVICE = new MemServiceImpl();
-	private Gson gson = new GsonBuilder().create();
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -33,10 +31,10 @@ public class RegisterServlet extends HttpServlet {
 		
         BufferedReader br = request.getReader();
         String json = br.readLine();
-        Member member = gson.fromJson(json, Member.class);
+        Member member = GSON.fromJson(json, Member.class);
         
         PrintWriter pw = response.getWriter();
-        pw.print(gson.toJson(SERVICE.register(member)));
+        pw.print(GSON.toJson(SERVICE.register(member)));
 	}
 	
 	@Override

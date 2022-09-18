@@ -26,5 +26,7 @@ public class MemDaoSQL {
 	public static final String SELECT_FOR_PASS = "select mem_id, mem_name, nickname, username, phone, email, gender, birth, register_date, start_date, expire_date, last_login, status, pic, qr_code, current_login from mem where username = ? and email = ?;";
 	
 	public static final String UPDATE_LAST_LOGIN = "update mem set last_login = ?, current_login = ? where username = ?;";
+	
+	public static final String UPDATE_IMG = "update mem set pic = ? where mem_id = ?;";
 
 }

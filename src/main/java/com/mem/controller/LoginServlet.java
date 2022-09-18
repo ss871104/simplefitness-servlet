@@ -3,7 +3,6 @@ package com.mem.controller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDateTime;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -12,9 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.common.util.LocalDateTimeAdapter;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import static com.common.util.Constants.GSON;
 import com.mem.service.impl.MemServiceImpl;
 import com.mem.service.intf.MemServiceIntf;
 import com.mem.vo.Member;
@@ -23,9 +20,6 @@ import com.mem.vo.Member;
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MemServiceIntf SERVICE = new MemServiceImpl();
-	private Gson gson = new GsonBuilder()
-			.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
-			.create();
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -38,9 +32,10 @@ public class LoginServlet extends HttpServlet {
 		
         BufferedReader br = request.getReader();
         String json = br.readLine();
-        Member member = gson.fromJson(json, Member.class);
+        Member member = GSON.fromJson(json, Member.class);
         
         member = SERVICE.login(member);
+        member = SERVICE.getBase64(member);
         
 		if (member.isSuccessful()) {
 			if (request.getSession(false) != null) {
@@ -51,7 +46,7 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("member", member);
 		}
 		PrintWriter pw = response.getWriter();
-        pw.print(gson.toJson(member));
+        pw.print(GSON.toJson(member));
 	}
 	
 	@Override

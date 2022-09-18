@@ -29,6 +29,15 @@ public class Member extends Common {
 	private String memVerification;
 	private String memInputCode;
 	private LocalDateTime memCurrentLogin;
+	private String memPicBase64;
+
+	public String getMemPicBase64() {
+		return memPicBase64;
+	}
+
+	public void setMemPicBase64(String memPicBase64) {
+		this.memPicBase64 = memPicBase64;
+	}
 
 	public LocalDateTime getMemCurrentLogin() {
 		return memCurrentLogin;

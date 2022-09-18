@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import static com.common.util.Constants.GSON;
+import static com.common.util.Constants.BASE64;
 import com.mem.service.impl.MemServiceImpl;
 import com.mem.service.intf.MemServiceIntf;
 import com.mem.vo.Member;
@@ -21,7 +21,6 @@ import com.mem.vo.Member;
 public class EditServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private MemServiceIntf SERVICE = new MemServiceImpl();
-	private Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -38,7 +37,7 @@ public class EditServlet extends HttpServlet {
 		
 		BufferedReader br = request.getReader();
         String json = br.readLine();
-        Member member = gson.fromJson(json, Member.class);
+        Member member = GSON.fromJson(json, Member.class);
         member.setMemUsername(username);
         
 //        已有替代方案
@@ -51,16 +50,37 @@ public class EditServlet extends HttpServlet {
 //			member.setMemBirth(null);
 //		}
         
-        member = SERVICE.memEdit(member);
+        if (member.getMemPicBase64().equals("")) {
+        	member = SERVICE.memEdit(member);
+        } else {
+        	member = SERVICE.memEdit(member);
+        	member = SERVICE.updateImg(member);
+        }
         
         if (member.isSuccessful()) {
 			session.setAttribute("member", member);
 		}
         
         PrintWriter pw = response.getWriter();
-        pw.print(gson.toJson(member));
+        pw.print(GSON.toJson(member));
 		
 	}
+	
+//	@Override
+//	protected void doPut(HttpServletRequest request, HttpServletResponse response)
+//			throws ServletException, IOException {
+//
+//		setHeaders(response);
+//
+//		Member member = GSON.fromJson(request.getReader().readLine(), Member.class);
+//		System.out.println(member.getMemPic());
+//		System.out.println(member.getMemPicBase64());
+//
+//		response.getWriter().print(GSON.toJson(SERVICE.updateImg(member)));
+//		System.out.println(member.getMemPic());
+//		System.out.println(member.getMemPicBase64());
+//		
+//	}
 	
 	@Override
 	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

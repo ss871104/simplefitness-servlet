@@ -324,7 +324,7 @@ public class MemDaoImpl implements MemDaoIntf {
 			pstmt.setString(7, memVo.getMemUsername());
 			
 			rowCount = pstmt.executeUpdate();		
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return rowCount != 0;
@@ -408,6 +408,25 @@ public class MemDaoImpl implements MemDaoIntf {
 			pstmt.setString(3, memVo.getMemUsername());
 			
 			rowCount = pstmt.executeUpdate();	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rowCount != 0;
+	}
+	
+	@Override
+	public boolean updateImg(Member memVo) {
+		
+		int rowCount = 0;
+
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(UPDATE_IMG);) {
+			
+			System.out.println("連線成功");
+
+			pstmt.setBytes(1, memVo.getMemPic());
+			pstmt.setInt(2, memVo.getMemId());
+
+			rowCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -1,11 +1,22 @@
 (() => {
 	$('#myModal').on('shown.bs.modal', function() {
 		$('#myInput').trigger('focus')
-	})
-
+	});
+	
+	// GET session 出現資料庫資料
 	fetch("http://localhost:8080/simplefitness-servlet/session")
 		.then(resp => resp.json())
 		.then(member => {
+			if (member.memPicBase64 != null) {
+				document.querySelector('#profile-pic').innerHTML = `
+                <img src="${member.memPicBase64}">
+              `;
+			} else {
+				document.querySelector('#profile-pic').innerHTML = `
+				<img src="../../img/no-profile.jpeg"></img>
+				`;
+			}
+			console.log(document.querySelector('#profile-pic').innerHTML);
 			document.querySelector('#name').textContent = member.memName;
 			document.querySelector('#nickname').textContent = member.memNickname;
 			document.querySelector('#username').textContent = member.memUsername;
@@ -50,7 +61,32 @@
 		location = './change_pass.html';
 	});
 
+	// 彈窗選擇圖片的預覽圖片
+	window.addEventListener("load", function() {
+		var the_file_element = document.getElementById("pic");
+		the_file_element.addEventListener("change", function(e) {
 
+			var preview_pic = document.getElementById("preview-pic");
+			
+			preview_pic.innerHTML = ""; // 讓預覽圖消失
+
+			// 跑使用者選的檔案
+			let reader = new FileReader(); // 用來讀取檔案
+			reader.readAsDataURL(this.files[0]); // 讀取檔案
+			reader.addEventListener("load", function() {
+					console.log(reader.result);
+					let pic_html = `
+                <img src="${reader.result}">
+              `;
+			  		preview_pic.insertAdjacentHTML("beforeend", pic_html); // 加進節點
+					
+				});
+				
+		});
+		
+	});
+
+	// 編輯資料
 	const Mname = document.querySelector('#name-input');
 	const nickname = document.querySelector('#nickname-input');
 	const email = document.querySelector('#email-input');
@@ -59,6 +95,11 @@
 	const birth = document.querySelector('#birth-input');
 	const errMsg = document.querySelector('#errMsg');
 	document.getElementById('edit').addEventListener('click', () => {
+		let picBase64;
+		let preview_pic = document.querySelector('#preview-pic').innerHTML
+		let preview_pic2 = preview_pic.replace('<img src="', "");
+		picBase64 = preview_pic2.replace('">', "");
+		console.log(picBase64);
 		let selected_gender;
 		if (gender[0].checked == true) {
 			selected_gender = gender[0];
@@ -69,6 +110,7 @@
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
+				memPicBase64: picBase64.trim(),
 				memName: Mname.value,
 				memNickname: nickname.value,
 				memEmail: email.value,
@@ -82,7 +124,7 @@
 				errMsg.textContent = '';
 				const { successful, message } = body;
 				if (successful) {
-					location = './member_edit.html';
+					// location = './member_edit.html';
 				} else {
 					errMsg.textContent = message;
 				}

@@ -2,69 +2,75 @@ package com.coursebooking.service.impl;
 
 import java.util.List;
 
-import com.course.vo.Course;
-import com.courlist.vo.CourList;
+import com.courselist.vo.CourseList;
+import com.course.dao.impl.CourseDaoImpl;
+import com.course.dao.intf.CourseDaoIntf;
 import com.coursebooking.dao.impl.CourseBookingDaoImpl;
 import com.coursebooking.dao.intf.CourseBookingDaoIntf;
 import com.coursebooking.service.intf.CourseBookingServiceIntf;
 import com.coursebooking.vo.CourseBooking;
-import com.courlist.dao.impl.CourListDaoImpl;
-import com.courlist.dao.intf.CourListDaoIntf;
+import com.courselist.dao.intf.CourseListDaoIntf;
+import com.courselist.dao.impl.CourseListDaoImpl;
+
 public class CourseBookingServiceImpl implements CourseBookingServiceIntf {
 
-	private CourseBookingDaoIntf dao;
-	private CourListDaoIntf _courseListDao;
+	private CourseBookingDaoIntf _courseBookingDao;
+	private CourseListDaoIntf _courseListDao;
+	private CourseDaoIntf _courseDao;
 
 	public CourseBookingServiceImpl() {
-		dao = new CourseBookingDaoImpl();
-		_courseListDao = new CourListDaoImpl();
+		_courseBookingDao = new CourseBookingDaoImpl();
+		_courseListDao = new CourseListDaoImpl();
+		_courseDao = new CourseDaoImpl();
 	}
 
-	
 	@Override
-	public CourseBooking booking(CourseBooking coursebook) {
-		final CourseBooking booking=dao.selectById(coursebook.getCoursebookId());
+	public Boolean bookCourse(CourseBooking coursebook) {
+
+		// 取得人數上限
+		// 裝在 CourseList =>max_p
+
+		var courseList = _courseListDao.getCourseListByCourseId(coursebook.getCourseId());
+
+		// 取得目前預約人數
+		var courseBookedCount = _courseBookingDao.getcourseBookedCount(coursebook.getCourseId());
+		// 執行判斷
+		// 人數跟上限比較
+		// 人數>上限 => return false;
+		// else => 執行新增。 => return true ;
+		if (courseBookedCount >= courseList.getCourseMaxP()) {
+			return false;
+		}
+
+		var insertCourse = _courseBookingDao.insert(coursebook);
 		
-		return null;
-	}
-
-	@Override
-	public CourseBooking memCancel(CourseBooking coursebook) {
-		final CourseBooking mCancel=dao.selectById(coursebook.getCoursebookId());
-		coursebook.setCoursebookStatus(mCancel.getCoursebookStatus());
-//		if(dao.updateStatus) {
-//			return null;
-//		}
-		return null;
-	}
-	
-	
-	
-	@Override
-	public CourseBooking empCancel(CourseBooking coursebook) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public CourseBooking check(CourseBooking coursebook) {
+		if (insertCourse) {
+			return true;
+		}
+		return false;
 		
-		return null;
+
 	}
 
+	// todo :  cancelMemberCourse => cancelCourseByMemberId
+	// 呼叫Dao 執行update (Status="0")
+	// 回傳值(Boolean)
 	@Override
-	public List<CourseBooking> findAll() {
-		return dao.selectAll();
+	public Boolean cancelCourseByMemberId(CourseBooking coursebook) {
+//		var cancelCourse = _courseBookingDao.updateStatus(coursebook);
+//		if ("1".equals(cancelCourse))
+//			coursebook.setCoursebookStatus("0");
+		return true;
 	}
 
-
+	// todo: checkMemberBooking => checkBookingCourseByMemberId
+	// 呼叫Dao 取出該會員的預約清單(List)
+	// 回傳值(List<CourseBooking>)
 	@Override
-	public List<CourList> getCourseList(CourList courseType) {
-		// TODO Auto-generated method stub
+	public CourseBooking checkBookingCourseByMemberId(CourseBooking coursebook) {
+		var checkBooking = _courseBookingDao.selectByMemberId(coursebook.getMemId());
 		
-		return _courseListDao.selectAll();
+		return coursebook;
 	}
 
-	
 }

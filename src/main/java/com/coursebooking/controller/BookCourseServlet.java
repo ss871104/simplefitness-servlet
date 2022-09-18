@@ -10,18 +10,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.coursebooking.service.impl.CourseBookingServiceImpl;
 import com.coursebooking.service.intf.CourseBookingServiceIntf;
 import com.coursebooking.vo.CourseBooking;
-import com.courlist.vo.CourList;
+import com.courselist.vo.CourseList;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
-//這個地方是你路徑
-@WebServlet("/coachBooking/GetCourseList")
-public class GetCourseListServlet extends HttpServlet {
+@WebServlet("/courseBooking/BookCourse")
+public class BookCourseServlet extends HttpServlet{
+
 	private static final long serialVersionUID = 1L;
 	private CourseBookingServiceIntf _courseBookingService = new CourseBookingServiceImpl();
 	private Gson GSON = new GsonBuilder().create();
@@ -37,32 +36,16 @@ public class GetCourseListServlet extends HttpServlet {
 		
         BufferedReader br = request.getReader();
         String json = br.readLine();
-        
-        //notice
-        //命名不好 courseList=>courseType
-        //CourseList應該為CourseList的清單
-        //這種命名會模糊你的取直
-        
-        //Step.1
-        //這邊接入DB_CourseList值
-        //從JSon轉model後
-        //利用傳入值取出對應課程清單
-        //後面應用service使用多dao
-        
-        CourList courseType = GSON.fromJson(json, CourList.class);
-        
-        List<CourList> courseTypeList=_courseBookingService.getCourseList(courseType);
 
-//		if (member.isSuccessful()) {
-//			if (request.getSession(false) != null) {
-//				request.changeSessionId();
-//			}
-//			final HttpSession session = request.getSession();
-//			session.setAttribute("loggedin", true);
-//			session.setAttribute("member", member);
-//		}
+        //Step.1 接值
+        CourseBooking courseBooking = GSON.fromJson(json, CourseBooking.class);
+        
+        //Step.2 執行SVC
+        Boolean courseBookingResult=_courseBookingService.bookCourse(courseBooking);
+
+
 		PrintWriter pw = response.getWriter();
-        pw.print(GSON.toJson(courseTypeList));
+        pw.print(GSON.toJson(courseBookingResult));
 	}
 	
 	@Override

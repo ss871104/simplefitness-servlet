@@ -41,9 +41,9 @@ public class CoachDaoImpl implements CoachDaoIntf {
 			System.out.println("連線成功");
 
 			pstmt.setInt(1, coaVo.getEmpId());
-			pstmt.setDate(2, coaVo.getStartTime());
-			pstmt.setDate(3, coaVo.getEndTime());
-			pstmt.setDate(4, coaVo.getUploadTime());
+			pstmt.setTimestamp(2, coaVo.getStartTime());
+			pstmt.setTimestamp(3, coaVo.getEndTime());
+			pstmt.setTimestamp(4, coaVo.getUploadTime());
 			pstmt.setString(5, coaVo.getStatus());
 			pstmt.setString(6, coaVo.getPubStatus());
 
@@ -65,9 +65,9 @@ public class CoachDaoImpl implements CoachDaoIntf {
 			System.out.println("連線成功");
 
 			pstmt.setInt(1, coaVo.getEmpId());
-			pstmt.setDate(2, coaVo.getStartTime());
-			pstmt.setDate(3, coaVo.getEndTime());
-			pstmt.setDate(4, coaVo.getUploadTime());
+			pstmt.setTimestamp(2, coaVo.getStartTime());
+			pstmt.setTimestamp(3, coaVo.getEndTime());
+			pstmt.setTimestamp(4, coaVo.getUploadTime());
 			pstmt.setString(5, coaVo.getStatus());
 			pstmt.setString(6, coaVo.getPubStatus());
 
@@ -116,9 +116,9 @@ public class CoachDaoImpl implements CoachDaoIntf {
 				if (rs.next()) {
 					coa.setCoaId(rs.getInt("coa_id"));
 					coa.setEmpId(rs.getInt("emp_id"));
-					coa.setStartTime(rs.getDate("start_time"));
-					coa.setEndTime(rs.getDate("end_time"));
-					coa.setUploadTime(rs.getDate("upload_time"));
+					coa.setStartTime(rs.getTimestamp("start_time"));
+					coa.setEndTime(rs.getTimestamp("end_time"));
+					coa.setUploadTime(rs.getTimestamp("upload_time"));
 					coa.setStatus(rs.getString("status"));
 					coa.setPubStatus(rs.getString("public"));
 
@@ -147,9 +147,9 @@ public class CoachDaoImpl implements CoachDaoIntf {
 					coa = new Coach();
 					coa.setCoaId(rs.getInt("coa_id"));
 					coa.setEmpId(rs.getInt("emp_id"));
-					coa.setStartTime(rs.getDate("start_time"));
-					coa.setEndTime(rs.getDate("end_time"));
-					coa.setUploadTime(rs.getDate("upload_time"));
+					coa.setStartTime(rs.getTimestamp("start_time"));
+					coa.setEndTime(rs.getTimestamp("end_time"));
+					coa.setUploadTime(rs.getTimestamp("upload_time"));
 					coa.setStatus(rs.getString("status"));
 					coa.setPubStatus(rs.getString("public"));
 					list.add(coa);

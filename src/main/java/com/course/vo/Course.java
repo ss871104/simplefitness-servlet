@@ -1,28 +1,29 @@
 package com.course.vo;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import com.common.pojo.Common;
 
 public class Course extends Common {
-	private Integer courId;
+	
+	private static final long serialVersionUID = 1L;
+	private Integer courseId;
 	private Integer empId;
 	private Integer gymId;
-	private Integer courListId;
-	private Date startTime;
-	private Date endTime;
-	private Date uploadTime;
+	private Integer courseListId;
+	private Date courseDate;
+	private Timestamp startTime;
+	private Timestamp endTime;
+	private Timestamp uploadTime;
 	private String status;
 	private String pubStatus;
 	
-
-	
-	
-	public Integer getCourId() {
-		return courId;
+	public Integer getCourseId() {
+		return courseId;
 	}
-	public void setCourId(Integer courId) {
-		this.courId = courId;
+	public void setCourseId(Integer courseId) {
+		this.courseId = courseId;
 	}
 	public Integer getEmpId() {
 		return empId;
@@ -36,28 +37,34 @@ public class Course extends Common {
 	public void setGymId(Integer gymId) {
 		this.gymId = gymId;
 	}
-	public Integer getCourListId() {
-		return courListId;
+	public Integer getCourseListId() {
+		return courseListId;
 	}
-	public void setCourListId(Integer courListId) {
-		this.courListId = courListId;
+	public void setCourseListId(Integer courseListId) {
+		this.courseListId = courseListId;
 	}
-	public Date getStartTime() {
+	public Date getCourseDate() {
+		return courseDate;
+	}
+	public void setCourseDate(Date courseDate) {
+		this.courseDate = courseDate;
+	}
+	public Timestamp getStartTime() {
 		return startTime;
 	}
-	public void setStartTime(Date startTime) {
+	public void setStartTime(Timestamp startTime) {
 		this.startTime = startTime;
 	}
-	public Date getEndTime() {
+	public Timestamp getEndTime() {
 		return endTime;
 	}
-	public void setEndTime(Date endTime) {
+	public void setEndTime(Timestamp endTime) {
 		this.endTime = endTime;
 	}
-	public Date getUploadTime() {
+	public Timestamp getUploadTime() {
 		return uploadTime;
 	}
-	public void setUploadTime(Date uploadTime) {
+	public void setUploadTime(Timestamp uploadTime) {
 		this.uploadTime = uploadTime;
 	}
 	public String getStatus() {
@@ -72,7 +79,6 @@ public class Course extends Common {
 	public void setPubStatus(String pubStatus) {
 		this.pubStatus = pubStatus;
 	}
-	
 	
 	
 	

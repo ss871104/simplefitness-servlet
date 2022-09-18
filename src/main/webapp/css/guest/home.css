@@ -363,6 +363,9 @@ ul {
 .course_list>li a {
 	display: block;
 	text-decoration: none;
+	position: absolute;
+    bottom: 1em;
+    width: 89%;
 }
 
 .course_list>li a img {

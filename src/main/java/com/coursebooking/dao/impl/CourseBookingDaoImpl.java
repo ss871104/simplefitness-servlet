@@ -144,10 +144,10 @@ public class CourseBookingDaoImpl implements CourseBookingDaoIntf {
 	}
 
 	@Override
-	public CourseBooking selectByMem(Integer memId) {
+	public CourseBooking selectByMemberId(Integer memId) {
 		CourseBooking coursebook = null;
 
-		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.SELECT_BY_MEM);) {
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.SELECT_BY_MEMBER_ID);) {
 
 			System.out.println("連線成功");
 
@@ -190,6 +190,28 @@ public class CourseBookingDaoImpl implements CourseBookingDaoIntf {
 		return rowCount != 0;
 	}
 
-	
-	
+	@Override
+	public int getcourseBookedCount(Integer courseId) {
+		// TODO Auto-generated method stub
+
+		int courseBookedCount = 0;
+		var sqlStr = "SELECT count(cour_Id) as count FROM simple_fitness.cour_booking Where status='1' and cour_id=? Group by cour_id;";
+
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(sqlStr);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setInt(1, courseId);
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+				while (rs.next()) {
+					courseBookedCount = rs.getInt("count");
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return courseBookedCount;
+	}
+
 }

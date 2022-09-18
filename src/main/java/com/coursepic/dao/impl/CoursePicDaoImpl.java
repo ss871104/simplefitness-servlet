@@ -1,4 +1,4 @@
-package com.courpic.dao.impl;
+package com.coursepic.dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,35 +12,35 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.courpic.dao.intf.CourPicDaoIntf;
-import com.courpic.dao.sql.CourPicDaoSQL;
-import com.courpic.vo.CourPic;
+import com.coursepic.dao.intf.CoursePicDaoIntf;
+import com.coursepic.dao.sql.CoursePicDaoSQL;
+import com.coursepic.vo.CoursePic;
 
-public class CourPicDaoImpl implements CourPicDaoIntf {
+public class CoursePicDaoImpl implements CoursePicDaoIntf {
 
 	private static DataSource ds = null;
-	private static CourPicDaoSQL SQL = null;
+	private static CoursePicDaoSQL SQL = null;
 
 	static {
 		try {
 			Context ctx = new InitialContext();
 			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/Test");
-			SQL = new CourPicDaoSQL();
+			SQL = new CoursePicDaoSQL();
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
 	}
 
 	@Override
-	public boolean insert(CourPic courpicVo) {
+	public boolean insert(CoursePic coursepicVo) {
 		int rowCount = 0;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.INSERT);) {
 
 			System.out.println("連線成功");
 
-			pstmt.setInt(1, courpicVo.getCourlistId());
-			pstmt.setBytes(2, courpicVo.getCourPic());
+			pstmt.setInt(1, coursepicVo.getCourselistId());
+			pstmt.setBytes(2, coursepicVo.getCoursePic());
 
 			rowCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -50,16 +50,16 @@ public class CourPicDaoImpl implements CourPicDaoIntf {
 	}
 
 	@Override
-	public boolean update(CourPic courpicVo) {
+	public boolean update(CoursePic coursepicVo) {
 		int rowCount = 0;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.UPDATE);) {
 
 			System.out.println("連線成功");
 
-			pstmt.setInt(1, courpicVo.getCourlistId());
-			pstmt.setBytes(2, courpicVo.getCourPic());
-			pstmt.setInt(3, courpicVo.getCourpicId());
+			pstmt.setInt(1, coursepicVo.getCourselistId());
+			pstmt.setBytes(2, coursepicVo.getCoursePic());
+			pstmt.setInt(3, coursepicVo.getCoursepicId());
 
 			rowCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -69,14 +69,14 @@ public class CourPicDaoImpl implements CourPicDaoIntf {
 	}
 
 	@Override
-	public boolean delete(Integer courpicId) {
+	public boolean delete(Integer coursepicId) {
 		int rowCount = 0;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.DELETE);) {
 
 			System.out.println("連線成功");
 
-			pstmt.setInt(1, courpicId);
+			pstmt.setInt(1, coursepicId);
 
 			rowCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -86,36 +86,34 @@ public class CourPicDaoImpl implements CourPicDaoIntf {
 	}
 
 	@Override
-	public CourPic selectById(Integer courpicId) {
-		CourPic courpic = null;
+	public CoursePic selectById(Integer coursepicId) {
+		CoursePic coursepic = null;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.SELECT_BY_ID);) {
 
 			System.out.println("連線成功");
 
-			pstmt.setInt(1, courpicId);
+			pstmt.setInt(1, coursepicId);
 
 			try (ResultSet rs = pstmt.executeQuery()) {
 
-				courpic = new CourPic();
+				coursepic = new CoursePic();
 
 				while (rs.next()) {
-					courpic = new CourPic();
-					courpic.setCourpicId(rs.getInt("courpicId"));
-					courpic.setCourlistId(rs.getInt("courlistId"));
-					courpic.setCourPic(rs.getBytes("courPic"));
+					coursepic = new CoursePic();
+					coursepic.setCoursePic(rs.getBytes("coursePic"));
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return courpic;
+		return coursepic;
 	}
 
 	@Override
-	public List<CourPic> selectAll() {
-		List<CourPic> list = new ArrayList<CourPic>();
-		CourPic courpic = null;
+	public List<CoursePic> selectAll() {
+		List<CoursePic> list = new ArrayList<CoursePic>();
+		CoursePic coursepic = null;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.SELECT_ALL);) {
 
@@ -124,11 +122,11 @@ public class CourPicDaoImpl implements CourPicDaoIntf {
 			try (ResultSet rs = pstmt.executeQuery()) {
 
 				while (rs.next()) {
-					courpic = new CourPic();
-					courpic.setCourpicId(rs.getInt("courpicId"));
-					courpic.setCourlistId(rs.getInt("courlistId"));
-					courpic.setCourPic(rs.getBytes("courPic"));
-					list.add(courpic);
+					coursepic = new CoursePic();
+					coursepic.setCoursepicId(rs.getInt("coursepicId"));
+					coursepic.setCourselistId(rs.getInt("courselistId"));
+					coursepic.setCoursePic(rs.getBytes("coursePic"));
+					list.add(coursepic);
 				}
 			}
 		} catch (SQLException e) {

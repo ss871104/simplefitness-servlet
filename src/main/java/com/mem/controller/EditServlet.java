@@ -50,12 +50,11 @@ public class EditServlet extends HttpServlet {
 //			member.setMemBirth(null);
 //		}
         
-        if (member.getMemPicBase64().equals("")) {
-        	member = SERVICE.memEdit(member);
-        } else {
-        	member = SERVICE.memEdit(member);
+        
+        if (!member.getMemPicBase64().equals("")) {
         	member = SERVICE.updateImg(member);
-        }
+        } 
+        member = SERVICE.memEdit(member);
         
         if (member.isSuccessful()) {
 			session.setAttribute("member", member);

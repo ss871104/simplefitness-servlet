@@ -230,12 +230,12 @@ body {
 	float: right;
 }
 
-img.preview {
-	width: 150px;
-	height: auto;
-}
-
 #profile-pic img{
 	max-height: 300px;
 	max-width: 300px;
+}
+
+#preview-pic img{
+	max-height: 150px;
+	max-width: 150px;
 }

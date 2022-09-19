@@ -76,10 +76,9 @@
 			reader.addEventListener("load", function() {
 					console.log(reader.result);
 					let pic_html = `
-                <img src="${reader.result}">
+                <img src="${reader.result}" id="new-pic">
               `;
 			  		preview_pic.insertAdjacentHTML("beforeend", pic_html); // 加進節點
-					
 				});
 				
 		});
@@ -95,11 +94,13 @@
 	const birth = document.querySelector('#birth-input');
 	const errMsg = document.querySelector('#errMsg');
 	document.getElementById('edit').addEventListener('click', () => {
-		let picBase64;
-		let preview_pic = document.querySelector('#preview-pic').innerHTML
-		let preview_pic2 = preview_pic.replace('<img src="', "");
-		picBase64 = preview_pic2.replace('">', "");
-		console.log(picBase64);
+		let picBase64 = document.querySelector('#new-pic');
+		const preview_pic = document.querySelector('#preview-pic');
+		if (preview_pic.innerHTML == "") {
+			picBase64 = "";
+		} else {
+			picBase64 = picBase64.src;
+		}
 		let selected_gender;
 		if (gender[0].checked == true) {
 			selected_gender = gender[0];
@@ -110,7 +111,7 @@
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
-				memPicBase64: picBase64.trim(),
+				memPicBase64: picBase64,
 				memName: Mname.value,
 				memNickname: nickname.value,
 				memEmail: email.value,
@@ -124,7 +125,7 @@
 				errMsg.textContent = '';
 				const { successful, message } = body;
 				if (successful) {
-					// location = './member_edit.html';
+					location = './member_edit.html';
 				} else {
 					errMsg.textContent = message;
 				}

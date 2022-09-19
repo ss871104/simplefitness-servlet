@@ -1,10 +1,9 @@
 package com.mem.service.impl;
 
 import java.time.LocalDateTime;
-import java.util.Base64;
 import java.util.List;
 
-import static com.common.util.Constants.BASE64;
+import com.common.util.Base64Adapter;
 import com.common.util.JavaMailThread;
 import com.common.util.VerificationCode;
 import com.mem.dao.impl.MemDaoImpl;
@@ -15,8 +14,10 @@ import com.mem.vo.Member;
 public class MemServiceImpl implements MemServiceIntf {
 	
 	private MemDaoIntf dao;
+	private Base64Adapter base64;
 	public MemServiceImpl() {
 		dao = new MemDaoImpl();
+		base64 = new Base64Adapter();
 	}
 
 	@Override
@@ -104,6 +105,12 @@ public class MemServiceImpl implements MemServiceIntf {
 		// 更新資料庫上一次登入和這一次登入
 		dao.updateLastLogin(mem);
 		
+		// 圖片轉base64
+		if (mem.getMemPic() != null) {
+        	mem.setMemPicBase64(base64.Encoder(mem.getMemPic()));
+        	mem.setMemPic(null);
+        }
+		
 		mem.setSuccessful(true);
 		return mem;	
 	}
@@ -118,6 +125,11 @@ public class MemServiceImpl implements MemServiceIntf {
 		}
 		// 回會員編輯有完整session
 		mem = dao.selectByUsername(mem.getMemUsername());
+		
+		if (mem.getMemPic() != null) {
+        	mem.setMemPicBase64(base64.Encoder(mem.getMemPic()));
+        	mem.setMemPic(null);
+        }
 		
 		mem.setMessage("資料更改成功");
 		mem.setSuccessful(true);
@@ -260,25 +272,13 @@ public class MemServiceImpl implements MemServiceIntf {
 	
 	public Member updateImg(Member mem) {
 
-		mem.setMemPic(Base64.getDecoder().decode(mem.getMemPicBase64())); // 這個出事
+		mem.setMemPic(base64.Decoder(mem.getMemPicBase64()));
+		
 		if (dao.updateImg(mem) == false) {
 			mem.setSuccessful(false);
 			mem.setMessage("圖片更改出現錯誤，請聯絡管理員!");
 		}
-		// 回會員編輯有完整session
-		mem = dao.selectByUsername(mem.getMemUsername());
 		
-		mem.setMessage("資料更改成功");
-		mem.setSuccessful(true);
-		return mem;
-	}
-	
-	public Member getBase64(Member mem) {
-		var img = mem.getMemPic();
-		if (img != null) {
-			mem.setMemPicBase64(BASE64 + Base64.getEncoder().encodeToString(img));
-//			mem.setMemPic(null);
-		}
 		return mem;
 	}
 	

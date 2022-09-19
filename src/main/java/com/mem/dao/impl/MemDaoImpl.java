@@ -424,7 +424,7 @@ public class MemDaoImpl implements MemDaoIntf {
 			System.out.println("連線成功");
 
 			pstmt.setBytes(1, memVo.getMemPic());
-			pstmt.setInt(2, memVo.getMemId());
+			pstmt.setString(2, memVo.getMemUsername());
 
 			rowCount = pstmt.executeUpdate();
 		} catch (SQLException e) {

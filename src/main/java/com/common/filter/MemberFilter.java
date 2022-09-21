@@ -23,7 +23,6 @@ public class MemberFilter extends HttpFilter {
 		if (session.getAttribute("member") != null) {
 			chain.doFilter(req, res);
 		} else {
-			// TODO 登入頁
 			req.getRequestDispatcher("../guest/login.html").forward(req, res);
 		}
 	}

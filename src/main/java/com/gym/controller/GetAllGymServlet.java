@@ -1,9 +1,8 @@
 package com.gym.controller;
 
-import static com.common.util.Constants.GSON;
+import static com.common.util.GsonUtil.*;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -28,8 +27,7 @@ public class GetAllGymServlet extends HttpServlet {
 		
 		List<Gym> gym = SERVICE.findAll();
 		
-		PrintWriter pw = response.getWriter();
-        pw.print(GSON.toJson(gym));
+		writePojo2Json(response, gym);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

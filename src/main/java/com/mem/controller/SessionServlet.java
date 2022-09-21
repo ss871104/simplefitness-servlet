@@ -18,14 +18,20 @@ public class SessionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		setHeaders(response);
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		
 		HttpSession session = request.getSession();
 		Member member =  (Member) session.getAttribute("member");
-		setHeaders(response);
+		
 		PrintWriter pw = response.getWriter();
         pw.print(GSON.toJson(member));
+	}
+	
+	@Override
+	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		setHeaders(response);
 	}
 	
 	private void setHeaders(HttpServletResponse response) {

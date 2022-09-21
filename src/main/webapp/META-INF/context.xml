@@ -2,14 +2,15 @@
 <!DOCTYPE xml>
 <Context>
 
-    <Resource auth="Container" name="jdbc/Test" type="javax.sql.DataSource"
-        url="jdbc:mysql://localhost:3306/simple_fitness?serverTimezone=Asia/Taipei"
+    <Resource name="jdbc/Test" type="javax.sql.DataSource"
+    	driverClassName="com.mysql.cj.jdbc.Driver"
+        jdbcUrl="jdbc:mysql://localhost:3306/simple_fitness"
         username="root"
         password="password"
-        driverClassName="com.mysql.cj.jdbc.Driver"
-        maxActive="8"
-      	maxIdle="4"
-      	maxWait="5000"
+        factory="com.zaxxer.hikari.HikariJNDIFactory"
+        minimumIdle="5"
+		maximumPoolSize="10"
+		connectionTimeout="30000"
     />
 
 </Context>

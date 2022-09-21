@@ -20,7 +20,7 @@
 				const { successful, message } = body;
 				if (successful) {
 					window.alert("驗證碼已寄出，請至信箱查詢！點擊確認跳轉至驗證碼頁面");
-					location = './verifivation.html';
+					location = './verification.html';
 				} else {
 					errMsg.textContent = message;
 				}

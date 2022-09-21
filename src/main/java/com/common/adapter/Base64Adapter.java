@@ -1,4 +1,4 @@
-package com.common.util;
+package com.common.adapter;
 
 import static com.common.util.Constants.BASE64;
 

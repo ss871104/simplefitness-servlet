@@ -1,5 +1,7 @@
 package com.mem.controller;
 
+import static com.common.util.Constants.GSON;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,9 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import static com.common.util.Constants.GSON;
-import com.common.util.JavaMail;
-import com.common.util.VerificationCode;
 import com.mem.service.impl.MemServiceImpl;
 import com.mem.service.intf.MemServiceIntf;
 import com.mem.vo.Member;

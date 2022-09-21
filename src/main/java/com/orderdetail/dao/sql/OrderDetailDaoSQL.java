@@ -1,6 +1,6 @@
-package com.ordetail.dao.sql;
+package com.orderdetail.dao.sql;
 
-public class OrDetailDaoSQL {
+public class OrderDetailDaoSQL {
 	public static final String INSERT =
 			"insert into order_detail (order_id, idv_id, status) values (?, ?, ?)";
 	public static final String SELECT_ALL = 

@@ -19,6 +19,10 @@ public class MemberFilter extends HttpFilter {
 
 	@Override
 	protected void doFilter(HttpServletRequest req, HttpServletResponse res, FilterChain chain) throws IOException, ServletException {
+		res.addHeader("Cache-Control", "no-cache,no-store,private,must-revalidate,max-stale=0,post-check=0,pre-check=0"); 
+		res.addHeader("Pragma", "no-cache"); 
+		res.addDateHeader ("Expires", 0);
+		
 		final HttpSession session = req.getSession();
 		if (session.getAttribute("member") != null) {
 			chain.doFilter(req, res);

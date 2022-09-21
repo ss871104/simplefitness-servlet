@@ -7,7 +7,7 @@
 	var gymId = sessionStorage.getItem('gym');
 	gymId = parseInt(gymId);
 	console.log(gymId);
-	fetch("http://localhost:8080/simplefitness-servlet/gym/selectById", {
+	fetch("http://localhost:8080/simplefitness-servlet/gym/getGymById", {
 	method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({

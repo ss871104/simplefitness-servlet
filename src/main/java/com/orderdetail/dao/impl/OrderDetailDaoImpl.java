@@ -1,6 +1,6 @@
-package com.ordetail.dao.impl;
+package com.orderdetail.dao.impl;
 
-import static com.ordetail.dao.sql.OrDetailDaoSQL.*;
+import static com.orderdetail.dao.sql.OrderDetailDaoSQL.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,10 +14,10 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.ordetail.dao.intf.OrDetailDaoIntf;
-import com.ordetail.vo.OrDetail;
+import com.orderdetail.dao.intf.OrderDetailDaoIntf;
+import com.orderdetail.vo.OrderDetail;
 
-public class OrDetailDaoImpl implements OrDetailDaoIntf {
+public class OrderDetailDaoImpl implements OrderDetailDaoIntf {
 
 	private static DataSource ds = null;
 
@@ -31,16 +31,16 @@ public class OrDetailDaoImpl implements OrDetailDaoIntf {
 	}
 
 	@Override
-	public boolean insert(OrDetail ordetailVo) {
+	public boolean insert(OrderDetail orderDetailVo) {
 		int rowCount = 0;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(INSERT);) {
 
 			System.out.println("連線成功");
 
-			pstmt.setInt(1, ordetailVo.getOrderId());
-			pstmt.setInt(2, ordetailVo.getIdvId());
-			pstmt.setString(3, ordetailVo.getStatus());
+			pstmt.setInt(1, orderDetailVo.getOrderId());
+			pstmt.setInt(2, orderDetailVo.getIdvId());
+			pstmt.setString(3, orderDetailVo.getStatus());
 
 			rowCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -50,7 +50,7 @@ public class OrDetailDaoImpl implements OrDetailDaoIntf {
 	}
 
 	@Override
-	public boolean update(OrDetail vo) {
+	public boolean update(OrderDetail vo) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -62,9 +62,9 @@ public class OrDetailDaoImpl implements OrDetailDaoIntf {
 	}
 
 	@Override
-	public List<OrDetail> selectAll() {
-		List<OrDetail> list = new ArrayList<OrDetail>();
-		OrDetail ordetail = null;
+	public List<OrderDetail> selectAll() {
+		List<OrderDetail> list = new ArrayList<OrderDetail>();
+		OrderDetail orderdetail = null;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SELECT_ALL);) {
 
@@ -73,14 +73,14 @@ public class OrDetailDaoImpl implements OrDetailDaoIntf {
 			try (ResultSet rs = pstmt.executeQuery()) {
 
 				while (rs.next()) {
-					ordetail = new OrDetail();
-					ordetail.setOrderCode(rs.getInt("order_code"));
-					ordetail.setOrderId(rs.getInt("order_id"));
-					ordetail.setIdvId(rs.getInt("idv_id"));
-					ordetail.setPickupTime(rs.getTimestamp("pickup_time"));
-					ordetail.setReturnTime(rs.getTimestamp("return_time"));
-					ordetail.setStatus(rs.getString("status"));
-					list.add(ordetail);
+					orderdetail = new OrderDetail();
+					orderdetail.setOrderCode(rs.getInt("order_code"));
+					orderdetail.setOrderId(rs.getInt("order_id"));
+					orderdetail.setIdvId(rs.getInt("idv_id"));
+					orderdetail.setPickupTime(rs.getTimestamp("pickup_time"));
+					orderdetail.setReturnTime(rs.getTimestamp("return_time"));
+					orderdetail.setStatus(rs.getString("status"));
+					list.add(orderdetail);
 				}
 			}
 		} catch (SQLException e) {
@@ -91,8 +91,8 @@ public class OrDetailDaoImpl implements OrDetailDaoIntf {
 	}
 
 	@Override
-	public OrDetail selectById(Integer orderCode) {
-		OrDetail ordetail = null;
+	public OrderDetail selectById(Integer orderCode) {
+		OrderDetail orderdetail = null;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SELECT_BY_ID);) {
 
@@ -103,24 +103,24 @@ public class OrDetailDaoImpl implements OrDetailDaoIntf {
 			try (ResultSet rs = pstmt.executeQuery()) {
 
 				if (rs.next()) {
-					ordetail = new OrDetail();
-					ordetail.setOrderCode(rs.getInt("order_code"));
-					ordetail.setOrderId(rs.getInt("order_id"));
-					ordetail.setIdvId(rs.getInt("idv_id"));
-					ordetail.setPickupTime(rs.getTimestamp("pickup_time"));
-					ordetail.setReturnTime(rs.getTimestamp("return_time"));
-					ordetail.setStatus(rs.getString("status"));
+					orderdetail = new OrderDetail();
+					orderdetail.setOrderCode(rs.getInt("order_code"));
+					orderdetail.setOrderId(rs.getInt("order_id"));
+					orderdetail.setIdvId(rs.getInt("idv_id"));
+					orderdetail.setPickupTime(rs.getTimestamp("pickup_time"));
+					orderdetail.setReturnTime(rs.getTimestamp("return_time"));
+					orderdetail.setStatus(rs.getString("status"));
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return ordetail;
+		return orderdetail;
 	}
 
 	@Override
-	public OrDetail SelectByOrderId(Integer orderId) {
-		OrDetail ordetail = null;
+	public OrderDetail SelectByOrderId(Integer orderId) {
+		OrderDetail orderdetail = null;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SELECT_BY_ORDERID);) {
 
@@ -131,31 +131,31 @@ public class OrDetailDaoImpl implements OrDetailDaoIntf {
 			try (ResultSet rs = pstmt.executeQuery()) {
 
 				if (rs.next()) {
-					ordetail = new OrDetail();
-					ordetail.setOrderCode(rs.getInt("order_code"));
-					ordetail.setOrderId(rs.getInt("order_id"));
-					ordetail.setIdvId(rs.getInt("idv_id"));
-					ordetail.setPickupTime(rs.getTimestamp("pickup_time"));
-					ordetail.setReturnTime(rs.getTimestamp("return_time"));
-					ordetail.setStatus(rs.getString("status"));
+					orderdetail = new OrderDetail();
+					orderdetail.setOrderCode(rs.getInt("order_code"));
+					orderdetail.setOrderId(rs.getInt("order_id"));
+					orderdetail.setIdvId(rs.getInt("idv_id"));
+					orderdetail.setPickupTime(rs.getTimestamp("pickup_time"));
+					orderdetail.setReturnTime(rs.getTimestamp("return_time"));
+					orderdetail.setStatus(rs.getString("status"));
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return ordetail;
+		return orderdetail;
 	}
 
 	@Override
-	public boolean UpdateStatus(OrDetail ordetailVo) {
+	public boolean UpdateStatus(OrderDetail orderDetailVo) {
 		int rowCount = 0;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(UPDATE_STATUS);) {
 
 			System.out.println("連線成功");
 
-			pstmt.setString(1, ordetailVo.getStatus());
-			pstmt.setInt(2, ordetailVo.getOrderCode());
+			pstmt.setString(1, orderDetailVo.getStatus());
+			pstmt.setInt(2, orderDetailVo.getOrderCode());
 
 			rowCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -165,16 +165,16 @@ public class OrDetailDaoImpl implements OrDetailDaoIntf {
 	}
 
 	@Override
-	public boolean UpdatePickup(OrDetail ordetailVo) {
+	public boolean UpdatePickup(OrderDetail orderDetailVo) {
 		int rowCount = 0;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(UPDATE_PICKUP);) {
 
 			System.out.println("連線成功");
 
-			pstmt.setTimestamp(1, ordetailVo.getPickupTime());
-			pstmt.setString(2, ordetailVo.getStatus());
-			pstmt.setInt(3, ordetailVo.getOrderCode());
+			pstmt.setTimestamp(1, orderDetailVo.getPickupTime());
+			pstmt.setString(2, orderDetailVo.getStatus());
+			pstmt.setInt(3, orderDetailVo.getOrderCode());
 
 			rowCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -184,16 +184,16 @@ public class OrDetailDaoImpl implements OrDetailDaoIntf {
 	}
 
 	@Override
-	public boolean UpdateReturn(OrDetail ordetailVo) {
+	public boolean UpdateReturn(OrderDetail orderDetailVo) {
 		int rowCount = 0;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(UPDATE_RETURN);) {
 
 			System.out.println("連線成功");
 
-			pstmt.setTimestamp(1, ordetailVo.getReturnTime());
-			pstmt.setString(2, ordetailVo.getStatus());
-			pstmt.setInt(3, ordetailVo.getOrderCode());
+			pstmt.setTimestamp(1, orderDetailVo.getReturnTime());
+			pstmt.setString(2, orderDetailVo.getStatus());
+			pstmt.setInt(3, orderDetailVo.getOrderCode());
 
 			rowCount = pstmt.executeUpdate();
 		} catch (SQLException e) {

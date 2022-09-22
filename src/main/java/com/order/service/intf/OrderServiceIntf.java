@@ -6,4 +6,4 @@ import com.order.vo.Order;
 
 public interface OrderServiceIntf {
 	List<Order> findAll();
-}
+	}

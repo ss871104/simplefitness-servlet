@@ -42,7 +42,7 @@ public class OrderDaoImpl implements OrderDaoIntf {
 			pstmt.setInt(1, orderVo.getMemId());
 			pstmt.setInt(2, orderVo.getGymId());
 			pstmt.setInt(3, orderVo.getAmount());
-			pstmt.setObject(4, orderVo.getOrderTime());
+			pstmt.setTimestamp(4, orderVo.getOrderTime());
 			pstmt.setString(5, orderVo.getStatus());
 
 			rowCount = pstmt.executeUpdate();

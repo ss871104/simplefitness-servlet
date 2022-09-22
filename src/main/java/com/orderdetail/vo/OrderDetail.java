@@ -1,9 +1,9 @@
-package com.ordetail.vo;
+package com.orderdetail.vo;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class OrDetail implements Serializable{
+public class OrderDetail implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private Integer orderCode;
@@ -13,7 +13,7 @@ public class OrDetail implements Serializable{
 	private Timestamp returnTime;
 	private String status;
 	
-	public OrDetail(Integer orderCode, Integer orderId, Integer idvId, Timestamp pickupTime, Timestamp returnTime,
+	public OrderDetail(Integer orderCode, Integer orderId, Integer idvId, Timestamp pickupTime, Timestamp returnTime,
 			String status) {
 		super();
 		this.orderCode = orderCode;
@@ -24,8 +24,7 @@ public class OrDetail implements Serializable{
 		this.status = status;
 	}
 
-	public OrDetail() {
-		// TODO Auto-generated constructor stub
+	public OrderDetail() {
 	}
 
 	public Integer getOrderCode() {

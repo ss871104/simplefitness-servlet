@@ -20,4 +20,8 @@ public class OrderServiceImpl implements OrderServiceIntf {
 		return dao.selectAll();
 	}
 
+	
+	
+	
+
 }

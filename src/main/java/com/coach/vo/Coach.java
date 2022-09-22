@@ -1,7 +1,6 @@
 package com.coach.vo;
 
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import com.common.pojo.Common;
 
@@ -10,9 +9,9 @@ public class Coach extends Common {
 	
 	private Integer coaId;
 	private Integer empId;
-	private Timestamp startTime;
-	private Timestamp endTime;
-	private Timestamp uploadTime;
+	private LocalDateTime startTime;
+	private LocalDateTime endTime;
+	private LocalDateTime uploadTime;
 	private String status;
 	private String pubStatus;
 	
@@ -28,23 +27,23 @@ public class Coach extends Common {
 	}
 	public void setEmpId(Integer empId) {
 		this.empId = empId;
-	}
-	public Timestamp getStartTime() {
+	}	
+	public LocalDateTime getStartTime() {
 		return startTime;
 	}
-	public void setStartTime(Timestamp startTime) {
+	public void setStartTime(LocalDateTime startTime) {
 		this.startTime = startTime;
 	}
-	public Timestamp getEndTime() {
+	public LocalDateTime getEndTime() {
 		return endTime;
 	}
-	public void setEndTime(Timestamp endTime) {
+	public void setEndTime(LocalDateTime endTime) {
 		this.endTime = endTime;
 	}
-	public Timestamp getUploadTime() {
+	public LocalDateTime getUploadTime() {
 		return uploadTime;
 	}
-	public void setUploadTime(Timestamp uploadTime) {
+	public void setUploadTime(LocalDateTime uploadTime) {
 		this.uploadTime = uploadTime;
 	}
 	public String getStatus() {

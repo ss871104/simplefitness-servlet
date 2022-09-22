@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,9 +107,9 @@ public class CoachBookingDaoImpl implements CoachBookingDaoIntf {
 					coachbook.setCoachbookId(rs.getInt("coa_book_id"));
 					coachbook.setMemId(rs.getInt("mem_id"));
 					coachbook.setCoachId(rs.getInt("coa_id"));
-					coachbook.setCoachbookTime(rs.getTimestamp("booking_time"));
+					coachbook.setCoachbookTime(rs.getObject("booking_time",LocalDateTime.class));
 					coachbook.setCoachbookStatus(rs.getString("status"));
-					coachbook.setCheckTime(rs.getTimestamp("check_time"));
+					coachbook.setCheckTime(rs.getObject("check_time",LocalDateTime.class));
 				}
 			}
 		} catch (SQLException e) {
@@ -133,9 +134,9 @@ public class CoachBookingDaoImpl implements CoachBookingDaoIntf {
 					coachbook.setCoachbookId(rs.getInt("coa_book_id"));
 					coachbook.setMemId(rs.getInt("mem_id"));
 					coachbook.setCoachId(rs.getInt("coa_id"));
-					coachbook.setCoachbookTime(rs.getTimestamp("booking_time"));
+					coachbook.setCoachbookTime(rs.getObject("booking_time",LocalDateTime.class));
 					coachbook.setCoachbookStatus(rs.getString("status"));
-					coachbook.setCheckTime(rs.getTimestamp("check_time"));
+					coachbook.setCheckTime(rs.getObject("check_time",LocalDateTime.class));
 					list.add(coachbook);	
 				}
 			}

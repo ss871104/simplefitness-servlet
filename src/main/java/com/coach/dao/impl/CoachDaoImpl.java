@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,9 +42,9 @@ public class CoachDaoImpl implements CoachDaoIntf {
 			System.out.println("連線成功");
 
 			pstmt.setInt(1, coaVo.getEmpId());
-			pstmt.setTimestamp(2, coaVo.getStartTime());
-			pstmt.setTimestamp(3, coaVo.getEndTime());
-			pstmt.setTimestamp(4, coaVo.getUploadTime());
+			pstmt.setObject(2, coaVo.getStartTime());
+			pstmt.setObject(3, coaVo.getEndTime());
+			pstmt.setObject(4, coaVo.getUploadTime());
 			pstmt.setString(5, coaVo.getStatus());
 			pstmt.setString(6, coaVo.getPubStatus());
 
@@ -65,9 +66,9 @@ public class CoachDaoImpl implements CoachDaoIntf {
 			System.out.println("連線成功");
 
 			pstmt.setInt(1, coaVo.getEmpId());
-			pstmt.setTimestamp(2, coaVo.getStartTime());
-			pstmt.setTimestamp(3, coaVo.getEndTime());
-			pstmt.setTimestamp(4, coaVo.getUploadTime());
+			pstmt.setObject(2, coaVo.getStartTime());
+			pstmt.setObject(3, coaVo.getEndTime());
+			pstmt.setObject(4, coaVo.getUploadTime());
 			pstmt.setString(5, coaVo.getStatus());
 			pstmt.setString(6, coaVo.getPubStatus());
 
@@ -116,9 +117,9 @@ public class CoachDaoImpl implements CoachDaoIntf {
 				if (rs.next()) {
 					coa.setCoaId(rs.getInt("coa_id"));
 					coa.setEmpId(rs.getInt("emp_id"));
-					coa.setStartTime(rs.getTimestamp("start_time"));
-					coa.setEndTime(rs.getTimestamp("end_time"));
-					coa.setUploadTime(rs.getTimestamp("upload_time"));
+					coa.setStartTime(rs.getObject("start_time",LocalDateTime.class));
+					coa.setEndTime(rs.getObject("end_time",LocalDateTime.class));
+					coa.setUploadTime(rs.getObject("upload_time",LocalDateTime.class));
 					coa.setStatus(rs.getString("status"));
 					coa.setPubStatus(rs.getString("public"));
 
@@ -147,9 +148,9 @@ public class CoachDaoImpl implements CoachDaoIntf {
 					coa = new Coach();
 					coa.setCoaId(rs.getInt("coa_id"));
 					coa.setEmpId(rs.getInt("emp_id"));
-					coa.setStartTime(rs.getTimestamp("start_time"));
-					coa.setEndTime(rs.getTimestamp("end_time"));
-					coa.setUploadTime(rs.getTimestamp("upload_time"));
+					coa.setStartTime(rs.getObject("start_time",LocalDateTime.class));
+					coa.setEndTime(rs.getObject("end_time",LocalDateTime.class));
+					coa.setUploadTime(rs.getObject("upload_time",LocalDateTime.class));
 					coa.setStatus(rs.getString("status"));
 					coa.setPubStatus(rs.getString("public"));
 					list.add(coa);

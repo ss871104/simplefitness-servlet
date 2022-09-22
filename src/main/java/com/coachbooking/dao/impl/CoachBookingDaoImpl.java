@@ -103,12 +103,12 @@ public class CoachBookingDaoImpl implements CoachBookingDaoIntf {
 
 				while (rs.next()) {
 					coachbook = new CoachBooking();
-					coachbook.setCoachbookId(rs.getInt("coachbookId"));
-					coachbook.setMemId(rs.getInt("memId"));
-					coachbook.setCoachId(rs.getInt("coachId"));
-					coachbook.setCoachbookTime(rs.getTimestamp("coachbookTime"));
-					coachbook.setCoachbookStatus(rs.getString("coachbookStatus"));
-					coachbook.setCheckTime(rs.getTimestamp("checkTime"));
+					coachbook.setCoachbookId(rs.getInt("coa_book_id"));
+					coachbook.setMemId(rs.getInt("mem_id"));
+					coachbook.setCoachId(rs.getInt("coa_id"));
+					coachbook.setCoachbookTime(rs.getTimestamp("booking_time"));
+					coachbook.setCoachbookStatus(rs.getString("status"));
+					coachbook.setCheckTime(rs.getTimestamp("check_time"));
 				}
 			}
 		} catch (SQLException e) {
@@ -130,12 +130,12 @@ public class CoachBookingDaoImpl implements CoachBookingDaoIntf {
 				
 				while (rs.next()) {
 					coachbook = new CoachBooking();
-					coachbook.setCoachbookId(rs.getInt("coachbookId"));
-					coachbook.setMemId(rs.getInt("memId"));
-					coachbook.setCoachId(rs.getInt("coachId"));
-					coachbook.setCoachbookTime(rs.getTimestamp("coachbookTime"));
-					coachbook.setCoachbookStatus(rs.getString("coachbookStatus"));
-					coachbook.setCheckTime(rs.getTimestamp("checkTime"));
+					coachbook.setCoachbookId(rs.getInt("coa_book_id"));
+					coachbook.setMemId(rs.getInt("mem_id"));
+					coachbook.setCoachId(rs.getInt("coa_id"));
+					coachbook.setCoachbookTime(rs.getTimestamp("booking_time"));
+					coachbook.setCoachbookStatus(rs.getString("status"));
+					coachbook.setCheckTime(rs.getTimestamp("check_time"));
 					list.add(coachbook);	
 				}
 			}

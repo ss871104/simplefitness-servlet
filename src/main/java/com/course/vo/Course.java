@@ -1,7 +1,6 @@
 package com.course.vo;
 
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import com.common.pojo.Common;
 
@@ -12,12 +11,12 @@ public class Course extends Common {
 	private Integer empId;
 	private Integer gymId;
 	private Integer courseListId;
-	private Date courseDate;
-	private Timestamp startTime;
-	private Timestamp endTime;
-	private Timestamp uploadTime;
+	private LocalDateTime startTime;
+	private LocalDateTime endTime;
+	private LocalDateTime uploadTime;
 	private String status;
 	private String pubStatus;
+	private String courseName;
 	
 	public Integer getCourseId() {
 		return courseId;
@@ -43,28 +42,22 @@ public class Course extends Common {
 	public void setCourseListId(Integer courseListId) {
 		this.courseListId = courseListId;
 	}
-	public Date getCourseDate() {
-		return courseDate;
-	}
-	public void setCourseDate(Date courseDate) {
-		this.courseDate = courseDate;
-	}
-	public Timestamp getStartTime() {
+	public LocalDateTime getStartTime() {
 		return startTime;
 	}
-	public void setStartTime(Timestamp startTime) {
+	public void setStartTime(LocalDateTime startTime) {
 		this.startTime = startTime;
 	}
-	public Timestamp getEndTime() {
+	public LocalDateTime getEndTime() {
 		return endTime;
 	}
-	public void setEndTime(Timestamp endTime) {
+	public void setEndTime(LocalDateTime endTime) {
 		this.endTime = endTime;
 	}
-	public Timestamp getUploadTime() {
+	public LocalDateTime getUploadTime() {
 		return uploadTime;
 	}
-	public void setUploadTime(Timestamp uploadTime) {
+	public void setUploadTime(LocalDateTime uploadTime) {
 		this.uploadTime = uploadTime;
 	}
 	public String getStatus() {
@@ -78,6 +71,12 @@ public class Course extends Common {
 	}
 	public void setPubStatus(String pubStatus) {
 		this.pubStatus = pubStatus;
+	}
+	public String getCourseName() {
+		return courseName;
+	}
+	public void setCourseName(String courseName) {
+		this.courseName = courseName;
 	}
 	
 	

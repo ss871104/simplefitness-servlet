@@ -25,13 +25,38 @@ public class GymDaoImpl implements GymDaoIntf {
 
 	@Override
 	public boolean update(Gym gym) {
-		// TODO Auto-generated method stub
-		return false;
+		final StringBuilder hql = new StringBuilder()
+				.append("UPDATE Gym SET ");
+			hql.append("gym_name = :gymName,")
+				.append("address = :address,")
+				.append("phone = :phone,")
+				.append("open_date = :openDate, ")
+				.append("open_time = :openTime, ")
+				.append("close_time = :closeTime, ")
+				.append("max_p = :maxPeople, ")
+				.append("intro = :intro ")
+				.append("where gym_id = :gymId");
+
+			Query<?> query = getSession().createQuery(hql.toString());
+			return query
+					.setParameter("gymName", gym.getGymName())
+					.setParameter("address", gym.getAddress())
+					.setParameter("phone", gym.getPhone())
+					.setParameter("openDate", gym.getOpenDate())
+					.setParameter("openTime", gym.getOpenTime())
+					.setParameter("closeTime", gym.getCloseTime())
+					.setParameter("maxPeople", gym.getMaxPeople())
+					.setParameter("intro", gym.getIntro())
+					.setParameter("gymId", gym.getGymId())
+					.executeUpdate() > 0;
 	}
 
 	@Override
 	public Gym selectById(Integer id) {
-		return getSession().load(Gym.class, id);
+		Query<Gym> query = getSession().createQuery("FROM Gym WHERE gym_id = :gymId", Gym.class);
+		query.setParameter("gymId", id);
+		Gym gym = query.uniqueResult();
+		return gym;
 	}
 
 	@Override

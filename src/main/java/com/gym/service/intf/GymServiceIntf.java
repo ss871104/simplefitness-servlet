@@ -11,6 +11,8 @@ public interface GymServiceIntf extends CommonServiceHibernate{
 	
 	Gym edit(Gym gym);
 	
+	Gym findById(Gym gym);
+	
 	List<Gym> findAll();
 	
 }

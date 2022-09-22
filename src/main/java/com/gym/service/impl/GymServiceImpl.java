@@ -77,8 +77,70 @@ public class GymServiceImpl implements GymServiceIntf{
 
 	@Override
 	public Gym edit(Gym gym) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			if (gym.getGymName().isEmpty()) {
+				gym.setMessage("健身房名稱未輸入");
+				gym.setSuccessful(false);
+				return gym;
+			}
+			if (gym.getAddress().isEmpty()) {
+				gym.setMessage("健身房地址未輸入");
+				gym.setSuccessful(false);
+				return gym;
+			}
+			if (gym.getPhone().isEmpty()) {
+				gym.setMessage("電話號碼未輸入");
+				gym.setSuccessful(false);
+				return gym;
+			}
+			if (gym.getOpenDate() == null) {
+				gym.setMessage("開幕日未輸入");
+				gym.setSuccessful(false);
+				return gym;
+			}
+			if (gym.getOpenTime() == null) {
+				gym.setMessage("開門時間未輸入");
+				gym.setSuccessful(false);
+				return gym;
+			}
+			if (gym.getCloseTime() == null) {
+				gym.setMessage("關門時間未輸入");
+				gym.setSuccessful(false);
+				return gym;
+			}
+			if (gym.getMaxPeople() == null) {
+				gym.setMessage("人數上限未輸入");
+				gym.setSuccessful(false);
+				return gym;
+			}
+			if (gym.getIntro().isEmpty()) {
+				gym.setMessage("健身房介紹未輸入");
+				gym.setSuccessful(false);
+				return gym;
+			}
+			if (dao.update(gym) == false) {
+				gym.setMessage("新增發生錯誤!");
+				gym.setSuccessful(false);
+				return gym;
+			}
+			gym.setMessage("編輯成功");
+			gym.setSuccessful(true);
+			return gym;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	@Override
+	public Gym findById(Gym gym) {
+		try {
+			System.out.println(gym.getGymId());
+			return dao.selectById(gym.getGymId());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override

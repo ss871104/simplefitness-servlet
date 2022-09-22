@@ -20,7 +20,7 @@ public class GsonUtil {
 	}
 
 	public static <P> void writePojo2Json(HttpServletResponse response, P pojo) {
-		response.setContentType("application/json");
+		response.setContentType("application/json;charset=UTF-8");
 		try (PrintWriter pw = response.getWriter()) {
 			pw.print(GSON.toJson(pojo));
 		} catch (Exception e) {

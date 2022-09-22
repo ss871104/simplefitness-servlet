@@ -4,7 +4,7 @@
 	});
 	
 	// GET session 出現資料庫資料
-	fetch("http://localhost:8080/simplefitness-servlet/session")
+	fetch("http://localhost:8080/simplefitness-servlet/member/session")
 		.then(resp => resp.json())
 		.then(member => {
 			if (member.memPicBase64 != null) {

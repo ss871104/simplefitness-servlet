@@ -64,86 +64,86 @@
             </li>
         </ul>
     </div>
-    <div class="contentArea">
-        <div class="side-menu">
-            <ul class="nav">
-                <li>
-                    <a href="#">
-                        <i class="fa fa-users" aria-hidden="true"></i>
-                        會員資料編輯
-                    </a>
-                </li>
-                <li>
-                    <a href="http://localhost:5500/html/booking.html">
-                        <i class="fa fa-gavel" aria-hidden="true"></i>
-                        課程預約
-                    </a>
-                    <ul>
-                        <li>
-                            <a href="http://localhost:5500/html/course_booking.html">
-                                預約團課
-                            </a>
-                        </li>
-                        <li>
-                            <a href="http://localhost:5500/html/coach_booking.html">
-                                預約教練課
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                我的預約
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-coins" aria-hidden="true"></i>
-                        租借用品
-                    </a>
-                    <ul>
-                        <li>
-                            <a href="#">
-                                我的租借清單
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-        //
 
-        <div class="course_booking">
-            <div class="contentTitle">
-                <p><i class="fa-solid fa-list-check"> 預約團課</i></p>
-                <select class="select" id="classLocation" name="classLocation">
-                    <option value="" selected>選擇場館</option>
-                    <option value="1">內湖康寧館</option>
-                    <option value="2">台北忠孝館</option>
-                    <option value="3">信義松仁館</option>
-                    <option value="4">新北三重館</option>
-                    <option value="5">新北汐止館</option>
-                </select>
-                <select class="select" id="classType" name="classType">
-                    <option value="" selected>選擇課程</option>
-                    <option value="1">基礎拳擊</option>
-                    <option value="2">拳擊有氧</option>
-                    <option value="3">入門瑜珈</option>
-                    <option value="4">進階瑜珈</option>
-                    <option value="5">空中瑜珈</option>
-                    <option value="6">飛輪燃脂</option>
-                    <option value="7">Zumba</option>
-                    <!-- <option value="coachClass">皮拉提斯</option> -->
-                </select>
-                <div class="titleBtn">
-                    <button type="submit" id="queryBooking" class="btn_submit">查詢課程</button>
-                </div>
+    <div class="side-menu">
+        <ul class="nav">
+            <li>
+                <a href="#">
+                    <i class="fa fa-users" aria-hidden="true"></i>
+                    會員資料編輯
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:5500/html/booking.html">
+                    <i class="fa fa-gavel" aria-hidden="true"></i>
+                    課程預約
+                </a>
+                <ul>
+                    <li>
+                        <a href="http://localhost:5500/html/course_booking.html">
+                            預約團課
+                        </a>
+                    </li>
+                    <li>
+                        <a href="http://localhost:5500/html/coach_booking.html">
+                            預約教練課
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            我的預約
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-coins" aria-hidden="true"></i>
+                    租借用品
+                </a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            我的租借清單
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+
+    <div class="course_booking">
+        <div class="contentTitle">
+            <p><i class="fa-solid fa-list-check"> 預約團課</i></p>
+            <select class="select" id="classLocation" name="classLocation">
+                <option value="" selected>選擇場館</option>
+                <option value="1">內湖康寧館</option>
+                <option value="2">台北忠孝館</option>
+                <option value="3">信義松仁館</option>
+                <option value="4">新北三重館</option>
+                <option value="5">新北汐止館</option>
+            </select>
+            <select class="select" id="classType" name="classType">
+                <option value="" selected>選擇課程</option>
+                <option value="1">基礎拳擊</option>
+                <option value="2">拳擊有氧</option>
+                <option value="3">入門瑜珈</option>
+                <option value="4">進階瑜珈</option>
+                <option value="5">空中瑜珈</option>
+                <option value="6">飛輪燃脂</option>
+                <option value="7">Zumba</option>
+                <!-- <option value="coachClass">皮拉提斯</option> -->
+            </select>
+            <div class="titleBtn">
+                <button type="submit" id="queryBooking" class="btn_submit">查詢課程</button>
             </div>
-            <div class="contentBody">
-                <div id="example" class="calendarArea"></div>
-            </div>
+        </div>
+        <div class="contentBody">
+            <div id="example" class="calendarArea"></div>
         </div>
     </div>
+
 
 
 
@@ -187,15 +187,15 @@
             //     $("#classSubType").append(`<option value=${e.value}>${e.name}</option>`);
             // })
             $.ajax({
-                url:"",
-                type:"GET",
-                data:{},
-                dataType:"json",
-                beforeSend:function(){
+                url: "",
+                type: "GET",
+                data: {},
+                dataType: "json",
+                beforeSend: function () {
 
-                },success:function(){
+                }, success: function () {
 
-                },error:function(){
+                }, error: function () {
 
                 }
             })

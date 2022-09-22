@@ -2,9 +2,12 @@ package com.coursebooking.service.impl;
 
 import java.util.List;
 
+import javax.servlet.jsp.tagext.VariableInfo;
+
 import com.courselist.vo.CourseList;
 import com.course.dao.impl.CourseDaoImpl;
 import com.course.dao.intf.CourseDaoIntf;
+import com.course.vo.Course;
 import com.coursebooking.dao.impl.CourseBookingDaoImpl;
 import com.coursebooking.dao.intf.CourseBookingDaoIntf;
 import com.coursebooking.service.intf.CourseBookingServiceIntf;
@@ -23,6 +26,11 @@ public class CourseBookingServiceImpl implements CourseBookingServiceIntf {
 		_courseListDao = new CourseListDaoImpl();
 		_courseDao = new CourseDaoImpl();
 	}
+	
+	
+
+
+
 
 	@Override
 	public Boolean bookCourse(CourseBooking coursebook) {
@@ -43,34 +51,43 @@ public class CourseBookingServiceImpl implements CourseBookingServiceIntf {
 		}
 
 		var insertCourse = _courseBookingDao.insert(coursebook);
-		
+
 		if (insertCourse) {
 			return true;
 		}
 		return false;
-		
 
 	}
 
-	// todo :  cancelMemberCourse => cancelCourseByMemberId
 	// 呼叫Dao 執行update (Status="0")
 	// 回傳值(Boolean)
 	@Override
 	public Boolean cancelCourseByMemberId(CourseBooking coursebook) {
-//		var cancelCourse = _courseBookingDao.updateStatus(coursebook);
-//		if ("1".equals(cancelCourse))
-//			coursebook.setCoursebookStatus("0");
-		return true;
+
+		coursebook.setCoursebookStatus("0");
+		var cancelCourse = _courseBookingDao.updateStatus(coursebook);
+
+		return cancelCourse;
 	}
 
-	// todo: checkMemberBooking => checkBookingCourseByMemberId
 	// 呼叫Dao 取出該會員的預約清單(List)
 	// 回傳值(List<CourseBooking>)
 	@Override
-	public CourseBooking checkBookingCourseByMemberId(CourseBooking coursebook) {
+	public List<CourseBooking> checkBookingCourseByMemberId(CourseBooking coursebook) {
+
 		var checkBooking = _courseBookingDao.selectByMemberId(coursebook.getMemId());
-		
-		return coursebook;
+		return checkBooking;
 	}
+
+	//獲取可預約課程清單 
+	@Override
+	public List<Course> searchCourseByGymIdAndCourseListId(CourseBooking coursebook) {
+		
+		var courseList=_courseDao.selectCourseByGymIdAndCourseListId(coursebook.getGymId(), coursebook.getCourseListId());
+
+		
+		return courseList;
+	}
+
 
 }

@@ -8,7 +8,8 @@ public class CourseBooking {
 	private Integer courseId;
 	private Timestamp coursebookTime;
 	private String coursebookStatus;
-	
+	private Integer courseListId;
+	private Integer gymId;
 	
 	public Integer getCoursebookId() {
 		return coursebookId;
@@ -40,4 +41,18 @@ public class CourseBooking {
 	public void setCoursebookStatus(String coursebookStatus) {
 		this.coursebookStatus = coursebookStatus;
 	}
+	public Integer getCourseListId() {
+		return courseListId;
+	}
+	public void setCourseListId(Integer courseListId) {
+		this.courseListId = courseListId;
+	}
+	public Integer getGymId() {
+		return gymId;
+	}
+	public void setGymId(Integer gymId) {
+		this.gymId = gymId;
+	}
+	
+	
 }

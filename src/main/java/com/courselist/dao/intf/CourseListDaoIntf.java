@@ -7,7 +7,7 @@ import com.courselist.vo.CourseList;
 public interface CourseListDaoIntf extends CommonDao<CourseList, Integer> {
 
 	/* *
-	 *  Func: 取得課程報名上限人數
+	 *  Function: 取得課程報名上限人數
 	 *  CreateBy: Iris
 	 *  CreateDate: 2022/09/18
 	 * */

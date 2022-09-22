@@ -3,7 +3,7 @@ package com.mem.service.impl;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import com.common.util.Base64Adapter;
+import com.common.adapter.Base64Adapter;
 import com.common.util.JavaMailThread;
 import com.common.util.VerificationCode;
 import com.mem.dao.impl.MemDaoImpl;
@@ -168,7 +168,7 @@ public class MemServiceImpl implements MemServiceIntf {
 		final String password = mem.getMemPassword();
 		final String newPass = mem.getMemNewPassword();
 		final String username = mem.getMemUsername();
-		final String pass = dao.selectByUsername(username).getMemPassword();
+		final String pass = dao.selectPassByUsername(username).getMemPassword();
 		if ("".equals(password)) {
 			mem.setMessage("舊密碼未輸入");
 			mem.setSuccessful(false);
@@ -258,7 +258,7 @@ public class MemServiceImpl implements MemServiceIntf {
 		System.out.println(newPass);
 		
 		mem.setMemPassword(newPass);
-		System.out.println(mem.getMemPassword());
+
 		if (dao.updatePassByUsername(mem) == false) {
 			mem.setSuccessful(false);
 			mem.setMessage("密碼更改出現錯誤，請聯絡管理員!");

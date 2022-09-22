@@ -433,5 +433,33 @@ public class MemDaoImpl implements MemDaoIntf {
 		return rowCount != 0;
 	}
 
+	@Override
+	public Member selectPassByUsername(String memUsername) {
+		Member mem = null;
+		
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SELECT_PASS_BY_USERNAME);) {
+			
+			System.out.println("連線成功");
+			
+			pstmt.setString(1, memUsername);
+			
+			try (ResultSet rs = pstmt.executeQuery()) {
+				
+				mem = new Member();
+				
+				if (rs.next()) {
+					mem.setMemPassword(rs.getString("pass"));
+
+				} else {
+					mem = null;
+				}
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return mem;
+	}
+
 
 }

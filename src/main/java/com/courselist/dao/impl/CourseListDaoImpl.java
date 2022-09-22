@@ -154,13 +154,12 @@ public class CourseListDaoImpl implements CourseListDaoIntf {
 	}
 
 	/* *
-	 *  Func: 取得課程報名上限人數
+	 *  Function: 取得課程報名上限人數
 	 *  CreateBy: Iris
 	 *  CreateDate: 2022/09/18
 	 * */
 	@Override
 	public CourseList getCourseListByCourseId(Integer courseId) {
-		// TODO Auto-generated method stub
 		
 		
 		CourseList courseList= null;

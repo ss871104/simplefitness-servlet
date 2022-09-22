@@ -4,7 +4,7 @@
 	});
 	
 	// GET session 出現資料庫資料
-	fetch("http://localhost:8080/simplefitness-servlet/session")
+	fetch("http://localhost:8080/simplefitness-servlet/member/session")
 		.then(resp => resp.json())
 		.then(member => {
 			if (member.memPicBase64 != null) {
@@ -106,6 +106,14 @@
 			selected_gender = gender[0];
 		} else if (gender[1].checked == true) {
 			selected_gender = gender[1];
+		}
+		if (selected_gender == null) {
+			errMsg.textContent = '性別未選';
+			return;
+		}
+		if (birth.value == "") {
+			errMsg.textContent = '生日未填';
+			return;
 		}
 		fetch('http://localhost:8080/simplefitness-servlet/member/edit', {
 			method: 'POST',

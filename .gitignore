@@ -13,3 +13,5 @@ buildNumber.properties
 .project
 .settings
 .metadata/
+.classpath
+src/main/webapp/.vscode/settings.json

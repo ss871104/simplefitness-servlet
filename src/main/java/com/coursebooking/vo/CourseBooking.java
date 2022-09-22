@@ -1,12 +1,12 @@
 package com.coursebooking.vo;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class CourseBooking {
 	private Integer coursebookId;
 	private Integer memId;
 	private Integer courseId;
-	private Timestamp coursebookTime;
+	private LocalDateTime coursebookTime;
 	private String coursebookStatus;
 	private Integer courseListId;
 	private Integer gymId;
@@ -29,10 +29,10 @@ public class CourseBooking {
 	public void setCourseId(Integer courseId) {
 		this.courseId = courseId;
 	}
-	public Timestamp getCoursebookTime() {
+	public LocalDateTime getCoursebookTime() {
 		return coursebookTime;
 	}
-	public void setCoursebookTime(Timestamp coursebookTime) {
+	public void setCoursebookTime(LocalDateTime coursebookTime) {
 		this.coursebookTime = coursebookTime;
 	}
 	public String getCoursebookStatus() {

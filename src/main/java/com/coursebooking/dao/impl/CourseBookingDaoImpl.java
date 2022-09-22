@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -106,7 +107,7 @@ public class CourseBookingDaoImpl implements CourseBookingDaoIntf {
 					coursebook.setCoursebookId(rs.getInt("cour_book_Id"));
 					coursebook.setMemId(rs.getInt("mem_Id"));
 					coursebook.setCourseId(rs.getInt("cour_Id"));
-					coursebook.setCoursebookTime(rs.getTimestamp("booking_time"));
+					coursebook.setCoursebookTime(rs.getObject("booking_time",LocalDateTime.class));
 					coursebook.setCoursebookStatus(rs.getString("status"));
 				}
 			}
@@ -133,7 +134,7 @@ public class CourseBookingDaoImpl implements CourseBookingDaoIntf {
 					coursebook.setCoursebookId(rs.getInt("cour_book_Id"));
 					coursebook.setMemId(rs.getInt("mem_Id"));
 					coursebook.setCourseId(rs.getInt("cour_Id"));
-					coursebook.setCoursebookTime(rs.getTimestamp("booking_time"));
+					coursebook.setCoursebookTime(rs.getObject("booking_time",LocalDateTime.class));
 					coursebook.setCoursebookStatus(rs.getString("status"));
 					list.add(coursebook);
 				}
@@ -163,7 +164,7 @@ public class CourseBookingDaoImpl implements CourseBookingDaoIntf {
 					coursebook.setCoursebookId(rs.getInt("cour_book_Id"));
 					coursebook.setMemId(rs.getInt("mem_Id"));
 					coursebook.setCourseId(rs.getInt("cour_Id"));
-					coursebook.setCoursebookTime(rs.getTimestamp("booking_time"));
+					coursebook.setCoursebookTime(rs.getObject("booking_time",LocalDateTime.class));
 					coursebook.setCoursebookStatus(rs.getString("status"));
 					
 					courseBookingList.add(coursebook);

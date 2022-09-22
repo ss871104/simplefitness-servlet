@@ -2,9 +2,6 @@ package com.coursebooking.service.impl;
 
 import java.util.List;
 
-import javax.servlet.jsp.tagext.VariableInfo;
-
-import com.courselist.vo.CourseList;
 import com.course.dao.impl.CourseDaoImpl;
 import com.course.dao.intf.CourseDaoIntf;
 import com.course.vo.Course;
@@ -12,8 +9,8 @@ import com.coursebooking.dao.impl.CourseBookingDaoImpl;
 import com.coursebooking.dao.intf.CourseBookingDaoIntf;
 import com.coursebooking.service.intf.CourseBookingServiceIntf;
 import com.coursebooking.vo.CourseBooking;
-import com.courselist.dao.intf.CourseListDaoIntf;
 import com.courselist.dao.impl.CourseListDaoImpl;
+import com.courselist.dao.intf.CourseListDaoIntf;
 
 public class CourseBookingServiceImpl implements CourseBookingServiceIntf {
 

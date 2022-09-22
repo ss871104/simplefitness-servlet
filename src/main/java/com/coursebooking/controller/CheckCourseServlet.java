@@ -1,5 +1,7 @@
 package com.coursebooking.controller;
 
+import static com.common.util.Constants.GSON;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,16 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 import com.coursebooking.service.impl.CourseBookingServiceImpl;
 import com.coursebooking.service.intf.CourseBookingServiceIntf;
 import com.coursebooking.vo.CourseBooking;
-import com.courselist.vo.CourseList;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 @WebServlet("/courseBooking/CheckCourseServlet")
 public class CheckCourseServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 	private CourseBookingServiceIntf _courseBookingService = new CourseBookingServiceImpl();
-	private Gson GSON = new GsonBuilder().create();
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		

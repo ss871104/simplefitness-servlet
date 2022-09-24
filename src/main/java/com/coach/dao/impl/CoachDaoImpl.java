@@ -34,7 +34,7 @@ public class CoachDaoImpl implements CoachDaoIntf {
 
 	@Override
 	public boolean insert(Coach coaVo) {
-		
+
 		int rowCount = 0;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.INSERT);) {
@@ -53,12 +53,12 @@ public class CoachDaoImpl implements CoachDaoIntf {
 			e.printStackTrace();
 		}
 		return rowCount != 0;
-		
+
 	}
 
 	@Override
 	public boolean update(Coach coaVo) {
-		
+
 		int rowCount = 0;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.UPDATE);) {
@@ -77,12 +77,12 @@ public class CoachDaoImpl implements CoachDaoIntf {
 			e.printStackTrace();
 		}
 		return rowCount != 0;
-		
+
 	}
 
 	@Override
 	public boolean delete(Integer coaId) {
-		
+
 		int rowCount = 0;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.DELETE);) {
@@ -96,12 +96,12 @@ public class CoachDaoImpl implements CoachDaoIntf {
 			e.printStackTrace();
 		}
 		return rowCount != 0;
-		
+
 	}
 
 	@Override
 	public Coach selectById(Integer coaId) {
-		
+
 		Coach coa = null;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.SELECT_BY_ID);) {
@@ -117,9 +117,9 @@ public class CoachDaoImpl implements CoachDaoIntf {
 				if (rs.next()) {
 					coa.setCoaId(rs.getInt("coa_id"));
 					coa.setEmpId(rs.getInt("emp_id"));
-					coa.setStartTime(rs.getObject("start_time",LocalDateTime.class));
-					coa.setEndTime(rs.getObject("end_time",LocalDateTime.class));
-					coa.setUploadTime(rs.getObject("upload_time",LocalDateTime.class));
+					coa.setStartTime(rs.getObject("start_time", LocalDateTime.class));
+					coa.setEndTime(rs.getObject("end_time", LocalDateTime.class));
+					coa.setUploadTime(rs.getObject("upload_time", LocalDateTime.class));
 					coa.setStatus(rs.getString("status"));
 					coa.setPubStatus(rs.getString("public"));
 
@@ -129,12 +129,12 @@ public class CoachDaoImpl implements CoachDaoIntf {
 			e.printStackTrace();
 		}
 		return coa;
-		
+
 	}
 
 	@Override
 	public List<Coach> selectAll() {
-		
+
 		List<Coach> list = new ArrayList<Coach>();
 		Coach coa = null;
 
@@ -148,9 +148,9 @@ public class CoachDaoImpl implements CoachDaoIntf {
 					coa = new Coach();
 					coa.setCoaId(rs.getInt("coa_id"));
 					coa.setEmpId(rs.getInt("emp_id"));
-					coa.setStartTime(rs.getObject("start_time",LocalDateTime.class));
-					coa.setEndTime(rs.getObject("end_time",LocalDateTime.class));
-					coa.setUploadTime(rs.getObject("upload_time",LocalDateTime.class));
+					coa.setStartTime(rs.getObject("start_time", LocalDateTime.class));
+					coa.setEndTime(rs.getObject("end_time", LocalDateTime.class));
+					coa.setUploadTime(rs.getObject("upload_time", LocalDateTime.class));
 					coa.setStatus(rs.getString("status"));
 					coa.setPubStatus(rs.getString("public"));
 					list.add(coa);
@@ -162,5 +162,71 @@ public class CoachDaoImpl implements CoachDaoIntf {
 		return list;
 	}
 
+	
+	/* *
+	 *  Function:  取得會員可預約教練課
+	 *  CreateBy: Iris
+	 *  CreateDate: 2022/09/23
+	 * */
+	@Override
+	public List<Coach> selectCoachByGymIdAndEmpId(Integer gymId, Integer empId) {
+		
+		Coach coach = null;
+		var sqlStr ="select coa_id,gym_id,coach.emp_id,emp_name,start_time,end_time from coach coach join emp emp on emp.emp_id=coach.emp_id where coach.`status`='1' and public='1' and gym_id=? and coach.emp_id=?;";
+		
+		List<Coach> canBookCoachList = new ArrayList<Coach>();
+		
+		try (Connection con = ds.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(sqlStr);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setInt(1, gymId);
+			pstmt.setInt(2, empId);
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+
+				while (rs.next()) {
+					coach = new Coach();
+					coach.setCoaId(rs.getInt("coa_id"));
+					coach.setGymId(rs.getInt("gym_id"));
+					coach.setEmpId(rs.getInt("emp_id"));
+					coach.setEmpName(rs.getString("emp_name"));
+					coach.setStartTime(rs.getObject("start_time",LocalDateTime.class));
+					coach.setEndTime(rs.getObject("end_time",LocalDateTime.class));
+					
+					canBookCoachList.add(coach);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return canBookCoachList;
+	}
+
+	/* *
+	 *  Function:修改教練課清單狀態
+	 *  CreateBy: Iris
+	 *  CreateDate: 2022/09/24
+	 * */
+	@Override
+	public boolean updateStatus(Coach coach) {
+		
+		boolean flag=true;
+		var sqlStr = "update coach set status=? where coa_id  = ?";
+				
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(sqlStr);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setString(1, coach.getStatus());
+			pstmt.setInt(2, coach.getCoaId());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return flag;
+	}
 
 }

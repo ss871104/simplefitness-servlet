@@ -5,7 +5,6 @@ import static com.common.util.Constants.GSON;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,8 +17,8 @@ import com.coachbooking.service.impl.CoachBookingServiceImpl;
 import com.coachbooking.service.intf.CoachBookingServiceIntf;
 import com.coachbooking.vo.CoachBooking;
 
-@WebServlet("/coachBooking/SearchCoachServlet")
-public class SearchCoachServlet extends HttpServlet{
+@WebServlet("/coachBooking/CreateCoachBookingServlet")
+public class CreateCoachBookingServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 	private CoachBookingServiceIntf _coachBookingService = new CoachBookingServiceImpl();
@@ -38,9 +37,15 @@ public class SearchCoachServlet extends HttpServlet{
 
         //Step.1 接值
         CoachBooking coachBooking = GSON.fromJson(json, CoachBooking.class);
+        boolean coachBookingResult=false;
         
         //Step.2 執行SVC
-        List<Coach> coachBookingResult=_coachBookingService.searchCoachByGymIdAndEmpId(coachBooking);
+        boolean insertCoachBookingResult=_coachBookingService.createCoachBooking(coachBooking);
+        if(insertCoachBookingResult) {
+        	Coach coach = new Coach();
+        	coach.setCoaId(coachBooking.getCoachId());
+        	coachBookingResult=_coachBookingService.setCoachStatusUnableBooking(coach);
+        	}
 
 
 		PrintWriter pw = response.getWriter();

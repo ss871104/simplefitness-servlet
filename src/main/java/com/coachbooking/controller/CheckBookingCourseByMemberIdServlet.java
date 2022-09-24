@@ -13,13 +13,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.coach.vo.Coach;
 import com.coachbooking.service.impl.CoachBookingServiceImpl;
 import com.coachbooking.service.intf.CoachBookingServiceIntf;
 import com.coachbooking.vo.CoachBooking;
 
-@WebServlet("/coachBooking/SearchCoachServlet")
-public class SearchCoachServlet extends HttpServlet{
+@WebServlet("/coachBooking/CheckBookingCourseByMemberIdServlet")
+public class CheckBookingCourseByMemberIdServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 	private CoachBookingServiceIntf _coachBookingService = new CoachBookingServiceImpl();
@@ -40,7 +39,7 @@ public class SearchCoachServlet extends HttpServlet{
         CoachBooking coachBooking = GSON.fromJson(json, CoachBooking.class);
         
         //Step.2 執行SVC
-        List<Coach> coachBookingResult=_coachBookingService.searchCoachByGymIdAndEmpId(coachBooking);
+        List<CoachBooking> coachBookingResult=_coachBookingService.checkBookingCourseByMemberId(coachBooking);
 
 
 		PrintWriter pw = response.getWriter();

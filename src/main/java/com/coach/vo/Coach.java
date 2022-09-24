@@ -14,6 +14,8 @@ public class Coach extends Common {
 	private LocalDateTime uploadTime;
 	private String status;
 	private String pubStatus;
+	private Integer gymId;
+	private String empName;
 	
 	
 	public Integer getCoaId() {
@@ -58,10 +60,19 @@ public class Coach extends Common {
 	public void setPubStatus(String pubStatus) {
 		this.pubStatus = pubStatus;
 	}
+	public Integer getGymId() {
+		return gymId;
+	}
+	public void setGymId(Integer gymId) {
+		this.gymId = gymId;
+	}
+	public String getEmpName() {
+		return empName;
+	}
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
+	
 
-	
-	
-	
-	
 	
 }

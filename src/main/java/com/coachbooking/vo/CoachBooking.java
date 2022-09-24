@@ -9,6 +9,8 @@ public class CoachBooking {
 	private LocalDateTime coachbookTime;
 	private String coachbookStatus;
 	private LocalDateTime checkTime;
+	private Integer gymId;
+	private Integer empId;
 	
 	public Integer getCoachbookId() {
 		return coachbookId;
@@ -45,6 +47,18 @@ public class CoachBooking {
 	}
 	public void setCheckTime(LocalDateTime checkTime) {
 		this.checkTime = checkTime;
+	}
+	public Integer getGymId() {
+		return gymId;
+	}
+	public void setGymId(Integer gymId) {
+		this.gymId = gymId;
+	}
+	public Integer getEmpId() {
+		return empId;
+	}
+	public void setEmpId(Integer empId) {
+		this.empId = empId;
 	}
 	
 	

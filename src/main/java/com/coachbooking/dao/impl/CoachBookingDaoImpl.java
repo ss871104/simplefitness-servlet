@@ -16,6 +16,8 @@ import javax.sql.DataSource;
 import com.coachbooking.dao.intf.CoachBookingDaoIntf;
 import com.coachbooking.dao.sql.CoachBookingDaoSQL;
 import com.coachbooking.vo.CoachBooking;
+import com.mysql.cj.xdevapi.Statement;
+
 
 public class CoachBookingDaoImpl implements CoachBookingDaoIntf {
 
@@ -34,8 +36,7 @@ public class CoachBookingDaoImpl implements CoachBookingDaoIntf {
 
 	@Override
 	public boolean insert(CoachBooking coachbookVo) {
-		int rowCount = 0;
-
+		boolean flag = true;
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.INSERT);) {
 
 			System.out.println("連線成功");
@@ -43,17 +44,18 @@ public class CoachBookingDaoImpl implements CoachBookingDaoIntf {
 			pstmt.setInt(1, coachbookVo.getMemId());
 			pstmt.setInt(2, coachbookVo.getCoachId());
 			pstmt.setString(3, coachbookVo.getCoachbookStatus());
+			pstmt.executeUpdate();
 
-			rowCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			flag = false;
 		}
-		return rowCount != 0;
+		return flag;
 	}
 
 	@Override
 	public boolean update(CoachBooking coachbookVo) {
-		int rowCount = 0;
+		boolean flag = true;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.UPDATE);) {
 
@@ -63,12 +65,12 @@ public class CoachBookingDaoImpl implements CoachBookingDaoIntf {
 			pstmt.setInt(2, coachbookVo.getCoachId());
 			pstmt.setString(3, coachbookVo.getCoachbookStatus());
 			pstmt.setInt(4, coachbookVo.getCoachbookId());
-
-			rowCount = pstmt.executeUpdate();
+			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			flag = false;
 		}
-		return rowCount != 0;
+		return flag;
 	}
 
 	@Override
@@ -107,9 +109,9 @@ public class CoachBookingDaoImpl implements CoachBookingDaoIntf {
 					coachbook.setCoachbookId(rs.getInt("coa_book_id"));
 					coachbook.setMemId(rs.getInt("mem_id"));
 					coachbook.setCoachId(rs.getInt("coa_id"));
-					coachbook.setCoachbookTime(rs.getObject("booking_time",LocalDateTime.class));
+					coachbook.setCoachbookTime(rs.getObject("booking_time", LocalDateTime.class));
 					coachbook.setCoachbookStatus(rs.getString("status"));
-					coachbook.setCheckTime(rs.getObject("check_time",LocalDateTime.class));
+					coachbook.setCheckTime(rs.getObject("check_time", LocalDateTime.class));
 				}
 			}
 		} catch (SQLException e) {
@@ -124,26 +126,77 @@ public class CoachBookingDaoImpl implements CoachBookingDaoIntf {
 		CoachBooking coachbook = null;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.SELECT_ALL);) {
-			
+
 			System.out.println("連線成功");
-			
+
 			try (ResultSet rs = pstmt.executeQuery()) {
-				
+
 				while (rs.next()) {
 					coachbook = new CoachBooking();
 					coachbook.setCoachbookId(rs.getInt("coa_book_id"));
 					coachbook.setMemId(rs.getInt("mem_id"));
 					coachbook.setCoachId(rs.getInt("coa_id"));
-					coachbook.setCoachbookTime(rs.getObject("booking_time",LocalDateTime.class));
+					coachbook.setCoachbookTime(rs.getObject("booking_time", LocalDateTime.class));
 					coachbook.setCoachbookStatus(rs.getString("status"));
-					coachbook.setCheckTime(rs.getObject("check_time",LocalDateTime.class));
-					list.add(coachbook);	
+					coachbook.setCheckTime(rs.getObject("check_time", LocalDateTime.class));
+					list.add(coachbook);
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} 
+		}
 		return list;
 	}
+
+	@Override
+	public Boolean updateStatus(CoachBooking coachbook) {
+		boolean flag = true;
+		var sqlStr = "update coa_booking set status=? where coa_book_id  = ?";
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(sqlStr);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setString(1, coachbook.getCoachbookStatus());
+			pstmt.setInt(2, coachbook.getCoachId());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			flag = false;
+		}
+		return flag;
+	}
+
+	@Override
+	public List<CoachBooking> selectByMemberId(Integer memId) {
+
+		CoachBooking coachbook = null;
+		List<CoachBooking> coachBookingList = new ArrayList<CoachBooking>();
+		var sqlStr = "select * from coa_booking where mem_id = ?";
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(sqlStr);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setInt(1, memId);
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+
+				while (rs.next()) {
+					coachbook = new CoachBooking();
+					coachbook.setCoachbookId(rs.getInt("coa_book_Id"));
+					coachbook.setMemId(rs.getInt("mem_Id"));
+					coachbook.setCoachId(rs.getInt("coa_Id"));
+					coachbook.setCoachbookTime(rs.getObject("booking_time", LocalDateTime.class));
+					coachbook.setCoachbookStatus(rs.getString("status"));
+
+					coachBookingList.add(coachbook);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return coachBookingList;
+	}
+
+
 
 }

@@ -34,7 +34,7 @@ public class CourseBookingDaoImpl implements CourseBookingDaoIntf {
 
 	@Override
 	public boolean insert(CourseBooking coursebookVo) {
-		int rowCount = 0;
+		boolean flag=true;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.INSERT);) {
 
@@ -43,17 +43,17 @@ public class CourseBookingDaoImpl implements CourseBookingDaoIntf {
 			pstmt.setInt(1, coursebookVo.getMemId());
 			pstmt.setInt(2, coursebookVo.getCourseId());
 			pstmt.setString(3, coursebookVo.getCoursebookStatus());
-
-			rowCount = pstmt.executeUpdate();
+			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
-		return rowCount != 0;
+		return flag;
 	}
 
 	@Override
 	public boolean update(CourseBooking coursebookVo) {
-		int rowCount = 0;
+		boolean flag=true;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.UPDATE);) {
 
@@ -63,12 +63,12 @@ public class CourseBookingDaoImpl implements CourseBookingDaoIntf {
 			pstmt.setInt(2, coursebookVo.getCourseId());
 			pstmt.setString(3, coursebookVo.getCoursebookStatus());
 			pstmt.setInt(4, coursebookVo.getCoursebookId());
-
-			rowCount = pstmt.executeUpdate();
+			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
-		return rowCount != 0;
+		return flag;
 	}
 
 	@Override
@@ -178,7 +178,7 @@ public class CourseBookingDaoImpl implements CourseBookingDaoIntf {
 
 	@Override
 	public boolean updateStatus(CourseBooking coursebookVo) {
-		int rowCount = 0;
+		boolean flag=true;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.UPDATE_STATUS);) {
 
@@ -186,12 +186,12 @@ public class CourseBookingDaoImpl implements CourseBookingDaoIntf {
 
 			pstmt.setString(1, coursebookVo.getCoursebookStatus());
 			pstmt.setInt(2, coursebookVo.getCoursebookId());
-
-			rowCount = pstmt.executeUpdate();
+			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
-		return rowCount != 0;
+		return flag;
 	}
 
 	@Override

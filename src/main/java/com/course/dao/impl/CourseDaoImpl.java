@@ -218,7 +218,7 @@ public class CourseDaoImpl implements CourseDaoIntf {
 		Course course = null;
 		var sqlStr ="select cour_id,gym_id,courseType.cour_list_id,cour_name,start_time,end_time from course course join cour_list courseType on course.cour_list_id=courseType.cour_list_id where course.`status`='1' and public='1' and gym_id=? and courseType.cour_list_id=?;";
 		
-		List<Course> canCourseList = new ArrayList<Course>();
+		List<Course> canBookCourseList = new ArrayList<Course>();
 		
 		try (Connection con = ds.getConnection();
 				PreparedStatement pstmt = con.prepareStatement(sqlStr);) {
@@ -239,13 +239,13 @@ public class CourseDaoImpl implements CourseDaoIntf {
 					course.setStartTime(rs.getObject("start_time",LocalDateTime.class));
 					course.setEndTime(rs.getObject("end_time",LocalDateTime.class));
 					
-					canCourseList.add(course);
+					canBookCourseList.add(course);
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return canCourseList;
+		return canBookCourseList;
 	}
 
 	

@@ -16,7 +16,7 @@ import com.coursebooking.service.impl.CourseBookingServiceImpl;
 import com.coursebooking.service.intf.CourseBookingServiceIntf;
 import com.coursebooking.vo.CourseBooking;
 
-@WebServlet("/courseBooking/BookCourse")
+@WebServlet("/courseBooking/BookCourseServlet")
 public class BookCourseServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;

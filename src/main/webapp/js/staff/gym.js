@@ -4,8 +4,6 @@
 	.then(resp => resp.json())
 	.then(gym => {
 		for (i = 0; i < gym["length"]; i++){
-			console.log(gym[i])
-		  let v = gym[i].gymId;
 		  let text = `
 		  	<tr>
 				<td>${gym[i].gymName}</td>

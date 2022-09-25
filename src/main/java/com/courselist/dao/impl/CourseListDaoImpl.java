@@ -41,10 +41,9 @@ public class CourseListDaoImpl implements CourseListDaoIntf {
 			System.out.println("連線成功");
 
 			pstmt.setString(1, courseListVo.getCourseName());
-			pstmt.setString(2, courseListVo.getCourseType());
-			pstmt.setInt(3, courseListVo.getCourseMaxP());
-			pstmt.setString(4, courseListVo.getCourseIntro());
-			pstmt.setString(5, courseListVo.getCourseStatus());
+			pstmt.setInt(2, courseListVo.getCourseMaxP());
+			pstmt.setString(3, courseListVo.getCourseIntro());
+			pstmt.setString(4, courseListVo.getCourseStatus());
 
 			rowCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -63,10 +62,10 @@ public class CourseListDaoImpl implements CourseListDaoIntf {
 			System.out.println("連線成功");
 
 			pstmt.setString(1, courseListVo.getCourseName());
-			pstmt.setString(2, courseListVo.getCourseType());
-			pstmt.setInt(3, courseListVo.getCourseMaxP());
-			pstmt.setString(4, courseListVo.getCourseIntro());
-			pstmt.setString(5, courseListVo.getCourseStatus());
+			pstmt.setInt(2, courseListVo.getCourseMaxP());
+			pstmt.setString(3, courseListVo.getCourseIntro());
+			pstmt.setString(4, courseListVo.getCourseStatus());
+			pstmt.setInt(5, courseListVo.getCourseListId());
 
 			rowCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -111,7 +110,6 @@ public class CourseListDaoImpl implements CourseListDaoIntf {
 				if (rs.next()) {
 					courseList.setCourseListId(rs.getInt("cour_list_id"));
 					courseList.setCourseName(rs.getString("cour_name"));
-					courseList.setCourseType(rs.getString("cour_type"));
 					courseList.setCourseMaxP(rs.getInt("max_p"));
 					courseList.setCourseIntro(rs.getString("intro"));
 					courseList.setCourseStatus(rs.getString("status"));
@@ -140,7 +138,6 @@ public class CourseListDaoImpl implements CourseListDaoIntf {
 					courseList = new CourseList();
 					courseList.setCourseListId(rs.getInt("cour_list_id"));
 					courseList.setCourseName(rs.getString("cour_name"));
-					courseList.setCourseType(rs.getString("cour_type"));
 					courseList.setCourseMaxP(rs.getInt("max_p"));
 					courseList.setCourseIntro(rs.getString("intro"));
 					courseList.setCourseStatus(rs.getString("status"));
@@ -178,7 +175,6 @@ public class CourseListDaoImpl implements CourseListDaoIntf {
 				if (rs.next()) {
 					courseList.setCourseListId(rs.getInt("cour_list_id"));
 					courseList.setCourseName(rs.getString("cour_name"));
-					courseList.setCourseType(rs.getString("cour_type"));
 					courseList.setCourseMaxP(rs.getInt("max_p"));
 					courseList.setCourseIntro(rs.getString("intro"));
 					courseList.setCourseStatus(rs.getString("status"));

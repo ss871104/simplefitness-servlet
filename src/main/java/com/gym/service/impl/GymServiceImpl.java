@@ -6,12 +6,17 @@ import com.gym.dao.impl.GymDaoImpl;
 import com.gym.dao.intf.GymDaoIntf;
 import com.gym.service.intf.GymServiceIntf;
 import com.gym.vo.Gym;
+import com.gym.vo.GymPic;
+
+import com.common.adapter.Base64Adapter;
 
 public class GymServiceImpl implements GymServiceIntf{
 	private GymDaoIntf dao;
+	private Base64Adapter base64;
 	
 	public GymServiceImpl() {
 		dao = new GymDaoImpl();
+		base64 = new Base64Adapter();
 	}
 
 	@Override
@@ -135,7 +140,6 @@ public class GymServiceImpl implements GymServiceIntf{
 	@Override
 	public Gym findById(Gym gym) {
 		try {
-			System.out.println(gym.getGymId());
 			return dao.selectById(gym.getGymId());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -146,8 +150,31 @@ public class GymServiceImpl implements GymServiceIntf{
 	@Override
 	public List<Gym> findAll() {
 		try {
-//			beginTransaction();
-			return dao.selectAll();
+			return (List<Gym>) dao.selectAll();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	@Override
+	public List<GymPic> findPicById(Gym gym) {
+		try {
+			List<GymPic> list = dao.selectPicById(gym.getGymId());
+			for (int i = 0; i < list.size(); i++) {
+				list.get(i).setPicBase64(base64.Encoder(list.get(i).getPic()));
+			}
+			return list;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@Override
+	public List<Gym> joinFindById(Gym gym) {
+		try {
+			return (List<Gym>) dao.joinSelectByGymId(gym.getGymId());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;

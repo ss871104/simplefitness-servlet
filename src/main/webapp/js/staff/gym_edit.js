@@ -43,7 +43,18 @@
 				document.querySelector('#close-input').value = gym.closeTime;
 				document.querySelector('#count-input').value = gym.maxPeople;
 				document.querySelector('#intro-input').value = gym.intro;
+				
+//				for (i = 0; i < gym["length"]; i++){
+//					let text = `<img src="${gym[i].picBase64}"></img>`;
+//					$(".gym-pic").append(text);
+//				}
 			})
+//			.then(gymPic => {
+//				for (i = 0; i < gymPic["length"]; i++){
+//					let text = `<span><img src="${gymPic[i].picBase64}"></span>`;
+//					$(".gym-pic").append(text);
+//				}
+//			})
 
 	// 彈窗選擇圖片的預覽圖片
 	window.addEventListener("load", function() {

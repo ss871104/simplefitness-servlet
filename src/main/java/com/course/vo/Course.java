@@ -80,6 +80,4 @@ public class Course extends Common {
 	}
 	
 	
-	
-	
 }

@@ -11,6 +11,8 @@ public interface CourseBookingServiceIntf {
 
 	public Boolean bookCourse(CourseBooking coursebook);
 
+	public void setCourseBookingFull(Integer courseId);
+	
 	public Boolean cancelCourseByMemberId(CourseBooking coursebook);
 
 	public List<CourseBooking> checkBookingCourseByMemberId(CourseBooking coursebook);

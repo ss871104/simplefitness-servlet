@@ -28,4 +28,12 @@ public interface CourseDaoIntf extends CommonDao<Course, Integer> {
 	 */
 	public boolean updateStatus(Course course);
 
+
+	/*
+	 * * Function: 取得課程可預約狀態 
+	 *   CreateBy: Iris 
+	 *   CreateDate: 2022/09/27
+	 */
+	public String getCourseStatusByCourseId(Integer courseId);
+
 }

@@ -36,11 +36,19 @@ public class BookCourseServlet extends HttpServlet{
 
         //Step.1 接值
         CourseBooking courseBooking = GSON.fromJson(json, CourseBooking.class);
+        boolean courseBookingResult = false;
         
         //Step.2 執行SVC
-        Boolean courseBookingResult=_courseBookingService.bookCourse(courseBooking);
-
-
+        //先執行insert booking
+        //再判斷有無額滿
+        //1.執行insert
+        courseBookingResult =  _courseBookingService.bookCourse(courseBooking);
+        
+        //2.執行判斷額滿狀態 
+        if(courseBookingResult) {
+        	_courseBookingService.setCourseBookingFull(courseBooking.getCourseId());
+        }
+  
 		PrintWriter pw = response.getWriter();
         pw.print(GSON.toJson(courseBookingResult));
 	}

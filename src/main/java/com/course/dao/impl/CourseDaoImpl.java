@@ -22,7 +22,7 @@ import javax.sql.DataSource;
 
 import com.course.dao.intf.CourseDaoIntf;
 import com.course.vo.Course;
-import com.coursebooking.vo.CourseBooking;
+
 
 public class CourseDaoImpl implements CourseDaoIntf {
 
@@ -266,5 +266,32 @@ public class CourseDaoImpl implements CourseDaoIntf {
 		}
 		return flag;
 	}
+
+	/*
+	 * * Function: 取得課程開放狀態 
+	 *   CreateBy: Iris 
+	 *   CreateDate: 2022/09/27
+	 */
+	public String getCourseStatusByCourseId(Integer courseId) {
+		var result="";
+		var sqlStr = "SELECT status FROM simple_fitness.course Where  cour_id=?;";
+
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(sqlStr);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setInt(1, courseId);
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+				while (rs.next()) {
+					result = rs.getString("status");
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
 
 }

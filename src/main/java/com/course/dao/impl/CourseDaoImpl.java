@@ -22,6 +22,7 @@ import javax.sql.DataSource;
 
 import com.course.dao.intf.CourseDaoIntf;
 import com.course.vo.Course;
+import com.coursebooking.vo.CourseBooking;
 
 public class CourseDaoImpl implements CourseDaoIntf {
 
@@ -35,7 +36,6 @@ public class CourseDaoImpl implements CourseDaoIntf {
 			e.printStackTrace();
 		}
 	}
-	
 
 	@Override
 	public boolean insert(Course courseVo) {
@@ -124,9 +124,9 @@ public class CourseDaoImpl implements CourseDaoIntf {
 					course.setEmpId(rs.getInt("emp_id"));
 					course.setGymId(rs.getInt("gym_id"));
 					course.setCourseListId(rs.getInt("cour_list_id"));
-					course.setStartTime(rs.getObject("start_time",LocalDateTime.class));
-					course.setEndTime(rs.getObject("end_time",LocalDateTime.class));
-					course.setUploadTime(rs.getObject("upload_time",LocalDateTime.class));
+					course.setStartTime(rs.getObject("start_time", LocalDateTime.class));
+					course.setEndTime(rs.getObject("end_time", LocalDateTime.class));
+					course.setUploadTime(rs.getObject("upload_time", LocalDateTime.class));
 					course.setStatus(rs.getString("status"));
 					course.setPubStatus(rs.getString("public"));
 
@@ -156,9 +156,9 @@ public class CourseDaoImpl implements CourseDaoIntf {
 					course.setEmpId(rs.getInt("emp_id"));
 					course.setGymId(rs.getInt("gym_id"));
 					course.setCourseListId(rs.getInt("cour_list_id"));
-					course.setStartTime(rs.getObject("start_time",LocalDateTime.class));
-					course.setEndTime(rs.getObject("end_time",LocalDateTime.class));
-					course.setUploadTime(rs.getObject("upload_time",LocalDateTime.class));
+					course.setStartTime(rs.getObject("start_time", LocalDateTime.class));
+					course.setEndTime(rs.getObject("end_time", LocalDateTime.class));
+					course.setUploadTime(rs.getObject("upload_time", LocalDateTime.class));
 					course.setStatus(rs.getString("status"));
 					course.setPubStatus(rs.getString("public"));
 					list.add(course);
@@ -170,10 +170,9 @@ public class CourseDaoImpl implements CourseDaoIntf {
 		return list;
 	}
 
-		
 	@Override
 	public Course selectByGymDate(Integer gymId, Date courseDate) {
-		
+
 		Course course = null;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SELECT_BY_ID);) {
@@ -192,9 +191,9 @@ public class CourseDaoImpl implements CourseDaoIntf {
 					course.setEmpId(rs.getInt("emp_id"));
 					course.setGymId(rs.getInt("gym_id"));
 					course.setCourseListId(rs.getInt("cour_list_id"));
-					course.setStartTime(rs.getObject("start_time",LocalDateTime.class));
-					course.setEndTime(rs.getObject("end_time",LocalDateTime.class));
-					course.setUploadTime(rs.getObject("upload_time",LocalDateTime.class));
+					course.setStartTime(rs.getObject("start_time", LocalDateTime.class));
+					course.setEndTime(rs.getObject("end_time", LocalDateTime.class));
+					course.setUploadTime(rs.getObject("upload_time", LocalDateTime.class));
 					course.setStatus(rs.getString("status"));
 					course.setPubStatus(rs.getString("public"));
 
@@ -205,23 +204,21 @@ public class CourseDaoImpl implements CourseDaoIntf {
 		}
 		return course;
 	}
-	
-	
-	/* *
-	 *  Function: 取得會員可預約團課
-	 *  CreateBy: Iris
-	 *  CreateDate: 2022/09/21
-	 * */
+
+	/*
+	 * * Function: 取得會員可預約團課 
+	 *   CreateBy: Iris 
+	 *   CreateDate: 2022/09/21
+	 */
 	@Override
-	public List<Course> selectCourseByGymIdAndCourseListId(Integer gymId,Integer courseListId) {
-		
+	public List<Course> selectCourseByGymIdAndCourseListId(Integer gymId, Integer courseListId) {
+
 		Course course = null;
-		var sqlStr ="select cour_id,gym_id,courseType.cour_list_id,cour_name,start_time,end_time from course course join cour_list courseType on course.cour_list_id=courseType.cour_list_id where course.`status`='1' and public='1' and gym_id=? and courseType.cour_list_id=?;";
-		
+		var sqlStr = "select cour_id,gym_id,courseType.cour_list_id,cour_name,start_time,end_time from course course join cour_list courseType on course.cour_list_id=courseType.cour_list_id where course.`status`='1' and public='1' and gym_id=? and courseType.cour_list_id=?;";
+
 		List<Course> canBookCourseList = new ArrayList<Course>();
-		
-		try (Connection con = ds.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(sqlStr);) {
+
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(sqlStr);) {
 
 			System.out.println("連線成功");
 
@@ -236,9 +233,9 @@ public class CourseDaoImpl implements CourseDaoIntf {
 					course.setGymId(rs.getInt("gym_id"));
 					course.setCourseListId(rs.getInt("cour_list_id"));
 					course.setCourseName(rs.getString("cour_name"));
-					course.setStartTime(rs.getObject("start_time",LocalDateTime.class));
-					course.setEndTime(rs.getObject("end_time",LocalDateTime.class));
-					
+					course.setStartTime(rs.getObject("start_time", LocalDateTime.class));
+					course.setEndTime(rs.getObject("end_time", LocalDateTime.class));
+
 					canBookCourseList.add(course);
 				}
 			}
@@ -248,6 +245,26 @@ public class CourseDaoImpl implements CourseDaoIntf {
 		return canBookCourseList;
 	}
 
-	
-	
+	/*
+	 * * Function: 更新團課預約狀態 
+	 *   CreateBy: Iris 
+	 *   CreateDate: 2022/09/26
+	 */
+	public boolean updateStatus(Course course) {
+		boolean flag = true;
+		var sqlstr = "update course set status=? where cour_id  = ?";
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(sqlstr);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setString(1, course.getStatus());
+			pstmt.setInt(2, course.getCourseId());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return flag;
+	}
+
 }

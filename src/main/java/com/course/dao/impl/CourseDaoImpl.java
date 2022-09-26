@@ -1,10 +1,6 @@
 package com.course.dao.impl;
 
-import static com.course.dao.sql.CourseDaoSQL.DELETE;
-import static com.course.dao.sql.CourseDaoSQL.INSERT;
-import static com.course.dao.sql.CourseDaoSQL.SELECT_ALL;
-import static com.course.dao.sql.CourseDaoSQL.SELECT_BY_ID;
-import static com.course.dao.sql.CourseDaoSQL.UPDATE;
+import static com.course.dao.sql.CourseDaoSQL.*;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -249,5 +245,38 @@ public class CourseDaoImpl implements CourseDaoIntf {
 	}
 
 	
+	// 取得已安排團課
+	public List<Course> selectCourseByGymIdAndStartTime(Integer gymId, LocalDateTime startTime) {
+		
+		List<Course> list = new ArrayList<Course>();
+		Course course = null;
+
+		try (Connection con = ds.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(SELECT_BY_GYMID_AND_STARTTIME);) {
+
+			System.out.println("連線成功");
+			
+			pstmt.setInt(1, gymId);
+			pstmt.setObject(2, startTime);
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+
+				while (rs.next()) {
+					course = new Course();
+					course.setGymId(rs.getInt("gym_id"));
+					course.setStartTime(rs.getObject("start_time", LocalDateTime.class));
+					course.setCourseListId(rs.getInt("cour_list_id"));
+					course.setEmpId(rs.getInt("emp_id"));
+					course.setStatus(rs.getString("status"));
+					course.setPubStatus(rs.getString("public"));
+					
+					list.add(course);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
 	
 }

@@ -16,6 +16,6 @@ public interface EmployeeServiceIntf {
 	
 	Employee findById(Employee emp);
 	
-	List<Employee> findAll(Employee emp);
+	List<Employee> findAll();
 
 }

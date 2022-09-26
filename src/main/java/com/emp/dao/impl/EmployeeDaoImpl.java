@@ -2,57 +2,99 @@ package com.emp.dao.impl;
 
 import java.util.List;
 
+import org.hibernate.query.Query;
+
 import com.emp.dao.intf.EmployeeDaoIntf;
 import com.emp.vo.Employee;
 
 public class EmployeeDaoImpl implements EmployeeDaoIntf{
 
 	@Override
-	public boolean insert(Employee pojo) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean insert(Employee emp) {
+		getSession().persist(emp);
+		return true;
 	}
 
 	@Override
 	public boolean deleteById(Integer id) {
-		// TODO Auto-generated method stub
-		return false;
+		Employee emp = new Employee();
+		emp.setEmpId(id);
+		getSession().remove(emp);
+		return true;
 	}
 
 	@Override
-	public boolean update(Employee pojo) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean update(Employee emp) {
+		final StringBuilder hql = new StringBuilder()
+				.append("UPDATE Employee SET ");
+			hql.append("gymId = :gymId, ")
+				.append("empName = :empName, ")
+				.append("nickname = :nickname, ")
+				.append("phone = :phone, ")
+				.append("email = :email, ")
+				.append("job = :job, ")
+				.append("gender = :gender, ")
+				.append("birth = :birth, ")
+				.append("intro = :intro ")
+				.append("status = :status ")
+				.append("pic = :pic ")
+				.append("where empId = :empId");
+
+			Query<?> query = getSession().createQuery(hql.toString());
+			return query
+					.setParameter("gymId", emp.getGymId())
+					.setParameter("empName", emp.getEmpName())
+					.setParameter("nickname", emp.getNickname())
+					.setParameter("phone", emp.getPhone())
+					.setParameter("email", emp.getEmail())
+					.setParameter("job", emp.getJob())
+					.setParameter("gender", emp.getGender())
+					.setParameter("birth", emp.getBirth())
+					.setParameter("intro", emp.getIntro())
+					.setParameter("status", emp.getStatus())
+					.setParameter("pic", emp.getPic())
+					.setParameter("empId", emp.getEmpId())
+					.executeUpdate() > 0;
 	}
 
 	@Override
 	public Employee selectById(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
+		Query<Employee> query =  getSession().createQuery("FROM Employee where empId = :empId", Employee.class);
+		query.setParameter("empId", id);
+		Employee emp = query.uniqueResult();
+		return emp;
 	}
 
 	@Override
 	public List<Employee> selectAll() {
-		// TODO Auto-generated method stub
-		return null;
+		Query<Employee> query =  getSession().createQuery("FROM Employee ", Employee.class);
+		List<Employee> list = query.list();
+		return list;
 	}
 
 	@Override
 	public Employee selectByUsername(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		Query<Employee> query =  getSession().createQuery("FROM Employee where username = :username", Employee.class);
+		query.setParameter("username", username);
+		Employee emp = query.uniqueResult();
+		return emp;
 	}
 
 	@Override
 	public Employee selectByEmail(String email) {
-		// TODO Auto-generated method stub
-		return null;
+		Query<Employee> query =  getSession().createQuery("FROM Employee where email = :email", Employee.class);
+		query.setParameter("email", email);
+		Employee emp = query.uniqueResult();
+		return emp;
 	}
 
 	@Override
 	public Employee selectForLogin(String username, String password) {
-		// TODO Auto-generated method stub
-		return null;
+		Query<Employee> query =  getSession().createQuery("FROM Employee where username = :username and password = :password", Employee.class);
+		query.setParameter("username", username);
+		query.setParameter("password", password);
+		Employee emp = query.uniqueResult();
+		return emp;
 	}
 
 }

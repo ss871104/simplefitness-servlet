@@ -15,15 +15,14 @@ import com.course.vo.Course;
 import com.coursebooking.service.impl.CourseBookingServiceImpl;
 import com.coursebooking.service.intf.CourseBookingServiceIntf;
 import com.coursebooking.vo.CourseBooking;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import static com.common.util.Constants.GSON;
 
 @WebServlet("/courseBooking/SearchCourseServlet")
 public class SearchCourseServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
 	private CourseBookingServiceIntf _courseBookingService = new CourseBookingServiceImpl();
-	private Gson GSON = new GsonBuilder().create();
+	
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		

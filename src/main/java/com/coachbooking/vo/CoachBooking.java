@@ -1,20 +1,22 @@
 package com.coachbooking.vo;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 public class CoachBooking {
 	private Integer coachbookId;
 	private Integer memId;
 	private Integer coachId;
-	private Timestamp coachbookTime;
+	private LocalDateTime coachbookTime;
 	private String coachbookStatus;
-	private Timestamp checkTime;
+	private LocalDateTime checkTime;
+	private Integer gymId;
+	private Integer empId;
 	
 	public Integer getCoachbookId() {
 		return coachbookId;
 	}
 	public void setCoachbookId(Integer coachbookId) {
-		this.coachbookId = coachId;
+		this.coachbookId = coachbookId;
 	}
 	public Integer getMemId() {
 		return memId;
@@ -28,10 +30,10 @@ public class CoachBooking {
 	public void setCoachId(Integer coachId) {
 		this.coachId = coachId;
 	}
-	public Timestamp getCoachbookTime() {
+	public LocalDateTime getCoachbookTime() {
 		return coachbookTime;
 	}
-	public void setCoachbookTime(Timestamp coachbookTime) {
+	public void setCoachbookTime(LocalDateTime coachbookTime) {
 		this.coachbookTime = coachbookTime;
 	}
 	public String getCoachbookStatus() {
@@ -40,10 +42,24 @@ public class CoachBooking {
 	public void setCoachbookStatus(String coachbookStatus) {
 		this.coachbookStatus = coachbookStatus;
 	}
-	public Timestamp getCheckTime() {
+	public LocalDateTime getCheckTime() {
 		return checkTime;
 	}
-	public void setCheckTime(Timestamp checkTime) {
+	public void setCheckTime(LocalDateTime checkTime) {
 		this.checkTime = checkTime;
 	}
+	public Integer getGymId() {
+		return gymId;
+	}
+	public void setGymId(Integer gymId) {
+		this.gymId = gymId;
+	}
+	public Integer getEmpId() {
+		return empId;
+	}
+	public void setEmpId(Integer empId) {
+		this.empId = empId;
+	}
+	
+	
 }

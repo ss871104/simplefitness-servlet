@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +34,7 @@ public class CourseBookingDaoImpl implements CourseBookingDaoIntf {
 
 	@Override
 	public boolean insert(CourseBooking coursebookVo) {
-		int rowCount = 0;
+		boolean flag=true;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.INSERT);) {
 
@@ -42,17 +43,17 @@ public class CourseBookingDaoImpl implements CourseBookingDaoIntf {
 			pstmt.setInt(1, coursebookVo.getMemId());
 			pstmt.setInt(2, coursebookVo.getCourseId());
 			pstmt.setString(3, coursebookVo.getCoursebookStatus());
-
-			rowCount = pstmt.executeUpdate();
+			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
-		return rowCount != 0;
+		return flag;
 	}
 
 	@Override
 	public boolean update(CourseBooking coursebookVo) {
-		int rowCount = 0;
+		boolean flag=true;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.UPDATE);) {
 
@@ -62,12 +63,12 @@ public class CourseBookingDaoImpl implements CourseBookingDaoIntf {
 			pstmt.setInt(2, coursebookVo.getCourseId());
 			pstmt.setString(3, coursebookVo.getCoursebookStatus());
 			pstmt.setInt(4, coursebookVo.getCoursebookId());
-
-			rowCount = pstmt.executeUpdate();
+			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
-		return rowCount != 0;
+		return flag;
 	}
 
 	@Override
@@ -106,7 +107,7 @@ public class CourseBookingDaoImpl implements CourseBookingDaoIntf {
 					coursebook.setCoursebookId(rs.getInt("cour_book_Id"));
 					coursebook.setMemId(rs.getInt("mem_Id"));
 					coursebook.setCourseId(rs.getInt("cour_Id"));
-					coursebook.setCoursebookTime(rs.getTimestamp("booking_time"));
+					coursebook.setCoursebookTime(rs.getObject("booking_time",LocalDateTime.class));
 					coursebook.setCoursebookStatus(rs.getString("status"));
 				}
 			}
@@ -133,7 +134,7 @@ public class CourseBookingDaoImpl implements CourseBookingDaoIntf {
 					coursebook.setCoursebookId(rs.getInt("cour_book_Id"));
 					coursebook.setMemId(rs.getInt("mem_Id"));
 					coursebook.setCourseId(rs.getInt("cour_Id"));
-					coursebook.setCoursebookTime(rs.getTimestamp("booking_time"));
+					coursebook.setCoursebookTime(rs.getObject("booking_time",LocalDateTime.class));
 					coursebook.setCoursebookStatus(rs.getString("status"));
 					list.add(coursebook);
 				}
@@ -163,7 +164,7 @@ public class CourseBookingDaoImpl implements CourseBookingDaoIntf {
 					coursebook.setCoursebookId(rs.getInt("cour_book_Id"));
 					coursebook.setMemId(rs.getInt("mem_Id"));
 					coursebook.setCourseId(rs.getInt("cour_Id"));
-					coursebook.setCoursebookTime(rs.getTimestamp("booking_time"));
+					coursebook.setCoursebookTime(rs.getObject("booking_time",LocalDateTime.class));
 					coursebook.setCoursebookStatus(rs.getString("status"));
 					
 					courseBookingList.add(coursebook);
@@ -177,7 +178,7 @@ public class CourseBookingDaoImpl implements CourseBookingDaoIntf {
 
 	@Override
 	public boolean updateStatus(CourseBooking coursebookVo) {
-		int rowCount = 0;
+		boolean flag=true;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SQL.UPDATE_STATUS);) {
 
@@ -185,12 +186,12 @@ public class CourseBookingDaoImpl implements CourseBookingDaoIntf {
 
 			pstmt.setString(1, coursebookVo.getCoursebookStatus());
 			pstmt.setInt(2, coursebookVo.getCoursebookId());
-
-			rowCount = pstmt.executeUpdate();
+			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return false;
 		}
-		return rowCount != 0;
+		return flag;
 	}
 
 	@Override

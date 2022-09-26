@@ -1,4 +1,4 @@
-package com.coursebooking.controller;
+package com.coachbooking.controller;
 
 import static com.common.util.Constants.GSON;
 
@@ -12,15 +12,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.coursebooking.service.impl.CourseBookingServiceImpl;
-import com.coursebooking.service.intf.CourseBookingServiceIntf;
-import com.coursebooking.vo.CourseBooking;
+import com.coach.vo.Coach;
+import com.coachbooking.service.impl.CoachBookingServiceImpl;
+import com.coachbooking.service.intf.CoachBookingServiceIntf;
+import com.coachbooking.vo.CoachBooking;
 
-@WebServlet("/courseBooking/CancelCourseServlet")
-public class CancelCourseServlet extends HttpServlet{
+@WebServlet("/coachBooking/CreateCoachBookingServlet")
+public class CreateCoachBookingServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;
-	private CourseBookingServiceIntf _courseBookingService = new CourseBookingServiceImpl();
+	private CoachBookingServiceIntf _coachBookingService = new CoachBookingServiceImpl();
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -35,14 +36,20 @@ public class CancelCourseServlet extends HttpServlet{
         String json = br.readLine();
 
         //Step.1 接值
-        CourseBooking courseBooking = GSON.fromJson(json, CourseBooking.class);
+        CoachBooking coachBooking = GSON.fromJson(json, CoachBooking.class);
+        boolean coachBookingResult=false;
         
         //Step.2 執行SVC
-        Boolean courseBookingResult=_courseBookingService.cancelCourseByMemberId(courseBooking);
+        boolean insertCoachBookingResult=_coachBookingService.createCoachBooking(coachBooking);
+        if(insertCoachBookingResult) {
+        	Coach coach = new Coach();
+        	coach.setCoaId(coachBooking.getCoachId());
+        	coachBookingResult=_coachBookingService.setCoachStatusUnableBooking(coach);
+        	}
 
 
 		PrintWriter pw = response.getWriter();
-        pw.print(GSON.toJson(courseBookingResult));
+        pw.print(GSON.toJson(coachBookingResult));
 	}
 	
 	@Override

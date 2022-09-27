@@ -1,0 +1,191 @@
+.main {
+    margin-left: 15%;
+    padding:30px;
+    /* border: 1px solid blue; */
+    font-family: 'Noto Sans TC', sans-serif;
+
+}
+.container{
+    width: 90%;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 20px 0px 50px 50px;
+    color: rgba(0, 0, 0, 0.719);
+}
+
+ul.tabList{
+    display: flex;
+    width: 95%;
+    justify-content: space-around;
+    padding-left: 0rem;
+    /* border: 1px solid black; */
+    background-color:rgba(199, 195, 195, 0.447) ;
+}
+
+.tabList >li{
+    padding: 20px 0px;
+    font-size: larger;
+
+}
+.tabList >li >a{
+    text-decoration: none;
+    color: black;
+    transition: all 0.3s ease;
+}
+.tabList >li :hover{
+    color:rgb(213, 139, 115);
+}
+.tabList >li >a.tab.-on{
+    color:rgb(213, 139, 115);
+}
+
+div.tab{
+    width: 95%;
+    /* border: 1px solid black; */
+    padding: 10px;
+    display: none;
+}
+div.tab2 {
+    border: 1px solid black;
+}
+div.tab3 {
+    border: 1px solid black;
+}
+
+div.tab.-on {
+    display: block;
+  }
+
+/* -------------------Step 1-------------------- */
+
+div.tab1{
+    height: auto;
+}
+div.tab1 > ul{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 0rem;
+    margin: 0;
+}
+
+
+.item_header{
+    display: flex;
+    width: 100%;
+    margin: 0 ;
+    background-color: #fff;
+    border-radius: 3px;
+    border-bottom: 1px solid #888;
+ 
+}
+.item_header div{
+    color: #888;
+    line-height: 40px;
+}
+.price, .count,.amount,.operate{
+    width: 12%;
+}
+
+.item_header .prdImg{
+    width: 21%;
+    padding-left: 20px;
+
+}
+.item_header .prdName{
+    width: 15%;
+}
+.item_header .gymName {
+    width: 16%;
+}
+
+.item_body{
+    display:block;
+}
+
+.product{
+    margin-top: 20px;
+    align-items: center;
+    width: 100%;
+    display: flex;
+    height: auto;
+    padding: 10px 0;
+}
+
+.product div{
+    width: 12%;
+    color: #888;
+    line-height: 40px;
+}
+
+.product .prdImg{
+    width: 21%;
+    padding-left: 20px;
+
+}
+.product .prdName{
+    width: 15%;
+}
+.product .gymName {
+    width: 16%;
+}
+
+.prdImg img{
+    width: 7em;
+    height: 5em;
+    border-radius: 3px;
+    margin: 10px 0;
+}
+
+.totalContainer >ul{
+    display: flex;
+    margin-top: 2em;
+    justify-content: space-between;
+    width: 45%;
+    margin-left: 50%;
+    align-items: center;
+}
+.tab1_btn{
+    border-radius: 3px;
+    padding: 5px 7px;
+}
+
+#count{
+    margin: 0 3px;
+}
+#minus:active, #plus:active{
+    opacity: 0.5;
+}
+
+/* -------------------Step 2-------------------- */
+.tab2Area{
+    margin: 1em;
+}
+
+label{
+    padding-bottom: 10px;
+}
+
+.cardArea {
+    margin: 1em;
+}
+
+.cardArea >div{
+     margin-bottom: 15px;
+}
+.cardArea >div >input{
+    text-align: center;
+    margin-left: 5px;
+}
+.tab2_btn{
+    margin: 2em 0 1em 85%;
+    border-radius: 3px;
+    padding: 5px 7px;
+}
+
+/* -------------------Step 2-------------------- */
+.tab3 h4{
+    margin: 0.5rem 1.5rem;
+}
+
+
+
+

@@ -18,9 +18,11 @@ public class Product extends Common{
 	
 	private Integer prodId;
 	private String prodName;
-	private Integer rent;
+	private Integer price;
 	private String intro;
 	private Integer count;
+	private byte[] prodPic;
+	private String prodPicBase64;
 	
 	public Integer getProdId() {
 		return prodId;
@@ -34,11 +36,11 @@ public class Product extends Common{
 	public void setProdName(String prodName) {
 		this.prodName = prodName;
 	}
-	public Integer getRent() {
-		return rent;
+	public Integer getPrice() {
+		return price;
 	}
-	public void setRent(Integer rent) {
-		this.rent = rent;
+	public void setPrice(Integer price) {
+		this.price = price;
 	}
 	public String getIntro() {
 		return intro;
@@ -52,7 +54,18 @@ public class Product extends Common{
 	public void setCount(Integer count) {
 		this.count = count;
 	}
+	public byte[] getProdPic() {
+		return prodPic;
+	}
+	public void setProdPic(byte[] prodPic) {
+		this.prodPic = prodPic;
+	}
+	public String getProdPicBase64() {
+		return prodPicBase64;
+	}
+	public void setProdPicBase64(String prodPicBase64) {
+		this.prodPicBase64 = prodPicBase64;
+	}
 	
 	
-//	private List<IdvProduct> list = new ArrayList<IdvProduct>();
 }

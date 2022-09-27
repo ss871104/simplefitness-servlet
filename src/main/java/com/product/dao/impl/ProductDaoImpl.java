@@ -66,15 +66,14 @@ public class ProductDaoImpl implements ProductDaoIntf{
 				if (rs.next()) {
 					product.setProdId(rs.getInt("prod_id"));
 					product.setProdName(rs.getString("prod_name"));
-					product.setRent(rs.getInt("rent"));
+					product.setPrice(rs.getInt("price"));
 					product.setIntro(rs.getString("intro"));
-//					product.setCount(rs.getInt("count"));
+					product.setProdPic(rs.getBytes("pic"));
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
 		return product;
 	
 	}
@@ -84,60 +83,7 @@ public class ProductDaoImpl implements ProductDaoIntf{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public List<Product> selectListById(Integer prodId) {
-		List<Product> list = new ArrayList<Product>();
-		
-			try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SELECT_BY_ID);) {
-
-				System.out.println("連線成功");
-				
-				pstmt.setInt(1, prodId);
-				
-				try (ResultSet rs = pstmt.executeQuery()) {
-
-					while (rs.next()) {
-						Product product = new Product();
-						product.setProdId(rs.getInt("prod_id"));
-						product.setProdName(rs.getString("prod_name"));
-						product.setRent(rs.getInt("rent"));
-						product.setIntro(rs.getString("intro"));
-						list.add(product);
-					}
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			return list;
-	}
 	
-//	public List<Product> getProdInfoByProdId(Integer prodId) {
-//		List<Product> list = new ArrayList<Product>();
-//		Product product = null;
-//		
-//			try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SELECT_PROD_BY_ID);) {
-//
-//				System.out.println("連線成功");
-//				
-//				pstmt.setInt(1, prodId);
-//				
-//				try (ResultSet rs = pstmt.executeQuery()) {
-//
-//					while (rs.next()) {
-//						product = new Product();
-//						product.setProdId(rs.getInt("prod_id"));
-//						product.setProdName(rs.getString("prod_name"));
-//						product.setRent(rs.getInt("rent"));
-//						product.setIntro(rs.getString("intro"));
-//						list.add(product);
-//					}
-//				}
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
-//			return list;
-//		}
 
 
 }

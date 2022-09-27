@@ -20,6 +20,11 @@ public class OrderServiceImpl implements OrderServiceIntf {
 		return dao.selectAll();
 	}
 
+	@Override
+	public List<Order> SelectByMem(Integer memId) {
+		return dao.SelectByMem(memId);
+	}
+
 	
 	
 	

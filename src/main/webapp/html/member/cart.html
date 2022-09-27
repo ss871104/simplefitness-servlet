@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>租借首頁</title>
+    <link rel="stylesheet" href="../../css/member/rent.css" />
+    <link rel="stylesheet" href="../../css/member/cart.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+      integrity="sha384-xeJqLiuOvjUBq3iGOjvSQSIlwrpqjSHXpduPd6rQpuiM3f5/ijby8pCsnbu5S81n"
+      crossorigin="anonymous"
+    />
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+  </head>
+  <body>
+  
+    <!-- header -->
+
+    <div style="height: auto">
+      <div class="topnav">
+        <img
+          class="logoImg"
+          href="#home"
+          src="../../img/Simple_Fitness-logos_white.png"
+          alt=""
+        />
+
+        <ul class="list-inline">
+          <li class="dropdown">
+            <a class="topnavBtn" id="home" href="#home">
+              <img class="icon" src="../../img/home.png" alt="" title="首頁" />
+            </a>
+            <div class="dropdown-content">
+              <ul>
+                <li><a href="#">最新消息</a></li>
+                <li><a href="#">場館資訊</a></li>
+                <li><a href="#">課程資訊</a></li>
+                <li><a href="#">收費方式</a></li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <a class="topnavBtn" id="cart" href="./cart.html">
+              <img
+                class="icon"
+                src="../../img/cart.png"
+                alt=""
+                title="購物車"
+              />
+              <span>0</span>
+            </a>
+          </li>
+          <li>
+            <a class="topnavBtn" id="notice" href="#notice">
+              <img class="icon" src="../../img/bell.png" alt="" title="通知中心" />
+            </a>
+          </li>
+          <li class="dropdown">
+            <a class="topnavBtn" id="user" href="#user">
+              <img class="icon" src="../../img/user.png" alt="" title="會員" />
+            </a>
+            <div class="dropdown-content">
+              <ul>
+                <li><a href="#">登出</a></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+        
+      </div>
+      
+      <!-- contentArea -->
+      <div class="contentArea">
+      
+        <!-- aside -->
+        <div class="side-menu">
+          <ul class="nav">
+            <li>
+              <a href="#">
+                <i class="fa fa-users" aria-hidden="true"></i>
+                會員資料編輯
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="fa fa-gavel" aria-hidden="true"></i>
+                課程預約
+              </a>
+              <ul>
+                <li>
+                  <a href="#"> 我的預約 </a>
+                </li>
+                <li>
+                  <a href="#"> 預約團課/教練課 </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="./rentFront.html" style="background-color: #7bb593">
+                <i class="fa fa-coins" aria-hidden="true"></i>
+                租借用品
+              </a>
+              <ul>
+                <li>
+                  <a href="#"> 我的租借清單 </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        
+        <!-- main -->
+        <main class="main">
+          <div class="container">
+
+            <div class="listBlock">
+              <ul class="tabList">
+                <li>
+                  <a href="#" data-target="tab1" class="tab -on">Step 1 <br>確認租借商品</a>
+                </li>
+                <li><a href="#" data-target="tab2" class="tab">Step 2 <br>確認付款方式</a></li>
+                <li><a href="#" data-target="tab3" class="tab">Step 3 <br>完成付款</a></li>
+              </ul>
+            </div>
+
+            <div class="content">
+              <div class="tab tab1 -on">
+                
+                <div class="item_header">
+                  <div class="prdImg">商品</div>
+                  <div class="prdName"></div>
+                  <div class="gymName">場館</div>
+                  <div class="price">單價</div>
+                  <div class="count">數量</div> 
+                  <div class="amount">總計</div>
+                  <div class="operate">操作</div>
+                </div>
+                <div class="item_header item_body">
+                    
+                </div>
+       
+                <div class="totalContainer">
+                  <ul>
+                    <li>總數：<span id="totalCount"></span></li>
+                    <li>總金額：$<span id="totalCost"></span></li>
+                    <button class="tab1_btn">結帳</button>
+                  </ul>  
+                </div>
+                 
+              </div>
+      
+              <div class="tab tab2">
+                <div class="tab2Area">
+                  <p>付款方式</p>
+                  
+                  <label for="cash"><input type="radio" id="cash" name="pay" value="1" checked >  臨櫃支付</label>
+                  <br>
+                  
+                  <label for="card"><input type="radio" id="card" name="pay" value="2" > 線上信用卡支付</label>
+                  
+
+                  <div class="cardArea">
+                    
+                    <div class="cardNo">
+                      信用卡號
+                      <input type="tel" autocomplete="off" maxlength="4" size="1" class="cardNo" id="cardNo_1" name="cardNo_1"> -
+                      <input type="tel" autocomplete="off" maxlength="4" size="1" class="cardNo" id="cardNo_2" name="cardNo_2"> -
+                      <input type="tel" autocomplete="off" maxlength="4" size="1" class="cardNo" id="cardNo_3" name="cardNo_3"> -
+                      <input type="tel" autocomplete="off" maxlength="4" size="1" class="cardNo" id="cardNo_4" name="cardNo_4">
+                      
+                    </div>
+                    <div class="date">
+                      有效期限
+                      <input type="tel" maxlength="5" size="3"  id="date" name="date" placeholder="MM/YY">
+                    </div>
+                    <div>
+                      安全驗證碼
+                      <input type="tel" maxlength="3" size="1"  id="cvv" name="cvv">
+                    </div>
+                    
+                  </div>
+                  
+                  <button class="tab2_btn">確認結帳</button>
+
+                </div>
+                
+              </div>
+      
+              <div class="tab tab3">
+                <h4>租借成功！</h4>
+                <div>
+                  <ul class="prdList">
+                    
+                  </ul>
+                  
+                  <ul>
+                    <li>租借人:<span>陳阿民</span></li>
+                    <li>租借場館：<span class="lastGym"></span></li>
+                    <li>付款方式：<span class="lastPay">臨櫃支付</span></li>
+                    <li>租借日期：<span class="startTime"></span></li>
+                    <li>取貨期限：<span class="endTime"></span></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+            
+            
+            
+          </div>
+        </main>
+      </div>
+    </div>
+    <script src="../../js/member/cart.js"></script>
+    <script>
+      
+    	// tab區塊
+      function tab_active() {
+        // console.log(location.hash);
+        let target_tab;
+        switch (location.hash) {
+          case "#tab1":
+            target_tab = "tab1";
+            break;
+          case "#tab2":
+            target_tab = "tab2";
+            break;
+          case "#tab3":
+            target_tab = "tab3";
+            break;
+          default:
+            target_tab = "tab1";
+        }
+
+        $("a.tab").removeClass("-on");
+        $("a.tab[data-target=" + target_tab + "]").addClass("-on");
+
+        $("div.tab").removeClass("-on");
+        $("div.tab." + target_tab).addClass("-on");
+      }
+
+      $(function () {
+        //console.log(location);
+        //console.log(location.hash);
+
+        // 連到外部網站，再按上一頁時，會觸發 DOMContentLoaded 事件，所以再執行
+        tab_active();
+
+
+        $("a.tab").on("click", function (e) {
+          e.preventDefault();
+
+          console.log(this);
+
+          /* 將頁籤列表移除所有 -on，再將指定的加上 -on */
+          $(this).closest("ul").find("a.tab").removeClass("-on");
+          $(this).addClass("-on");
+
+          /* 找到對應的頁籤內容，加上 -on 來顯示 */
+          $("div.tab").removeClass("-on");
+          $("div.tab." + $(this).attr("data-target")).addClass("-on");
+
+          history.pushState(null, null, "#" + $(this).attr("data-target"));
+        });
+
+        $(".tab1_btn").on("click", function (e) {
+          e.preventDefault();
+          $(".tab").removeClass("-on");
+          $("a.tab[data-target= tab2]").addClass("-on");
+          $("div.tab2").addClass("-on");
+          history.pushState(null, null, "#" + "tab2");
+        });
+        $(".tab2_btn").on("click", function (e) {
+          e.preventDefault();
+          $(".tab").removeClass("-on");
+          $("a.tab[data-target= tab3]").addClass("-on");
+          $("div.tab3").addClass("-on");
+          history.pushState(null, null, "#" + "tab3");
+        });
+
+
+      });
+
+      window.addEventListener("popstate", function () {
+        console.log("ttt");
+        tab_active();
+      });
+
+
+
+      // 卡號欄位
+      $(function(){
+        $(".cardNo").focus(function(e){
+          $(".cardNo").keyup(function(e){
+            if(e.which >= 48 && e.which <= 57 ||e.which == 8){
+              return true;
+            }else{
+              $(this).val("")
+            }
+          });
+           
+          $("#cardNo_1").keyup(function(e){
+                if($(this).val().length == 4)
+                  $("#cardNo_1").next().focus();
+          })
+          $("#cardNo_2").keyup(function(e){
+            if($(this).val().length == 4)
+              $("#cardNo_2").next().focus();
+          })
+          $("#cardNo_3").keyup(function(e){
+            if($(this).val().length == 4)
+              $("#cardNo_3").next().focus();
+          })
+        })
+
+       
+          $("#date").keyup(function(e){
+            
+            if($(this).val().length ==2){
+                $(this).val($(this).val()+"/")
+            }
+            if(e.which >= 48 && e.which <= 57 ||e.which == 8){
+              return true;
+            }else{
+              $(this).val("")
+            }
+          });
+       
+        $("#cvv").keyup(function(e){
+            
+            if(e.which >= 48 && e.which <= 57 ||e.which == 8){
+              return true;
+            }else{
+              $(this).val("")
+            }
+          });
+      });
+
+
+    </script>
+  </body>
+</html>

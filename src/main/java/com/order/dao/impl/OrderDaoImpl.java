@@ -42,7 +42,7 @@ public class OrderDaoImpl implements OrderDaoIntf {
 			pstmt.setInt(1, orderVo.getMemId());
 			pstmt.setInt(2, orderVo.getGymId());
 			pstmt.setInt(3, orderVo.getAmount());
-			pstmt.setTimestamp(4, orderVo.getOrderTime());
+			pstmt.setTimestamp(4, orderVo.getOrderDate());
 			pstmt.setString(5, orderVo.getStatus());
 
 			rowCount = pstmt.executeUpdate();
@@ -63,7 +63,7 @@ public class OrderDaoImpl implements OrderDaoIntf {
 			pstmt.setInt(1, orderVo.getMemId());
 			pstmt.setInt(2, orderVo.getGymId());
 			pstmt.setInt(3, orderVo.getAmount());
-			pstmt.setObject(4, orderVo.getOrderTime());
+			pstmt.setObject(4, orderVo.getOrderDate());
 			pstmt.setString(5, orderVo.getStatus());
 			pstmt.setInt(6, orderVo.getOrderId());
 
@@ -111,7 +111,7 @@ public class OrderDaoImpl implements OrderDaoIntf {
 					order.setMemId(rs.getInt("mem_id"));
 					order.setGymId(rs.getInt("gym_id"));
 					order.setAmount(rs.getInt("amount"));
-					order.setOrderTime(rs.getTimestamp("order_time"));
+					order.setOrderDate(rs.getTimestamp("order_date"));
 					order.setStatus(rs.getString("status"));
 				}
 			}
@@ -138,7 +138,7 @@ public class OrderDaoImpl implements OrderDaoIntf {
 					order.setMemId(rs.getInt("mem_id"));
 					order.setGymId(rs.getInt("gym_id"));
 					order.setAmount(rs.getInt("amount"));
-					order.setOrderTime(rs.getTimestamp("order_time"));
+					order.setOrderDate(rs.getTimestamp("order_date"));
 					order.setStatus(rs.getString("status"));
 					list.add(order);
 				}
@@ -150,7 +150,8 @@ public class OrderDaoImpl implements OrderDaoIntf {
 	}
 
 	@Override
-	public Order SelectByMem(Integer memId) {
+	public List<Order> SelectByMem(Integer memId) {
+		List<Order> list = new ArrayList<Order>();
 		Order order = null;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SELECT_BY_MEM);) {
@@ -161,25 +162,27 @@ public class OrderDaoImpl implements OrderDaoIntf {
 
 			try (ResultSet rs = pstmt.executeQuery()) {
 
-				order = new Order();
 
-				if (rs.next()) {
+				while (rs.next()) {
+					order = new Order();
 					order.setOrderId(rs.getInt("order_id"));
 					order.setMemId(rs.getInt("mem_id"));
 					order.setGymId(rs.getInt("gym_id"));
 					order.setAmount(rs.getInt("amount"));
-					order.setOrderTime(rs.getTimestamp("order_time"));
+					order.setOrderDate(rs.getTimestamp("order_date"));
 					order.setStatus(rs.getString("status"));
+					list.add(order);
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return order;
+		return list;
 	}
 
 	@Override
-	public Order SelectByGym(Integer gymId) {
+	public List<Order> SelectByGym(Integer gymId) {
+		List<Order> list = new ArrayList<Order>();
 		Order order = null;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SELECT_BY_GYM);) {
@@ -192,19 +195,20 @@ public class OrderDaoImpl implements OrderDaoIntf {
 
 				order = new Order();
 
-				if (rs.next()) {
+				while (rs.next()) {
 					order.setOrderId(rs.getInt("order_id"));
 					order.setMemId(rs.getInt("mem_id"));
 					order.setGymId(rs.getInt("gym_id"));
 					order.setAmount(rs.getInt("amount"));
-					order.setOrderTime(rs.getTimestamp("order_time"));
+					order.setOrderDate(rs.getTimestamp("order_date"));
 					order.setStatus(rs.getString("status"));
+					list.add(order);
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return order;
+		return list;
 	}
 
 	@Override

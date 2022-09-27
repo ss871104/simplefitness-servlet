@@ -119,7 +119,8 @@ public class OrderDetailDaoImpl implements OrderDetailDaoIntf {
 	}
 
 	@Override
-	public OrderDetail SelectByOrderId(Integer orderId) {
+	public List<OrderDetail> SelectByOrderId(Integer orderId) {
+		List<OrderDetail> list = new ArrayList<OrderDetail>();
 		OrderDetail orderdetail = null;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SELECT_BY_ORDERID);) {
@@ -130,7 +131,7 @@ public class OrderDetailDaoImpl implements OrderDetailDaoIntf {
 
 			try (ResultSet rs = pstmt.executeQuery()) {
 
-				if (rs.next()) {
+				while (rs.next()) {
 					orderdetail = new OrderDetail();
 					orderdetail.setOrderCode(rs.getInt("order_code"));
 					orderdetail.setOrderId(rs.getInt("order_id"));
@@ -138,12 +139,13 @@ public class OrderDetailDaoImpl implements OrderDetailDaoIntf {
 					orderdetail.setPickupTime(rs.getTimestamp("pickup_time"));
 					orderdetail.setReturnTime(rs.getTimestamp("return_time"));
 					orderdetail.setStatus(rs.getString("status"));
+					list.add(orderdetail);
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return orderdetail;
+		return list;
 	}
 
 	@Override

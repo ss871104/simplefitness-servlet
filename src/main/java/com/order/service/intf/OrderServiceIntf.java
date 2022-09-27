@@ -5,5 +5,8 @@ import java.util.List;
 import com.order.vo.Order;
 
 public interface OrderServiceIntf {
-	List<Order> findAll();
+	
+	public List<Order> findAll();
+	public List<Order> SelectByMem(Integer memId);
+	
 	}

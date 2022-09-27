@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>租借首頁</title>
+    <link rel="stylesheet" href="../../css/member/rent.css" />
+    <link rel="stylesheet" href="../../css/member/rentFront.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+      integrity="sha384-xeJqLiuOvjUBq3iGOjvSQSIlwrpqjSHXpduPd6rQpuiM3f5/ijby8pCsnbu5S81n"
+      crossorigin="anonymous"
+    />
+  
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+  </head>
+  
+  <body>
+  
+    <!-- header -->
+   
+    <div style="height: auto">
+      <div class="topnav">
+        <img
+          class="logoImg"
+          href="#home"
+          src="../../img/Simple_Fitness-logos_white.png"
+          alt=""
+        />
+
+        <ul class="list-inline">
+          <li class="dropdown">
+            <a class="topnavBtn" id="home" href="#home">
+              <img class="icon" src="../../img/home.png" alt="" title="首頁" />
+            </a>
+            <div class="dropdown-content">
+              <ul>
+                <li><a href="#">最新消息</a></li>
+                <li><a href="#">場館資訊</a></li>
+                <li><a href="#">課程資訊</a></li>
+                <li><a href="#">收費方式</a></li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <a class="topnavBtn" id="cart" href="./cart.html">
+              <img
+                class="icon"
+                src="../../img/cart.png"
+                alt=""
+                title="購物車"
+              /><span>0</span>
+            </a>
+          </li>
+          <li>
+            <a class="topnavBtn" id="notice" href="#notice">
+              <img class="icon" src="../../img/bell.png" alt="" title="通知中心" />
+            </a>
+          </li>
+          <li class="dropdown">
+            <a class="topnavBtn" id="user" href="#user">
+              <img class="icon" src="../../img/user.png" alt="" title="會員" />
+            </a>
+            <div class="dropdown-content">
+              <ul>
+                <li><a href="#">登出</a></li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+        
+      </div>
+      
+      <!-- contentArea -->
+      
+      <div class="contentArea">
+      
+        <!-- aside -->
+        <div class="side-menu">
+          <ul class="nav">
+            <li>
+              <a href="#">
+                <i class="fa fa-users" aria-hidden="true"></i>
+                會員資料編輯
+              </a>
+            </li>
+            <li>
+              <a href="#">
+                <i class="fa fa-gavel" aria-hidden="true"></i>
+                課程預約
+              </a>
+              <ul>
+                <li>
+                  <a href="#"> 我的預約 </a>
+                </li>
+                <li>
+                  <a href="#"> 預約團課/教練課 </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="#" style="background-color: #7bb593">
+                <i class="fa fa-coins" aria-hidden="true"></i>
+                租借用品
+              </a>
+              <ul>
+                <li>
+                  <a href="#"> 我的租借清單 </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        
+        <!-- main -->
+        <main class="main">
+          <div class="selectGym">
+            租借場館：
+            <select name="gymName" id="gymName">
+              <option value="0">選擇場館</option>
+              <option value="1">內湖康寧館</option>
+              <option value="2">台北忠孝館</option>
+              <option value="3">信義松仁館</option>
+              <option value="4">新北三重館</option>
+              <option value="5">新北汐止館</option>
+            </select>
+          </div>
+          
+          <ul class="item_list">
+            
+          </ul>
+
+          <p>- Simple Fitness 簡單運動股份有限公司 -</p>
+        </main>
+      </div>
+    </div>
+    <script src="../../js/member/rentFront.js"></script>
+    <script src="../../js/member/cart.js"></script>
+  </body>
+</html>

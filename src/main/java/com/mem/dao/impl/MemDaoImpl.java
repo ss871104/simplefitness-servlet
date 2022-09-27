@@ -62,18 +62,12 @@ public class MemDaoImpl implements MemDaoIntf {
 			
 			System.out.println("連線成功");
 			
-			pstmt.setString(1, memVo.getMemName());
-			pstmt.setString(2, memVo.getMemNickname());
-			pstmt.setString(3, memVo.getMemUsername());
-			pstmt.setString(4, memVo.getMemPassword());
-			pstmt.setString(5, memVo.getMemPhone());
-			pstmt.setString(6, memVo.getMemEmail());
-			pstmt.setString(7, memVo.getMemGender());
-			pstmt.setDate(8, memVo.getMemBirth());
-			pstmt.setDate(9, memVo.getMemStart());
-			pstmt.setDate(10, memVo.getMemExpire());
-			pstmt.setString(11, memVo.getMemStatus());
-			pstmt.setInt(12, memVo.getMemId());
+			pstmt.setString(1, memVo.getMemPhone());
+			pstmt.setString(2, memVo.getMemEmail());
+			pstmt.setDate(3, memVo.getMemStart());
+			pstmt.setDate(4, memVo.getMemExpire());
+			pstmt.setString(5, memVo.getMemStatus());
+			pstmt.setInt(6, memVo.getMemId());
 			
 			rowCount = pstmt.executeUpdate();		
 		} catch (SQLException e) {

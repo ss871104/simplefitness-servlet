@@ -10,5 +10,7 @@ public interface EmployeeDaoIntf extends CommonDaoHibernate<Employee, Integer>{
 	public Employee selectByEmail(String email);
 	
 	public Employee selectForLogin(String username, String password);
+	
+	public boolean updatePassById(Employee emp);
 
 }

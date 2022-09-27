@@ -37,7 +37,7 @@ public class Employee extends CommonHibernate{
 	private String empName;
 	private String nickname;
 	private String username;
-	@Column(name = "pass")
+	@Column(name = "pass", insertable = false)
 	private String password;
 	@Column(insertable = false)
 	private String phone;
@@ -51,11 +51,14 @@ public class Employee extends CommonHibernate{
 	private Date employDate;
 	@Column(insertable = false)
 	private String intro;
+	@Column(name = "`status`")
 	private String status;
-	@Column(insertable = false)
+	@Column(insertable = false, updatable = true)
 	private byte[] pic;
 	@Transient
 	private String picBase64;
+	@Transient
+	private String newPassword;
 	
 //	public JobEnum getJob() {
 //		return job;

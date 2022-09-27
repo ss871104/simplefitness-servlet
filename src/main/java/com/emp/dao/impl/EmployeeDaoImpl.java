@@ -25,8 +25,13 @@ public class EmployeeDaoImpl implements EmployeeDaoIntf{
 
 	@Override
 	public boolean update(Employee emp) {
+		final byte[] pic = emp.getPic();
+		System.out.println(pic);
 		final StringBuilder hql = new StringBuilder()
 				.append("UPDATE Employee SET ");
+			if (pic != null) {
+				hql.append("pic = :pic,");
+			}
 			hql.append("gymId = :gymId, ")
 				.append("empName = :empName, ")
 				.append("nickname = :nickname, ")
@@ -35,12 +40,14 @@ public class EmployeeDaoImpl implements EmployeeDaoIntf{
 				.append("job = :job, ")
 				.append("gender = :gender, ")
 				.append("birth = :birth, ")
-				.append("intro = :intro ")
+				.append("intro = :intro, ")
 				.append("status = :status ")
-				.append("pic = :pic ")
 				.append("where empId = :empId");
 
 			Query<?> query = getSession().createQuery(hql.toString());
+			if (pic != null) {
+				query.setParameter("pic", pic);
+			}
 			return query
 					.setParameter("gymId", emp.getGymId())
 					.setParameter("empName", emp.getEmpName())
@@ -52,7 +59,6 @@ public class EmployeeDaoImpl implements EmployeeDaoIntf{
 					.setParameter("birth", emp.getBirth())
 					.setParameter("intro", emp.getIntro())
 					.setParameter("status", emp.getStatus())
-					.setParameter("pic", emp.getPic())
 					.setParameter("empId", emp.getEmpId())
 					.executeUpdate() > 0;
 	}
@@ -95,6 +101,16 @@ public class EmployeeDaoImpl implements EmployeeDaoIntf{
 		query.setParameter("password", password);
 		Employee emp = query.uniqueResult();
 		return emp;
+	}
+
+	@Override
+	public boolean updatePassById(Employee emp) {
+		String hql = "UPDATE Employee SET password = :password where empId = :empId";
+		Query<?> query = getSession().createQuery(hql.toString());
+		return query
+				.setParameter("password", emp.getNewPassword())
+				.setParameter("empId", emp.getEmpId())
+				.executeUpdate() > 0;
 	}
 
 }

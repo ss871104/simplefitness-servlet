@@ -1,5 +1,6 @@
 package com.mem.service.impl;
 
+import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -139,19 +140,32 @@ public class MemServiceImpl implements MemServiceIntf {
 
 	@Override
 	public Member empEdit(Member mem) {
-		final Member eEdit = dao.selectById(mem.getMemId());
-		mem.setMemName(eEdit.getMemName());
-		mem.setMemNickname(eEdit.getMemNickname());
-		mem.setMemUsername(eEdit.getMemUsername());
-		mem.setMemPassword(eEdit.getMemPassword());
-		mem.setMemPhone(eEdit.getMemPhone());
-		mem.setMemEmail(eEdit.getMemEmail());
-		mem.setMemGender(eEdit.getMemGender());
-		mem.setMemBirth(eEdit.getMemBirth());
-		mem.setMemStart(eEdit.getMemStart());
-		mem.setMemExpire(eEdit.getMemExpire());
-		mem.setMemStatus(eEdit.getMemStatus());
-		mem.setMemId(eEdit.getMemId());
+		final String phone = mem.getMemPhone();
+		final String email = mem.getMemEmail();
+		final Date start = mem.getMemStart();
+		final Date expire = mem.getMemExpire();
+		final String status = mem.getMemStatus();
+		
+		if ("".equals(phone)) {
+			mem.setMessage("電話號碼未輸入");
+			mem.setSuccessful(false);
+			return mem;
+		}
+		if ("".equals(email)) {
+			mem.setMessage("信箱未輸入");
+			mem.setSuccessful(false);
+			return mem;
+		}
+		if (email.contains("@") == false) {
+			mem.setMessage("未符合信箱格式");
+			mem.setSuccessful(false);
+			return mem;
+		}
+		if ("".equals(status)) {
+			mem.setMessage("狀態未輸入");
+			mem.setSuccessful(false);
+			return mem;
+		}
 		if (dao.update(mem) == false) {
 			mem.setMessage("資料更改出現錯誤");
 			mem.setSuccessful(false);

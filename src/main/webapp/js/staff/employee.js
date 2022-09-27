@@ -1,4 +1,20 @@
 (() => {
+	// 一進來get gym
+	fetch("http://localhost:8080/simplefitness-servlet/gym/getAllGym")
+	.then(resp => resp.json())
+	.then(gym => {
+		for (i = 0; i < gym["length"]; i++){
+			sessionStorage.setItem(`'gym${gym[i].gymId}'`, `${gym[i].gymName}`);
+			
+		  	let text = `
+		  		<option value="${gym[i].gymId}">${gym[i].gymName}</option>
+		  		`;
+
+			$(".gym").append(text);
+			
+		}
+	});
+	
 	// 一進來get all
 	fetch("http://localhost:8080/simplefitness-servlet/staff/getAllEmp")
 	.then(resp => resp.json())
@@ -18,15 +34,17 @@
 			} else if (emp[i].status == "2") {
 				status = "留停"
 			}
-		  let text = `
-		  	<tr>
-				<td>${emp[i].empName}</td>
-				<td>${emp[i].nickname}</td>
-				<td>${job}</td>
-				<td>${emp[i].employDate}</td>
-				<td>${status}</td>
-				<td><button type="button" class="btn btn-secondary" id="emp${emp[i].empId}" value="${emp[i].empId}">進入</button></td>
-	  		</tr>`;
+			let gymName = sessionStorage.getItem(`'gym${emp[i].gymId}'`);
+		  	let text = `
+		  		<tr>
+					<td>${emp[i].empName}</td>
+					<td>${emp[i].nickname}</td>
+					<td>${gymName}</td>
+					<td>${job}</td>
+					<td>${emp[i].employDate}</td>
+					<td>${status}</td>
+					<td><button type="button" class="btn btn-secondary" id="emp${emp[i].empId}" value="${emp[i].empId}">進入</button></td>
+		  		</tr>`;
 
 			$(".info").append(text);
 		}
@@ -37,19 +55,6 @@
 				sessionStorage.setItem('emp', button.value);
 				location = './employee_edit.html';
 			});
-		}
-	});
-	
-	// 一進來get gym
-	fetch("http://localhost:8080/simplefitness-servlet/gym/getAllGym")
-	.then(resp => resp.json())
-	.then(gym => {
-		for (i = 0; i < gym["length"]; i++){
-		  let text = `
-		  	<option value="${gym[i].gymId}">${gym[i].gymName}</option>
-		  `;
-
-			$(".gym").append(text);
 		}
 	});
 	
@@ -69,6 +74,10 @@
 		const accLength = username.value.length;
 		if (accLength < 8 || accLength > 50) {
 			errMsg.textContent = '帳號長度須介於8~50字元';
+			return;
+		}
+		if (gym.value == "0") {
+			errMsg.textContent = '所屬健身房未選';
 			return;
 		}
 		let selected_job;
@@ -96,6 +105,8 @@
 			selected_status = status[0];
 		} else if (status[1].checked == true) {
 			selected_status = status[1];
+		} else if (status[2].checked == true) {
+			selected_status = status[2];
 		}
 		if (selected_status == null) {
 			errMsg.textContent = '狀態未選';

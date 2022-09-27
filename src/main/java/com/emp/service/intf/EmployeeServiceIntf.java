@@ -16,6 +16,8 @@ public interface EmployeeServiceIntf {
 	
 	Employee findById(Employee emp);
 	
+	Employee passChange(Employee emp);
+	
 	List<Employee> findAll();
 
 }

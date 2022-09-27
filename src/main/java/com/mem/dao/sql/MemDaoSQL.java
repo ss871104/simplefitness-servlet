@@ -5,7 +5,7 @@ public class MemDaoSQL {
 	public static final String INSERT = "insert into mem (mem_name, username, pass, email) "
 			+ "values (?, ?, ?, ?);";
 	
-	public static final String UPDATE = "update mem set mem_name = ?, nickname = ?, username = ?, pass = ?, phone = ?, email = ?, gender = ?, birth = ?, start_date = ?, expire_date = ?, status = ? where mem_id = ?;";
+	public static final String UPDATE = "update mem set phone = ?, email = ?, start_date = ?, expire_date = ?, status = ? where mem_id = ?;";
 	
 	public static final String DELETE = "delete from mem where mem_id = ?;";
 	

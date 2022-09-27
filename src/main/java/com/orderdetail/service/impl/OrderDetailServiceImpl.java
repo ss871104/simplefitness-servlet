@@ -20,4 +20,9 @@ public class OrderDetailServiceImpl implements OrderDetailServiceIntf {
 		return dao.selectAll();
 	}
 
+	@Override
+	public List<OrderDetail> SelectByOrderId(Integer orderId) {
+		return dao.SelectByOrderId(orderId);
+	}
+
 }

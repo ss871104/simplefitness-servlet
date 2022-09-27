@@ -10,22 +10,21 @@ public class Order implements Serializable {
 	private Integer memId;
 	private Integer gymId;
 	private Integer amount;
-	private Timestamp orderTime;     
+	private Timestamp orderDate;     
 	private String status;
 	
-	public Order(Integer orderId, Integer memId, Integer gymId, Integer amount, Timestamp orderTime, String status) {
+	public Order(Integer orderId, Integer memId, Integer gymId, Integer amount, Timestamp orderDate, String status) {
 		super();
 		this.orderId = orderId;
 		this.memId = memId;
 		this.gymId = gymId;
 		this.amount = amount;
-		this.orderTime = orderTime;
+		this.orderDate = orderDate;
 		this.status = status;
 	}
 
 
 	public Order() {
-		// TODO Auto-generated constructor stub
 	}
 
 
@@ -61,12 +60,12 @@ public class Order implements Serializable {
 		this.amount = amount;
 	}
 
-	public Timestamp getOrderTime() {
-		return orderTime;
+	public Timestamp getOrderDate() {
+		return orderDate;
 	}
 
-	public void setOrderTime(Timestamp orderTime) {
-		this.orderTime = orderTime;
+	public void setOrderDate(Timestamp orderDate) {
+		this.orderDate = orderDate;
 	}
 
 	public String getStatus() {

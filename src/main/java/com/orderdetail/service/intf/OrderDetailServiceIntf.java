@@ -5,5 +5,8 @@ import java.util.List;
 import com.orderdetail.vo.OrderDetail;
 
 public interface OrderDetailServiceIntf {
-	List<OrderDetail> findAll();
+	
+	public List<OrderDetail> findAll();
+	public List<OrderDetail> SelectByOrderId(Integer orderId);
+	
 }

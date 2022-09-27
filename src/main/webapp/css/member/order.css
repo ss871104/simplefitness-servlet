@@ -1,0 +1,13 @@
+.main {
+    margin-left: 15%;
+    padding:30px;
+    /* border: 1px solid blue; */
+    font-family: 'Noto Sans TC', sans-serif;
+
+}
+.container{
+    width: 90%;
+    background-color: rgba(255, 255, 255, 0.5);
+    padding: 20px 0px 50px 50px;
+    color: rgba(0, 0, 0, 0.719);
+}

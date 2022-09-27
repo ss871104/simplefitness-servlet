@@ -1,67 +1,67 @@
 //let carts= document.querySelectorAll(".cart-plus");
 //console.log("load")
-let cartproducts = [
-    {
-        name: "拳擊手套",
-        tag: "glove",
-        price: 50,
-        inCart: 0
-    },
-    {
-        name: "拳擊手靶",
-        tag:"pad",
-        price: 50,
-        inCart: 0
-    },
-    {
-        name: "瑜珈墊",
-        tag: "yogaMat",
-        price: 20,
-        inCart: 0
-    },
-    {
-        name: "運動毛巾",
-        tag: "towel",
-        price: 20,
-        inCart: 0
-    },
-    {
-        name: "健身護腕",
-        tag: "wristWrap",
-        price: 50,
-        inCart: 0
-    },
-    {
-        name: "健身腰帶",
-        tag: "belt",
-        price: 50,
-        inCart: 0
-    },
-    {
-        name: "運動手錶",
-        tag: "watch",
-        price: 50,
-        inCart: 0
-    },
-    {
-        name: "瑜珈磚",
-        tag: "brick",
-        price: 50,
-        inCart: 0
-    },
-    {
-        name: "筋膜槍",
-        tag: "gun",
-        price: 100,
-        inCart: 0
-    },
-    {
-        name: "拉力帶",
-        tag: "band",
-        price: 50,
-        inCart: 0
-    }
-]
+//let cartproducts = [
+//    {
+//        name: "拳擊手套",
+//        tag: "glove",
+//        price: 50,
+//        inCart: 0
+//    },
+//    {
+//        name: "拳擊手靶",
+//        tag:"pad",
+//        price: 50,
+//        inCart: 0
+//    },
+//    {
+//        name: "瑜珈墊",
+//        tag: "yogaMat",
+//        price: 20,
+//        inCart: 0
+//    },
+//    {
+//        name: "運動毛巾",
+//        tag: "towel",
+//        price: 20,
+//        inCart: 0
+//    },
+//    {
+//        name: "健身護腕",
+//        tag: "wristWrap",
+//        price: 50,
+//        inCart: 0
+//    },
+//    {
+//        name: "健身腰帶",
+//        tag: "belt",
+//        price: 50,
+//        inCart: 0
+//    },
+//    {
+//        name: "運動手錶",
+//        tag: "watch",
+//        price: 50,
+//        inCart: 0
+//    },
+//    {
+//        name: "瑜珈磚",
+//        tag: "brick",
+//        price: 50,
+//        inCart: 0
+//    },
+//    {
+//        name: "筋膜槍",
+//        tag: "gun",
+//        price: 100,
+//        inCart: 0
+//    },
+//    {
+//        name: "拉力帶",
+//        tag: "band",
+//        price: 50,
+//        inCart: 0
+//    }
+//]
 
 
 
@@ -179,7 +179,7 @@ function displayCart(){
 
                 <div class="product">
                     <div class="prdImg">
-                      <img id="prdImg" src="../img/rent/${item.tag}.jpg" alt="">
+                      <img id="prdImg" src="${item.img}" alt="">
                     </div>    
                     <div class="prdName">${item.name}</div>
                     <div class="gymName">${gymName}</div>

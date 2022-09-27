@@ -35,6 +35,39 @@ $("#gymName").change(function() {
 				$(".item_list").append(html);
 			}
 			
+			let cartproducts = [
+				{
+					name: products[0].prodName,
+					price: products[0].price,
+					img: products[0].prodPicBase64,
+					intro: products[0].intro,
+					count:products[0].count,
+					inCart: 0
+				},
+				{
+					name: products[1].prodName,
+					price: products[1].price,
+					img: products[1].prodPicBase64,
+					intro: products[1].intro,
+					count:products[1].count,
+					inCart: 0
+				},
+				{
+					name: products[2].prodName,
+					price: products[2].price,
+					img: products[2].prodPicBase64,
+					intro: products[2].intro,
+					count:products[2].count,
+					inCart: 0
+				},
+				{
+					name: products[3].prodName,
+					price: products[3].price,
+					img: products[3].prodPicBase64,
+					intro: products[3].intro,
+					count:products[3].count,
+					inCart: 0
+				}]
 			
 			let carts = document.querySelectorAll(".cart-plus");
 			for (let i = 0; i < carts.length; i++) {

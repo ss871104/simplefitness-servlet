@@ -19,7 +19,7 @@
 		}
 	});
 	
-	// GET session 出現資料庫資料
+	// GET ById 出現資料庫資料
 	var empId = sessionStorage.getItem('emp');
 	empId = parseInt(empId);
 	fetch("http://localhost:8080/simplefitness-servlet/staff/getEmpById", {

@@ -296,18 +296,16 @@ public class MemServiceImpl implements MemServiceIntf {
 		return mem;
 	}
 	
-//	public List<Member> getBase64(List<Member> list) {
-//
-//		for (Member mem : list) {
-//			var img = mem.getMemPic();
-//			if (img != null) {
-//				mem.setMemPicBase64(BASE64 + Base64.getEncoder().encodeToString(img));
-//				mem.setMemPic(null);
-//			}
-//		}
-//
-//		return list;
-//	}
+	@Override
+	public Member findById(Member mem) {
+		mem = dao.selectById(mem.getMemId());
+		// 圖片轉base64
+		if (mem.getMemPic() != null) {
+		    mem.setMemPicBase64(base64.Encoder(mem.getMemPic()));
+		    mem.setMemPic(null);
+		}
+		return mem;
+	}
 	
 	@Override
 	public List<Member> findAll() {

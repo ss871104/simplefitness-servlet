@@ -3,7 +3,7 @@
 		$('#myInput').trigger('focus')
 	});
 	
-	// GET session 出現資料庫資料
+	// GET ById 出現資料庫資料
 	var courseListId = sessionStorage.getItem('course');
 	courseListId = parseInt(courseListId);
 	console.log(courseListId);

@@ -3,7 +3,7 @@
 		$('#myInput').trigger('focus')
 	});
 	
-	// GET session 出現資料庫資料
+	// GET ById 出現資料庫資料
 	var gymId = sessionStorage.getItem('gym');
 	gymId = parseInt(gymId);
 	console.log(gymId);

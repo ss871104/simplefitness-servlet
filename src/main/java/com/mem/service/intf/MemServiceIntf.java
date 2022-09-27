@@ -24,9 +24,8 @@ public interface MemServiceIntf {
 	
 	Member updateImg(Member mem);
 	
-//	List<Member>getBase64(List<Member> list);
+	Member findById(Member mem);
 	
-	List<Member> findAll();
-		
+	List<Member> findAll();	
 	
 }

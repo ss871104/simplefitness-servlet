@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/boostrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/staff/employee.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>員工資料管理</title>
+
+
+</head>
+
+<body>
+
+
+    <div class="topnav">
+        
+        <a class="img_link" href="staff_home.html">
+            <img class="logoImg" src="../../img/Simple_Fitness-logos_white.png" alt="">
+        </a>
+
+        <ul class="list-inline">
+            <li>
+                <a class="topnavBtn" id="notice" href="#notice">
+                    <img class="icon" src="../../img/bell.png" alt="" title="通知中心">
+                </a>
+            </li>
+            <li class="dropdown">
+                <a class="topnavBtn" id="user" href="#user">
+                    <img class="icon" src="../../img/user.png" alt="" title="會員">
+                </a>
+                <div class="dropdown-content">
+                    <ul>
+                        <li><a href="#">登出</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <div class="contentArea">
+        <div class="side-menu">
+
+            <ul class="nav">
+                <li>
+                    <a href="#">
+                        <i class="fa fa-users" aria-hidden="true"></i>
+                        會員資料管理
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-users" aria-hidden="true"></i>
+                        員工資料管理
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-wrench" aria-hidden="true"></i>
+                        上下架管理
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="#">
+                                用品管理
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                場館管理
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                團課種類管理
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                教練資訊管理
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-coins" aria-hidden="true"></i>
+                        租借用品
+                    </a>
+                </li>
+                <!-- <li>
+                    <a href="#">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                        討論區管理
+                    </a>
+                </li> -->
+                <li>
+                    <a href="#">
+                        <i class="fa fa-list" aria-hidden="true"></i>
+                        課程管理
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="#">
+                                團課管理
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                教練課管理
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                團課報名管理
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="fa fa-gavel" aria-hidden="true"></i>
+                        教練專區
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="#">
+                                預約回覆
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                個人課程行事曆
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
+        <div class="emp-body">
+            <div class="content-body">
+                <div class="emp-block">
+                    <p><i class="fa-solid fa-list-check"> 員工資料管理</i></p>
+                    <hr>
+
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">新增</button>
+
+                    <table class="table table-striped" style="margin-top:5%;">
+                        <thead>
+                        <tr>
+                            <th scope="col">員工名稱</th>
+                            <th scope="col">員工暱稱</th>
+                            <th scope="col">所屬健身房</th>
+                            <th scope="col">職位</th>
+                            <th scope="col">到職日</th>
+                            <th scope="col">員工狀態</th>
+                            <th scope="col">完整資訊/修改</th>
+                        </tr>
+                        </thead>
+                        <tbody class="info">
+                            <!-- get all 進來 -->
+                        </tbody>
+    
+                    </table>
+                </div>
+                 
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">員工資料新增</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="name">員工名稱：</label>
+                        <input type="text" id="name-input"><br>
+                        <label for="nickname">員工暱稱：</label>
+                        <input type="text" id="nickname-input"><br>
+                        <label for="username">員工帳號：</label>
+                        <input type="text" id="username-input"><br>
+                        <label for="gym">所屬健身房：</label>
+                        <select id="gym" class="gym">
+                        	<option value="0">請選擇場館</option>
+                            <!-- get gym -->
+                        </select><br>
+                        <label for="email">員工信箱：</label>
+                        <input type="text" id="email-input"><br>
+                        <label for="job">職位：</label>
+                        <input type="radio" name="job" value="0" id="staff-input">行政
+                        <input type="radio" name="job" value="1" id="coach-input">教練<br>
+                        <label for="gender">性別：</label>
+                        <input type="radio" name="gender" value="0" id="female-input">女
+                        <input type="radio" name="gender" value="1" id="male-input">男<br>
+                        <label for="birth">生日：</label>
+                        <input type="date" id="birth-input" value="2000-01-01"><br>
+                        <label for="status">狀態：</label>
+                        <input type="radio" name="status" value="0" id="quit-input">離職
+                        <input type="radio" name="status" value="1" id="onboard-input">在職中
+                        <input type="radio" name="status" value="2" id="hold-input">留停<br>
+                        <div id="errMsg" class="error" style="color: red;"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                        <button type="button" class="btn btn-primary" id="add">儲存</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>   
+
+            
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="../../js/staff/employee.js"></script>
+
+
+</body>
+
+</html>

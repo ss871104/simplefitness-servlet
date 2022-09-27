@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/boostrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/guest/emp_login.css">
+
+    <title>員工登入頁面</title>
+
+</head>
+
+<body>
+
+    <div class="topnav">
+
+        <img class="logoImg" href="home.html" src="../../img/Simple_Fitness-logos_white.png" alt="">
+        <ul class="list-inline">
+            <li>
+                <a class="topnavBtn" id="news" href="#">最新消息</a>
+            </li>
+            <li>
+                <a class="topnavBtn" id="gym" href="#">場館資訊</a>
+            </li>
+            <li>
+                <a class="topnavBtn" id="coach" href="#">教練資訊</a>
+            </li>
+            <li>
+                <a class="topnavBtn" id="course" href="#">課程資訊</a>
+            </li>
+            <li>
+                <a class="topnavBtn" id="pay" href="#">收費方式</a>
+            </li>
+            <!-- <li>
+                <a class="topnavBtn" id="about" href="#about">討論區</a>
+            </li> -->
+            <li class="dropdown">
+                <a class="topnavBtn" id="user" href="#user">
+                    <img class="icon" src="../../img/user.png" alt="" title="會員">
+                </a>
+                <div class="dropdown-content">
+                    <ul>
+                        <li><a href="#">會員中心</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="contentArea">
+        <div class="login-block">
+            <div class="login-input">
+                <h4>員工登入</h4>
+                員工帳號
+                <input type="text" class="form-control" placeholder="帳號" id="username"><br>
+                密碼
+                <input type="password" class="form-control" placeholder="密碼" id="password"><br>
+                <button type="button" class="btn-submit" id="login">登入</button>
+                <div id="errMsg" class="error" style="color: red;"></div>
+            </div>
+        </div>   
+    </div>
+
+    <script src="../../js/guest/emp_login.js"></script>
+
+</body>
+
+</html>

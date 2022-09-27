@@ -1,4 +1,4 @@
-package com.gym.controller;
+package com.mem.controller;
 
 import static com.common.util.GsonUtil.json2Pojo;
 import static com.common.util.GsonUtil.writePojo2Json;
@@ -11,22 +11,23 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.gym.service.impl.GymServiceImpl;
-import com.gym.service.intf.GymServiceIntf;
-import com.gym.vo.Gym;
+import com.mem.service.impl.MemServiceImpl;
+import com.mem.service.intf.MemServiceIntf;
+import com.mem.vo.Member;
 
-@WebServlet("/gym/addGym")
-public class AddGymServlet extends HttpServlet {
+@WebServlet("/member/getMemById")
+public class GetOneMemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private GymServiceIntf SERVICE = new GymServiceImpl();
-       
+	private MemServiceIntf SERVICE = new MemServiceImpl();
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		Member member = json2Pojo(request, Member.class);
+		
+		member = SERVICE.findById(member);
         
-        Gym gym = json2Pojo(request, Gym.class);
-        
-        gym = SERVICE.add(gym);
-            
-        writePojo2Json(response, gym);
+        writePojo2Json(response, member);
+	
 	}
 
 }

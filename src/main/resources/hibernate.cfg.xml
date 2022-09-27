@@ -18,5 +18,6 @@
 
 		<mapping class="com.gym.vo.Gym" />
 		<mapping class="com.gym.vo.GymPic" />
+		<mapping class="com.emp.vo.Employee" />
 	</session-factory>
 </hibernate-configuration>

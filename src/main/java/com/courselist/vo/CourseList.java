@@ -7,7 +7,6 @@ public class CourseList extends Common {
 	
 	private Integer courseListId;
 	private String courseName;
-	private String courseType;
 	private Integer courseMaxP;
 	private String courseIntro;
 	private String courseStatus;
@@ -24,12 +23,6 @@ public class CourseList extends Common {
 	}
 	public void setCourseName(String courseName) {
 		this.courseName = courseName;
-	}
-	public String getCourseType() {
-		return courseType;
-	}
-	public void setCourseType(String courseType) {
-		this.courseType = courseType;
 	}
 	public Integer getCourseMaxP() {
 		return courseMaxP;

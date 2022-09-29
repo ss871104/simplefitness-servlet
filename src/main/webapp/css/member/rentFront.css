@@ -1,187 +1,7 @@
-/*
-@import url("https://fonts.googleapis.com/css?family=Noto+Sans+TC:100,300,400,500,700,900&display=swap");
-@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css");
-
-.badge-notify{
-    background:red;
-    position:relative;
-    top: -20px;
-    right: 10px;
-  }
-  .my-cart-icon-affix {
-    position: fixed;
-    z-index: 999;
-  }
-* {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-    box-sizing: border-box;
-}
-
-html,
-body {
-	height: 100%;
-}
-
-body {
-	margin: 0;
-	background-color: #fefee3;
-	font-family: Arial, Helvetica, sans-serif;
-}
-
-功能列
-
-.topnav {
-	position: sticky;
-	top: 0;
-	left: 0;
-	background-color: #2c6e49;
-	height: 4.1em;
-	z-index: 9;
-}
-
-.logoImg {
-	display: inline-block;
-	margin-top: 0;
-	width: 280px;
-	height: 100%;
-	cursor: pointer;
-}
-
-.icon {
-	width: 30px;
-	height: 30px;
-}
-
-.topnav a {
-	float: left;
-	padding: 18px 16px;
-	text-decoration: none;
-	font-size: 17px;
-
-}
-
-.topnav .list-inline {
-	top: 0;
-	right: 0;
-	float: right;
-	display: flex;
-
-}
-
-.topnav a:hover {
-	background-color: rgb(154, 153, 153);
-}
-
-.dropdown {
-	position: relative;
-	display: inline-block;
-}
-
-.dropdown-content {
-	display: none;
-	position: absolute;
-	top: 65px;
-	background-color: #f7f0f0;
-	min-width: 9em;
-	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-}
-
-.dropdown-content>ul {
-	justify-content: center;
-	display: grid;
-	padding: 0;
-}
-
-.dropdown:hover .dropdown-content {
-	display: block;
-	right: 0 !important;
-	left: revert;
-}
-
-
-
-.contentArea {
-	height: 100%;
-	background-color: #fefee3;
-}
-
-sidebars
-.side-menu {
-	width: 15%;
-	height: 100%;
-	padding: 50px 0;
-	position: fixed;
-	left: 0;
-	background-color: #9ebc9e;
-	display: flex;
-	flex-direction: column;
-	box-shadow: 5px 0px 10px hsla(240, 40%, 15%, .6);
-}
-
-.side-menu .nav a {
-	min-height: 4em;
-	font-size: larger;
-	display: block;
-	padding: 10px;
-	color: white;
-	text-decoration: none;
-	position: relative;
-	font-family: 'Noto Sans TC', sans-serif;
-}
-
-
-
-.side-menu .nav a .fa {
-	margin-right: -1.1em;
-	transform: scale(0);
-	transition: .3s;
-}
-
-.side-menu .nav a:hover .fa {
-	margin-right: 0em;
-	transform: scale(1);
-}
-
-.side-menu .nav {
-	display: inline-block;
-}
-
-.nav ul {
-	display: none;
-	left: 100%;
-	top: 6px;
-	background-color: rgb(130 59 11 / 20%);
-	box-shadow: 5px 5px 10px hsla(240, 40%, 15%, .6);
-}
-
-.nav li:hover>ul {
-	display: block;
-}
-
-.nav li:hover {
-	background-color: rgb(130 59 11 / 20%);
-}
-
-.nav>li>a:hover {
-	background-color: rgba(4, 255, 226, 0.2) !important;
-}
-
-*/
-
-
-/* -------------------租借-------------------- */
 .main {
 	width: 85%;
 	margin-left: 15%;
-    /* height: calc(100% - 4.1em); */
-	/* right: 0em; */
-	/* position: relative; */
-	/* top: 4.1em; */
     padding:30px;
-	/* overflow: scroll; */
-    /* border: 1px solid blue; */
 }
 
 .selectGym{
@@ -194,10 +14,8 @@ sidebars
 select{
     padding-right: 5px;
     color: rgba(0, 0, 0, 0.719);
-	/* color: #2c6e49; */
     border: 1px solid rgba(128, 128, 128, 0.416);
     border-radius: 3px;
-	
 }
 
 main.main ul.item_list {
@@ -227,17 +45,14 @@ main.main ul.item_list > li > a {
 	background-color: bisque;
 
   }
-  main.main ul.item_list > li >a:hover{
-	/* background-color: rgba(255, 228, 196, 0.712); */
+main.main ul.item_list > li >a:hover{
 	opacity: 0.8;
 	position: relative;
 	bottom: 2px;
-  }
+}
 
-  
   main.main ul.item_list > li > a > div >img {
     width: 100%;
-    
   }
 
   main.main ul.item_list > li > a >span {
@@ -256,14 +71,12 @@ main.main ul.item_list > li > a {
 	right:10px;
 	bottom: 10px;
 	width: 2em ;
-	/* border: 1px solid #3b7252; */
 	border-radius: 10px ;	
   }
   
   .cart-plus:hover{
     background-color: #d1e9dbdc ;
 	border: 1.5px solid #3b725288;
-	/* opacity: 0.8; */
   }
 
   .cart-plus > a >i:active{

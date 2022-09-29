@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>租借首頁</title>
     <link rel="stylesheet" href="../../css/member/rent.css" />
-    <link rel="stylesheet" href="../../css/member/glove.css" />
+    <link rel="stylesheet" href="../../css/member/rentOne.css" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
@@ -51,7 +51,12 @@
           </li>
           <li>
             <a class="topnavBtn" id="notice" href="#notice">
-              <img class="icon" src="../../img/bell.png" alt="" title="通知中心" />
+              <img
+                class="icon"
+                src="../../img/bell.png"
+                alt=""
+                title="通知中心"
+              />
             </a>
           </li>
           <li class="dropdown">
@@ -66,10 +71,9 @@
           </li>
         </ul>
       </div>
-      
+
       <!-- contentArea -->
       <div class="contentArea">
-      
         <!-- aside -->
         <div class="side-menu">
           <ul class="nav">
@@ -106,91 +110,118 @@
             </li>
           </ul>
         </div>
-        
+
         <!-- main -->
         <main class="main">
           <div class="container">
-            <!-- <form action="#" id="the_form"> -->
+
             <div class="img_block">
-              <img id="prdImg" src="../img/rent/glove.jpg" />
+           
             </div>
             <div class="right">
               <ul>
-                <h3 class="prdName">拳擊手套</h3>
+                <h1 class="prdName"></h1>
               </ul>
-              <ul class="prdInfo">
-                <li>多層次泡棉，強效保護指間關節</li>
-                <li>每日定期清洗消毒</li>
-                <li>紓壓爆汗燃脂的最佳良伴</li>
-              </ul>
-              <ul class="prdPrice">
+              <ul class="prdInfo"></ul>
+              <ul>
                 租借價
-                <span>$ <span>50</span></span>
+                $ <span class="prdPrice"></span>
               </ul>
               <ul>
                 <li>結帳方式： 線上信用卡/ 憑證臨櫃支付</li>
 
                 <li>
                   租借數量：
-                  <select name="count" id="count">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                  </select>
+                  <select name="count" id="count"></select>
                 </li>
               </ul>
               <div class="btnArea">
-                <button type="button" class="inCart">
+                <button type="button" class="cart-plus">
                   <i class="bi bi-cart-plus"></i> 加入購物車
                 </button>
-                <button type="button" class="checkout">直接結帳</button>
+                <button type="button" class="cart-check">直接結帳</button>
               </div>
             </div>
-            <!-- </form> -->
+      
           </div>
         </main>
       </div>
     </div>
-    
+
     <script src="../../js/member/rentFront.js"></script>
-	<script src="../../js/member/cart.js"></script>
+    <script src="../../js/member/cart.js"></script>
     <script>
-      window.addEventListener("load", function () {
-        document
-          .querySelector(".checkout")
-          .addEventListener("click", function (e) {
-            e.preventDefault(); // 停掉送出到action
+    cartproduct = sessionStorage.getItem("cartproduct");
+	cartproduct = JSON.parse(cartproduct);
+	$(".img_block").html(`<img id="prdImg" src="${cartproduct.img}"/>`);
+	$(".prdName").text(cartproduct.name);
+	$(".prdInfo").html(`<li>${cartproduct.intro}</li>`);
+	$(".prdPrice").text(cartproduct.price);
+    for (i = 1; i <= cartproduct.count; i++) {
+    	let html = `<option value="${i}">${i}</option>`;
+    	$("#count").append(html);
+    };
+    $(".cart-plus").on("click", function(e) {
+		e.preventDefault();
+		cartNumbers(cartproduct);
+	})
+	$(".cart-check").on("click", function(e) {
+		cartNumbers(cartproduct);
+		location ="./cart.html";
+	})
+	
+	function cartNumbers(product) {
+	let productNumbers = sessionStorage.getItem("cartNumbers");
+	let cartItems = sessionStorage.getItem("productsInCart");
+	cartItems = JSON.parse(cartItems);
+	productNumbers = parseInt(productNumbers);
+	prdCount = parseInt($("#count").val());
+	if (productNumbers) {
+		if (cartItems[product.name] == undefined) {
+			sessionStorage.setItem("cartNumbers", productNumbers + prdCount);
+			document.querySelector("#cart span").textContent = productNumbers + prdCount;
+		}else{
+			if(cartItems[product.name].inCart < cartItems[product.name].count){
+			sessionStorage.setItem("cartNumbers", productNumbers + prdCount);
+			document.querySelector("#cart span").textContent = productNumbers + prdCount;
+			}
+		}
+// 		sessionStorage.setItem("cartNumbers", productNumbers + prdCount);
+// 		document.querySelector("#cart span").textContent = productNumbers + prdCount;
+	} else {
+		sessionStorage.setItem("cartNumbers", prdCount);
+		document.querySelector("#cart span").textContent = prdCount;
+	}
+	setItem(product);
+	}
+    
+    function setItem(product) {
+    	let cartItems = sessionStorage.getItem("productsInCart");
+    	cartItems = JSON.parse(cartItems);
 
-            var send_data = {};
-            var gymName = document.querySelector("#gymName");
-            send_data.gymName = gymName.options[gymName.selectedIndex].text;
-            // send_data.gymName = document.querySelector("#gymName").text;
-            send_data.count = document.querySelector("#count").value;
+    	if (cartItems != null) {
 
-            var img_base64_el = document.querySelector("#prdImg");
-            if (img_base64_el) {
-              send_data.img_base64 = img_base64_el.src;
-            }
+    		if (cartItems[product.name] == undefined) {
+    			cartItems = {
+    				...cartItems,  
+    				[product.name]: product
+    			}
+    		}
+    		if(cartItems[product.name].inCart < cartItems[product.name].count){
+    			cartItems[product.name].inCart += prdCount;
+    		}
+    		
 
-            // console.log(send_data);
+    	} else {
+    		product.inCart = prdCount;
+    		cartItems = {
+    			[product.name]: product
+    		}
+    	}
 
-            sessionStorage.setItem("form_data", JSON.stringify(send_data));
-            location.href = "./cart.html";
-          });
+    	sessionStorage.setItem("productsInCart", JSON.stringify(cartItems));
+    }
 
-        // var recovery_data = function () {
-        //   if (sessionStorage.getItem("form_data") != null) {
-        //     var form_data = JSON.parse(sessionStorage.getItem("form_data"));
-        //     console.log(form_data);
-        //     document.getElementById("gymName").value = form_data.gymName;
-        //     document.getElementById("count").value = form_data.count;
-        //     preview_el.innerHTML =
-        //       "<img id='prdImg' src='" + form_data.img_base64 + "'>";
-        //   }
-        // };
-
-        // recovery_data();
-      });
     </script>
   </body>
 </html>

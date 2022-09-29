@@ -1,6 +1,9 @@
 package com.course.service.impl;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.course.dao.impl.CourseDaoImpl;
@@ -17,10 +20,31 @@ public class CourseServiceImpl implements CourseServiceIntf {
 	
 	@Override
 	public List<Course> selectCourseByGymIdAndStartTime(Course course) {
-		 
-		var courseList = _courseDao.selectCourseByGymIdAndStartTime(course.getGymId(), course.getStartTime());
+		final Integer gymId = course.getGymId();
+		final LocalDate selectedDate = course.getSelectedDate();
 		
-		return courseList;
+		// 拿到所選日期當週第一天 & 最後一天
+		course.setDayOne(selectedDate.with(DayOfWeek.MONDAY));
+		course.setDaySeven(selectedDate.with(DayOfWeek.SUNDAY));
+		
+		List<Course> list = new ArrayList<Course>();
+		
+		try {
+			System.out.println(course.getGymId());
+			if (gymId == 0) {
+				course.setMessage("請選擇場館");
+				course.setSuccessful(false);
+				list.add(course);
+				return list;
+			}
+			
+			
+			List<Course> courseList = _courseDao.selectCourseByGymIdAndStartTime(course.getGymId(), course.getDayOne(), course.getDaySeven());	
+			return courseList;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	@Override
@@ -37,7 +61,7 @@ public class CourseServiceImpl implements CourseServiceIntf {
 		
 			try {
 				// 判斷項目都要選擇到
-				if ("".equals(gymId)) {
+				if (gymId == 0) {
 					course.setMessage("請選擇場館");
 					return course;
 				}

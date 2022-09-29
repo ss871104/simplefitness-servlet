@@ -1,6 +1,7 @@
 package com.course.dao.intf;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -29,6 +30,8 @@ public interface CourseDaoIntf extends CommonDao<Course, Integer> {
 	 */
 	public boolean updateStatus(Course course);
 
-	List<Course> selectCourseByGymIdAndStartTime(Integer gymId, LocalDateTime startTime);
+	List<Course> selectCourseByGymIdAndStartTime(Integer gymId, LocalDate one, LocalDate seven);
+	
+	// 取得
 	
 }

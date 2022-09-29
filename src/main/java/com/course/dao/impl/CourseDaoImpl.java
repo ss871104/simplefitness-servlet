@@ -7,6 +7,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -264,9 +265,8 @@ public class CourseDaoImpl implements CourseDaoIntf {
 	}
 
 
-	
 	// 取得已安排團課
-	public List<Course> selectCourseByGymIdAndStartTime(Integer gymId, LocalDateTime startTime) {
+	public List<Course> selectCourseByGymIdAndStartTime(Integer gymId,  LocalDate one, LocalDate seven) {
 		
 		List<Course> list = new ArrayList<Course>();
 		Course course = null;
@@ -277,7 +277,8 @@ public class CourseDaoImpl implements CourseDaoIntf {
 			System.out.println("連線成功");
 			
 			pstmt.setInt(1, gymId);
-			pstmt.setObject(2, startTime);
+			pstmt.setObject(2, one);
+			pstmt.setObject(3, seven);
 
 			try (ResultSet rs = pstmt.executeQuery()) {
 
@@ -289,15 +290,18 @@ public class CourseDaoImpl implements CourseDaoIntf {
 					course.setEmpId(rs.getInt("emp_id"));
 					course.setStatus(rs.getString("status"));
 					course.setPubStatus(rs.getString("public"));
+					course.setSuccessful(true);
 					
 					list.add(course);
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return null;
 		}
 		return list;
 	}
+
 	
 
 }

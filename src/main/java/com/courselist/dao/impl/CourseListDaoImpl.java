@@ -178,7 +178,6 @@ public class CourseListDaoImpl implements CourseListDaoIntf {
 				if (rs.next()) {
 					courseList.setCourseListId(rs.getInt("cour_list_id"));
 					courseList.setCourseName(rs.getString("cour_name"));
-					courseList.setCourseType(rs.getString("cour_type"));
 					courseList.setCourseMaxP(rs.getInt("max_p"));
 					courseList.setCourseIntro(rs.getString("intro"));
 					courseList.setCourseStatus(rs.getString("status"));

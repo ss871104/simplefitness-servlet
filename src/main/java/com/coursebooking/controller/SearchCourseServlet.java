@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,40 +19,51 @@ import com.coursebooking.vo.CourseBooking;
 import static com.common.util.Constants.GSON;
 
 @WebServlet("/courseBooking/SearchCourseServlet")
-public class SearchCourseServlet extends HttpServlet{
+public class SearchCourseServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private CourseBookingServiceIntf _courseBookingService = new CourseBookingServiceImpl();
-	
-       
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		setHeaders(response);
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
-		
-        BufferedReader br = request.getReader();
-        String json = br.readLine();
 
-        //Step.1 接值
-        CourseBooking courseBooking = GSON.fromJson(json, CourseBooking.class);
-        
-        //Step.2 執行SVC
-        List<Course> courseBookingResult=_courseBookingService.searchCourseByGymIdAndCourseListId(courseBooking);
+		BufferedReader br = request.getReader();
+		String json = br.readLine();
 
+		// Step.1 接值
+		CourseBooking courseBooking = GSON.fromJson(json, CourseBooking.class);
+
+		// Step.2 執行SVC
+		// 取得可預約課程
+		List<Course> courseBookingResult = _courseBookingService.searchCourseByGymIdAndCourseListId(courseBooking);
+		// 取得已預約課程
+		List<Course> courseBookedResult = _courseBookingService.checkBookingCourseByMemberId(courseBooking);
+
+		// 轉換出已預約課程編號清單
+		List<Integer> bookedCourseIdList = courseBookedResult.stream().map(Course::getCourseId)
+				.collect(Collectors.toList());
+		// 將課程中有出現在編號清單中的課程過濾掉
+		courseBookingResult = courseBookingResult.stream()
+				.filter(item -> !bookedCourseIdList.contains(item.getCourseId())).toList();
 
 		PrintWriter pw = response.getWriter();
-        pw.print(GSON.toJson(courseBookingResult));
+		pw.print(GSON.toJson(courseBookingResult));
 	}
-	
+
 	@Override
-	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doOptions(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		setHeaders(response);
 	}
-	
+
 	private void setHeaders(HttpServletResponse response) {
 
 		response.setContentType("application/json;charset=UTF-8"); // 重要

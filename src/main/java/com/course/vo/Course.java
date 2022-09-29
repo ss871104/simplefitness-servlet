@@ -17,6 +17,9 @@ public class Course extends Common {
 	private String status;
 	private String pubStatus;
 	private String courseName;
+	private String gymName;
+	private String empName;
+	private Integer courseBookId;
 	
 	public Integer getCourseId() {
 		return courseId;
@@ -77,6 +80,24 @@ public class Course extends Common {
 	}
 	public void setCourseName(String courseName) {
 		this.courseName = courseName;
+	}
+	public String getGymName() {
+		return gymName;
+	}
+	public void setGymName(String gymName) {
+		this.gymName = gymName;
+	}
+	public String getEmpName() {
+		return empName;
+	}
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
+	public Integer getCourseBookId() {
+		return courseBookId;
+	}
+	public void setCourseBookId(Integer courseBookId) {
+		this.courseBookId = courseBookId;
 	}
 	
 	

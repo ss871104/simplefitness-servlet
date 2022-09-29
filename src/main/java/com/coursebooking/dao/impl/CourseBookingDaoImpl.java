@@ -145,37 +145,8 @@ public class CourseBookingDaoImpl implements CourseBookingDaoIntf {
 		return list;
 	}
 
-	@Override
-	public List<CourseBooking> selectByMemberId(Integer memId) {
-		CourseBooking coursebook = null;
-		List<CourseBooking> courseBookingList = new ArrayList<CourseBooking>();
-		
-		try (Connection con = ds.getConnection();
-				PreparedStatement pstmt = con.prepareStatement(SQL.SELECT_BY_MEMBER_ID);) {
 
-			System.out.println("連線成功");
-
-			pstmt.setInt(1, memId);
-
-			try (ResultSet rs = pstmt.executeQuery()) {
-
-				while (rs.next()) {
-					coursebook = new CourseBooking();
-					coursebook.setCoursebookId(rs.getInt("cour_book_Id"));
-					coursebook.setMemId(rs.getInt("mem_Id"));
-					coursebook.setCourseId(rs.getInt("cour_Id"));
-					coursebook.setCoursebookTime(rs.getObject("booking_time",LocalDateTime.class));
-					coursebook.setCoursebookStatus(rs.getString("status"));
-					
-					courseBookingList.add(coursebook);
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return courseBookingList;
-	}
-
+	
 	@Override
 	public boolean updateStatus(CourseBooking coursebookVo) {
 		boolean flag=true;

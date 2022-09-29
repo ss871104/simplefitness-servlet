@@ -24,7 +24,6 @@ public class CourseBookingServiceImpl implements CourseBookingServiceIntf {
 		_courseDao = new CourseDaoImpl();
 	}
 
-	@Override
 	public Boolean bookCourse(CourseBooking coursebook) {
 		// 取得課程狀態
 		var courseStatus = _courseDao.getCourseStatusByCourseId(coursebook.getCourseId());
@@ -60,9 +59,7 @@ public class CourseBookingServiceImpl implements CourseBookingServiceIntf {
 		}
 	}
 
-	// 呼叫Dao 執行update (Status="0")
-	// 回傳值(Boolean)
-	@Override
+	// 會員取消已預約課程(coursebook Status="0")
 	public Boolean cancelCourseByMemberId(CourseBooking coursebook) {
 
 		coursebook.setCoursebookStatus("0");
@@ -70,19 +67,22 @@ public class CourseBookingServiceImpl implements CourseBookingServiceIntf {
 
 	}
 
-	// 呼叫Dao 取出該會員的預約清單(List)
-	// 回傳值(List<CourseBooking>)
-	@Override
-	public List<CourseBooking> checkBookingCourseByMemberId(CourseBooking coursebook) {
+	// 取出該會員的預約清單(List)
+	public List<Course> checkBookingCourseByMemberId(CourseBooking coursebook) {
 
-		return _courseBookingDao.selectByMemberId(coursebook.getMemId());
+		return _courseDao.selectBookedCourseByMemberIdAndGymId(coursebook.getMemId(), coursebook.getGymId());
 	}
 
 	// 獲取可預約團課課程清單
-	@Override
 	public List<Course> searchCourseByGymIdAndCourseListId(CourseBooking coursebook) {
 
 		return _courseDao.selectCourseByGymIdAndCourseListId(coursebook.getGymId(), coursebook.getCourseListId());
+
+	}
+
+	// 開放課程狀態為可預約
+	public void setCourseBookingEnable(Integer courseId) {
+		_courseDao.setCourseEnable(courseId);
 
 	}
 

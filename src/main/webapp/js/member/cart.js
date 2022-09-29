@@ -1,3 +1,116 @@
+/*----- cart.html的頁面操作 -----*/
+// tab區塊
+function tab_active() {
+	let target_tab;
+	switch (location.hash) {
+		case "#tab1":
+			target_tab = "tab1";
+			break;
+		case "#tab2":
+			target_tab = "tab2";
+			break;
+		case "#tab3":
+			target_tab = "tab3";
+			break;
+		default:
+			target_tab = "tab1";
+	}
+
+	$("a.tab").removeClass("-on");
+	$("a.tab[data-target=" + target_tab + "]").addClass("-on");
+
+	$("div.tab").removeClass("-on");
+	$("div.tab." + target_tab).addClass("-on");
+}
+
+$(function() {
+	// 連到外部網站，再按上一頁時，會觸發 DOMContentLoaded 事件，所以再執行
+	tab_active();
+
+	$("a.tab").on("click", function(e) {
+		e.preventDefault();
+
+		/* 將頁籤列表移除所有 -on，再將指定的加上 -on */
+		$(this).closest("ul").find("a.tab").removeClass("-on");
+		$(this).addClass("-on");
+
+		/* 找到對應的頁籤內容，加上 -on 來顯示 */
+		$("div.tab").removeClass("-on");
+		$("div.tab." + $(this).attr("data-target")).addClass("-on");
+
+		history.pushState(null, null, "#" + $(this).attr("data-target"));
+	});
+
+	$(".tab1_btn").on("click", function(e) {
+		e.preventDefault();
+		$(".tab").removeClass("-on");
+		$("a.tab[data-target= tab2]").addClass("-on");
+		$("div.tab2").addClass("-on");
+		history.pushState(null, null, "#" + "tab2");
+	});
+	$(".tab2_btn").on("click", function(e) {
+		e.preventDefault();
+		$(".tab").removeClass("-on");
+		$("a.tab[data-target= tab3]").addClass("-on");
+		$("div.tab3").addClass("-on");
+		history.pushState(null, null, "#" + "tab3");
+	});
+});
+
+window.addEventListener("popstate", function() {
+	tab_active();
+});
+
+// 卡號欄位
+$(function() {
+	$(".cardNo").focus(function(e) {
+		$(".cardNo").keyup(function(e) {
+			if (e.which >= 48 && e.which <= 57 || e.which == 8) {
+				return true;
+			} else {
+				$(this).val("")
+			}
+		});
+
+		$("#cardNo_1").keyup(function(e) {
+			if ($(this).val().length == 4)
+				$("#cardNo_1").next().focus();
+		})
+		$("#cardNo_2").keyup(function(e) {
+			if ($(this).val().length == 4)
+				$("#cardNo_2").next().focus();
+		})
+		$("#cardNo_3").keyup(function(e) {
+			if ($(this).val().length == 4)
+				$("#cardNo_3").next().focus();
+		})
+	});
+
+
+	$("#date").keyup(function(e) {
+
+		if ($(this).val().length == 2) {
+			$(this).val($(this).val() + "/")
+		}
+		if (e.which >= 48 && e.which <= 57 || e.which == 8) {
+			return true;
+		} else {
+			$(this).val("")
+		}
+	});
+
+	$("#cvv").keyup(function(e) {
+
+		if (e.which >= 48 && e.which <= 57 || e.which == 8) {
+			return true;
+		} else {
+			$(this).val("")
+		}
+	});
+});
+
+
+/*------- 購物相關操作 -------*/
 
 //購物車 icon 數字
 function onLoadCartNumbers() {
@@ -8,10 +121,8 @@ function onLoadCartNumbers() {
 	}
 }
 
-
 // 購物車數字、總數+-
 function cartNumbers(product, action) {
-	// console.log(product);
 	let productNumbers = sessionStorage.getItem("cartNumbers");
 	let cartItems = sessionStorage.getItem("productsInCart");
 	cartItems = JSON.parse(cartItems);
@@ -25,28 +136,25 @@ function cartNumbers(product, action) {
 		if (cartItems[product.name] == undefined) {
 			sessionStorage.setItem("cartNumbers", productNumbers + 1);
 			document.querySelector("#cart span").textContent = productNumbers + 1;
-		}else{
-			if(cartItems[product.name].inCart < cartItems[product.name].count){
-			sessionStorage.setItem("cartNumbers", productNumbers + 1);
-			document.querySelector("#cart span").textContent = productNumbers + 1;
+		} else {
+			if (cartItems[product.name].inCart < cartItems[product.name].count) {
+				sessionStorage.setItem("cartNumbers", productNumbers + 1);
+				document.querySelector("#cart span").textContent = productNumbers + 1;
 			}
 		}
 	} else {
 		sessionStorage.setItem("cartNumbers", 1);
 		document.querySelector("#cart span").textContent = 1;
-		console.log(456);
 	}
 	setItem(product);
 }
 
 // 不同產品的資料跟數量
 function setItem(product) {
-	// console.log("my product is",product);
 	let cartItems = sessionStorage.getItem("productsInCart");
 	cartItems = JSON.parse(cartItems);
 
 	if (cartItems != null) {
-		// console.log(cartItems[product.tag]); //undefined
 
 		if (cartItems[product.name] == undefined) {  //不同產品
 			cartItems = {
@@ -54,37 +162,18 @@ function setItem(product) {
 				[product.name]: product
 			}
 		}
-		if(cartItems[product.name].inCart < cartItems[product.name].count){
+		if (cartItems[product.name].inCart < cartItems[product.name].count) {
 			cartItems[product.name].inCart += 1;
 		}
-		
+
 	} else {
 		product.inCart = 1;
 		cartItems = {
 			[product.name]: product
 		}
 	}
-
 	sessionStorage.setItem("productsInCart", JSON.stringify(cartItems));
 }
-
-// 總金額
-//function totalCost(product, action) {
-//	// console.log(product.price);
-//	let cartCost = sessionStorage.getItem("totalCost");
-//	// console.log(typeof cartCost); //string
-//
-//	if (action == "minus") {
-//		cartCost = parseInt(cartCost);
-//		sessionStorage.setItem("totalCost", cartCost - product.price);
-//	} else if (cartCost != null) {
-//		cartCost = parseInt(cartCost);
-//		sessionStorage.setItem("totalCost", cartCost + product.price);
-//	} else {
-//		sessionStorage.setItem("totalCost", product.price);
-//	}
-//
-//}
 
 // 選擇場館
 $("#gymName").change(function() {
@@ -94,13 +183,13 @@ $("#gymName").change(function() {
 
 // 付款方式
 $(".cash").on("click", function() {
-   sessionStorage.setItem("payfor", "臨櫃支付");
+	sessionStorage.setItem("payfor", "臨櫃支付");
 });
 $(".card").on("click", function() {
-    sessionStorage.setItem("payfor", "信用卡支付");
+	sessionStorage.setItem("payfor", "信用卡支付");
 });
 $(".tab2_btn").on("click", function() {
-    $(".lastPay").text(sessionStorage.getItem("payfor"));  
+	$(".lastPay").text(sessionStorage.getItem("payfor"));
 });
 
 // 新增至購物車頁面
@@ -109,15 +198,11 @@ function displayCart() {
 	cartItems = JSON.parse(cartItems);
 
 	let productContainer = document.querySelector(".item_body");
-//	let cartCost = sessionStorage.getItem("totalCost");
 	let rentList = document.querySelector(".prdList");
 	let gymName = sessionStorage.getItem("gymName");
 	let prdInfo = document.querySelector(".prdInfo");
-	// console.log(gymName);
 
-	// console.log(cartItems);
 	if (cartItems && productContainer) {
-		// console.log("runnig");
 		productContainer.innerHTML = "";
 		rentList.innerHTML = "";
 		prdInfo.innerHTML = "";
@@ -144,10 +229,9 @@ function displayCart() {
                     </div>
                 </div>
                 `
-			
 			totalCount += parseInt(item.inCart);
 			totalCost += parseInt(item.inCart * item.price);
-			
+
 			// step3
 			rentList.innerHTML += `
             <li><span class="prdName">${item.name}</span>：<span class="count">${item.inCart}</span></li>
@@ -158,8 +242,6 @@ function displayCart() {
 		document.querySelector(".lastGym").innerText = `${gymName}`;
 		sessionStorage.setItem("totalCost", totalCost);
 		sessionStorage.setItem("cartNumbers", totalCount);
-		
-		 
 	}
 	deleteButtons();
 	manageQuantity();
@@ -172,18 +254,13 @@ function deleteButtons() {
 	let productNumbers = sessionStorage.getItem("cartNumbers");
 	let cartItems = sessionStorage.getItem("productsInCart");
 	cartItems = JSON.parse(cartItems);
-	// console.log(cartItems);
 	let cartCost = sessionStorage.getItem("totalCost");
 
 	for (let i = 0; i < deleteButtons.length; i++) {
 		deleteButtons[i].addEventListener("click", () => {
-			console.log("clicked");
 			productName = deleteButtons[i].closest(".product").children[1].textContent;
-			console.log(productName);
 			sessionStorage.setItem("cartNumbers", productNumbers - cartItems[productName].inCart);
-
 			sessionStorage.setItem("totalCost", cartCost - (cartItems[productName].price * cartItems[productName].inCart));
-
 
 			delete cartItems[productName];
 			sessionStorage.setItem("productsInCart", JSON.stringify(cartItems));
@@ -199,23 +276,18 @@ function manageQuantity() {
 	let minusButtons = document.querySelectorAll("#minus");
 	let plusButtons = document.querySelectorAll("#plus");
 	let cartItems = sessionStorage.getItem("productsInCart");
-	let currentQuantity = 0;
+	//	let currentQuantity = 0;
 	let currentProduct = "";
 	cartItems = JSON.parse(cartItems);
-	// console.log(cartItems);
 
 	for (let i = 0; i < minusButtons.length; i++) {
 		minusButtons[i].addEventListener("click", () => {
-			console.log("minus");
 			currentQuantity = minusButtons[i].parentElement.querySelector("span").textContent;
-			console.log(currentQuantity);
 			currentProduct = minusButtons[i].closest(".product").children[1].textContent;
-			console.log(currentProduct);
 
 			if (cartItems[currentProduct].inCart > 1) {
 				cartItems[currentProduct].inCart -= 1;
 				cartNumbers(cartItems[currentProduct], "minus");
-//				totalCost(cartItems[currentProduct], "minus");
 				sessionStorage.setItem("productsInCart", JSON.stringify(cartItems));
 				displayCart();
 			}
@@ -224,21 +296,15 @@ function manageQuantity() {
 
 	for (let i = 0; i < plusButtons.length; i++) {
 		plusButtons[i].addEventListener("click", () => {
-			//            console.log("plus");
 			currentQuantity = plusButtons[i].parentElement.querySelector("span").textContent;
-			console.log(currentQuantity);
-
 			currentProduct = plusButtons[i].closest(".product").children[1].textContent;
-			//            console.log(currentProduct);
 
 			if (cartItems[currentProduct].inCart < cartItems[currentProduct].count) {
 				cartItems[currentProduct].inCart += 1;
 				cartNumbers(cartItems[currentProduct]);
-//				totalCost(cartItems[currentProduct]);
 				sessionStorage.setItem("productsInCart", JSON.stringify(cartItems));
 				displayCart();
 			}
-
 		})
 	}
 }

@@ -5,6 +5,7 @@ import static com.common.util.Constants.GSON;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,11 +17,11 @@ import com.course.service.impl.CourseServiceImpl;
 import com.course.service.intf.CourseServiceIntf;
 import com.course.vo.Course;
 
-@WebServlet("/course/addCourseServlet")
-public class addCourseServlet extends HttpServlet {
+@WebServlet("/course/searchCourse")
+public class SearchCourseServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private CourseServiceIntf SERVICE = new CourseServiceImpl();
+	private CourseServiceIntf _courseService = new CourseServiceImpl();
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -28,19 +29,15 @@ public class addCourseServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		setHeaders(response);
-		request.setCharacterEncoding("UTF-8");
-		response.setCharacterEncoding("UTF-8");
-		
-//		System.out.println(request.getParameter("Content-Type"));
- 		
+		 		
         BufferedReader br = request.getReader();
         String json = br.readLine();
         Course course = GSON.fromJson(json, Course.class);
         
-        course = SERVICE.addCourse(course);
+        List<Course> courseResult = _courseService.selectCourseByGymIdAndStartTime(course);
         
 		PrintWriter pw = response.getWriter();
-        pw.print(GSON.toJson(course));
+        pw.print(GSON.toJson(courseResult));
 	}
 	
 	@Override

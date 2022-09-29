@@ -10,7 +10,7 @@
     <script src="../js/jquery-3.6.0.min.js"></script>
     <script src='../js/moment.min.js'></script>
     <script src="../js/boostrap/bootstrap.min.js"></script>
-
+    
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -147,17 +147,11 @@
     <div class="course">
         <div class="contentTitle">
             <p><i class="fa-solid fa-list-check"> 團課管理</i></p>
-            <select class="select" id="courseLocation" name="courseLocation">
+            <select class="select" id="gym" name="gym">
                 <option value="" selected>選擇場館</option>
-                <option value="1">忠孝</option>
-                <option value="2">善導寺</option>
+                <!-- getAllGym 拿場館 -->
             </select>
-            <select class="select" id="courseDate" name="courseDate">
-                <option value="" selected>選擇日期區間</option>
-                <option value="1">2022/08/28 - 2022/09/03</option>
-                <option value="2">2022/09/04 - 2022/09/10</option>
-            </select>
-
+            <input type="date" class="select" id="dateRange" min="2022-09-01" max="2022-10-30" value="">
             <div class="titleBtn">
                 <button type="submit" id="queryCourse" class="btn_submit">查詢預約</button>
                 <button type="button" id="newCourse" class="btn_submit" data-toggle="modal"
@@ -187,47 +181,8 @@
                                 <th scope="col"></th>
                             </tr>
                         </thead>
-                        <tbody id="courList1">
-                            <tr>
-                                <td>台北忠孝館</td>
-                                <td>11:00-12:00</td>
-                                <td>入門瑜珈</td>
-                                <td>空條承太郎</td>
-                                <td>可預約</td>
-                                <td>公開</td>
-                                <td><img class="listIcon" src="../../img/pencil_black.png" alt="" title="編輯"></td>
-                                <td><img class="listIcon" src="../../img/trash_black.png" alt="" title="編輯"></td>
-                            </tr>
-                            <tr>
-                                <td>台北忠孝館</td>
-                                <td>17:00-18:00</td>
-                                <td>飛輪燃脂</td>
-                                <td>喬魯諾·喬巴拿</td>
-                                <td>額滿</td>
-                                <td>公開</td>
-                                <td><img class="listIcon" src="../../img/pencil_black.png" alt="" title="編輯"></td>
-                                <td><img class="listIcon" src="../../img/trash_black.png" alt="" title="編輯"></td>
-                            </tr>
-                            <tr>
-                                <td>台北忠孝館</td>
-                                <td>17:00-18:00</td>
-                                <td>飛輪燃脂</td>
-                                <td>喬魯諾·喬巴拿</td>
-                                <td>額滿</td>
-                                <td>公開</td>
-                                <td><img class="listIcon" src="../../img/pencil_black.png" alt="" title="編輯"></td>
-                                <td><img class="listIcon" src="../../img/trash_black.png" alt="" title="編輯"></td>
-                            </tr>
-                            <tr>
-                                <td>台北忠孝館</td>
-                                <td>17:00-18:00</td>
-                                <td>飛輪燃脂</td>
-                                <td>喬魯諾·喬巴拿</td>
-                                <td>額滿</td>
-                                <td>公開</td>
-                                <td><img class="listIcon" src="../../img/pencil_black.png" alt="" title="編輯"></td>
-                                <td><img class="listIcon" src="../../img/trash_black.png" alt="" title="編輯"></td>
-                            </tr>
+                        <tbody id="courList" name="courList">
+                            <!-- searchCourse 列出現有課程 -->
                         </tbody>
                     </table>
                 </div>
@@ -305,7 +260,7 @@
                 </div>
                 <div class="modal-body">
                     <div>
-                        <select class="addselect" id="gym" name="gym">
+                        <select class="addselect" id="addgym" name="addgym">
                             <option value="" selected>場館</option>
                             <option value="1">台北忠孝館</option>
                             <option value="2">善導寺館</option>
@@ -359,7 +314,7 @@
         </div>
     </div>
 
-    <script src="../../js/staff/course.js"></script>
+
 
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
@@ -371,6 +326,8 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
         integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
         crossorigin="anonymous"></script>
+
+    <script src="../../js/staff/course.js"></script>
 </body>
 
 </html>

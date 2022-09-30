@@ -87,7 +87,7 @@ public class Course extends Common {
 	public void setCourseName(String courseName) {
 		this.courseName = courseName;
 	}
-<<<<<<< HEAD
+
 	public String getGymName() {
 		return gymName;
 	}

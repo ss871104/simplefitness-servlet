@@ -29,6 +29,29 @@ public interface CourseDaoIntf extends CommonDao<Course, Integer> {
 	 */
 	public boolean updateStatus(Course course);
 
-	List<Course> selectCourseByGymIdAndStartTime(Integer gymId, LocalDateTime startTime);
+
+
+	/*
+	 * * Function: 取得課程可預約狀態 
+	 *   CreateBy: Iris 
+	 *   CreateDate: 2022/09/27
+	 */
+	public String getCourseStatusByCourseId(Integer courseId);
+
 	
+	/*
+	 * * Function: 取得會員已預約課程 
+	 *   CreateBy: Iris 
+	 *   CreateDate: 2022/09/27
+	 */
+	public List<Course> selectBookedCourseByMemberIdAndGymId(Integer memId,Integer gymId);
+
+
+	/*
+	 * * Function: 開放團課預約狀態為可預約 
+	 *   CreateBy: Iris 
+	 *   CreateDate: 2022/09/30
+	 */
+	public void setCourseEnable(Integer courseId);
+
 }

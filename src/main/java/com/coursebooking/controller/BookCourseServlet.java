@@ -17,39 +17,50 @@ import com.coursebooking.service.intf.CourseBookingServiceIntf;
 import com.coursebooking.vo.CourseBooking;
 
 @WebServlet("/courseBooking/BookCourseServlet")
-public class BookCourseServlet extends HttpServlet{
+public class BookCourseServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private CourseBookingServiceIntf _courseBookingService = new CourseBookingServiceImpl();
-       
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		setHeaders(response);
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
-		
-        BufferedReader br = request.getReader();
-        String json = br.readLine();
 
-        //Step.1 接值
-        CourseBooking courseBooking = GSON.fromJson(json, CourseBooking.class);
-        
-        //Step.2 執行SVC
-        Boolean courseBookingResult=_courseBookingService.bookCourse(courseBooking);
+		BufferedReader br = request.getReader();
+		String json = br.readLine();
 
+		// Step.1 接值
+		CourseBooking courseBooking = GSON.fromJson(json, CourseBooking.class);
+		boolean courseBookingResult = false;
+
+		// Step.2 執行SVC
+		// 先執行insert booking
+		// 再判斷有無額滿
+		// 1.執行insert
+		courseBookingResult = _courseBookingService.bookCourse(courseBooking);
+
+		// 2.執行判斷額滿狀態
+		if (courseBookingResult) {
+			_courseBookingService.setCourseBookingFull(courseBooking.getCourseId());
+		}
 
 		PrintWriter pw = response.getWriter();
-        pw.print(GSON.toJson(courseBookingResult));
+		pw.print(GSON.toJson(courseBookingResult));
 	}
-	
+
 	@Override
-	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doOptions(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		setHeaders(response);
 	}
-	
+
 	private void setHeaders(HttpServletResponse response) {
 
 		response.setContentType("application/json;charset=UTF-8"); // 重要

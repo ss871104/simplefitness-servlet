@@ -120,22 +120,9 @@
             <p><i class="fa-solid fa-list-check"> 預約團課</i></p>
             <select class="select" id="classLocation" name="classLocation">
                 <option value="" selected>選擇場館</option>
-                <option value="1">內湖康寧館</option>
-                <option value="2">台北忠孝館</option>
-                <option value="3">信義松仁館</option>
-                <option value="4">新北三重館</option>
-                <option value="5">新北汐止館</option>
             </select>
             <select class="select" id="classType" name="classType">
                 <option value="" selected>選擇課程</option>
-                <option value="1">基礎拳擊</option>
-                <option value="2">拳擊有氧</option>
-                <option value="3">入門瑜珈</option>
-                <option value="4">進階瑜珈</option>
-                <option value="5">空中瑜珈</option>
-                <option value="6">飛輪燃脂</option>
-                <option value="7">Zumba</option>
-                <!-- <option value="coachClass">皮拉提斯</option> -->
             </select>
             <div class="titleBtn">
                 <button type="submit" id="queryBooking" class="btn_submit">查詢課程</button>
@@ -151,9 +138,13 @@
 
 </body>
 <script>
-            var mem_id = 1;
+    var mem_id = 1;
 
     $(document).ready(function () {
+
+        loadGymList();
+
+        loadTeamClassList();
 
         //**參數設定開始**************************************************************************/
         //會員編號(先寫死)
@@ -266,30 +257,38 @@
                     showCalendarEvent(data);
                 }
             });
+        }
+        // 取得健身房下拉選單資訊
+        function loadGymList() {
+            $.ajax({
+                url: "http://localhost:8080/simplefitness-servlet/gym/getAllGym",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    var optionStr = "";
+                    data.forEach(gym => optionStr += '<option value="' + gym.gymId + '">' + gym.gymName + '</option>');
+                    console.log(optionStr);
+                    $("#classLocation").empty();
+                    $("#classLocation").append('<option value="">選擇場館</option>');
+                    $('#classLocation').append(optionStr);
+                }
+            })
+
 
         }
-        // todo 取得下拉選單資訊
+        // 取得團課下拉選單資訊
         function loadTeamClassList() {
-            // $("#classSubType").show();
-            // $("#coach").hide();
-
-            // $("#classSubType").empty();
-            // $("#classSubType").append("<option value=''>--請選擇課程--</option>");
-            // //獲得課程清單(暫時讀取前端已建立物件)
-            // teamClassTypeList.forEach(e => {
-            //     $("#classSubType").append(`<option value=${e.value}>${e.name}</option>`);
-            // })
             $.ajax({
-                url: "",
+                url: "http://localhost:8080/simplefitness-servlet/courseList/getAllCourse",
                 type: "GET",
-                data: {},
                 dataType: "json",
-                beforeSend: function () {
-
-                }, success: function () {
-
-                }, error: function () {
-
+                success: function (data) {
+                    var optionStr = "";
+                    data.forEach(course => optionStr += '<option value="' + course.courseListId + '">' + course.courseName + '</option>');
+                    console.log(optionStr);
+                    $("#classType").empty();
+                    $("#classType").append('<option value="">選擇課程</option>');
+                    $('#classType').append(optionStr);
                 }
             })
         }

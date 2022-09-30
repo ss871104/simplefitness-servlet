@@ -8,14 +8,16 @@
     <link rel="stylesheet" href="../../css/boostrap/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/member/course_booking.css">
     <script src="../../js/jquery-3.6.0.min.js"></script>
-    <script src='../../js/member/calendar/moment.min.js'></script>
-    <script src="../../js/boostrap/bootstrap.min.js"></script>
+    <script src='../../js/moment.min.js'></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/sweetalert2.all.js" type="text/javascript"></script>
 
     <!-- FullCalendar v3.8.1 -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.1/fullcalendar.min.css" rel="stylesheet" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.1/fullcalendar.print.css" rel="stylesheet"
         media="print">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.8.1/fullcalendar.min.js"></script>
+
     <title>預約團體課</title>
 
 </head>
@@ -149,7 +151,22 @@
 
 </body>
 <script>
+            var mem_id = 1;
+
     $(document).ready(function () {
+
+        //**參數設定開始**************************************************************************/
+        //會員編號(先寫死)
+
+        //SWAL按鈕設定
+        swal.setDefaults({
+            //確認按鈕顯示文字
+            confirmButtonText: "確定",
+            //取消按鈕顯示文字
+            cancelButtonText: "取消",
+            // 畫面鎖定設定
+            allowOutsideClick: false
+        });
 
         $("#example").fullCalendar({
             // 參數設定
@@ -158,24 +175,100 @@
                 center: "title", // 中間放置標題
                 right: "" // 右邊放置月、周、天
             },
-            // defaultDate: "2022-08-12", // 起始日期
+            // defaultDate: "2022-09-12", // 起始日期
             weekends: true, // 顯示星期六跟星期日
-            editable: true,  // 啟動拖曳調整日期
-            allDay: true
-
+            //editable: true,  // 啟動拖曳調整日期
+            //allDay: true
+            locale: 'zh-cn', //中文设置
+            timeFormat: "HH:mm",
+            eventClick: function (date, event, view) {
+                swal({
+                    title: "請確認是否預約",
+                    html: "課程名稱:" + date.course + "<br>"
+                        + "課程場館:" + date.gym + "<br>"
+                        + "課程教練:" + date.emp + "<br>"
+                        + "課程時間:" + moment(date.start).format("YYYY-MM-DD") + "\n" + moment(date.start).format("HH:mm"),
+                    type: "info",//success,error,warning
+                    showCancelButton: true//顯示取消按鈕
+                }).then(
+                    function (result) {
+                        //點擊確認事件
+                        if (result.value) {
+                            checkBooking(date.resourse);
+                            getCourseList();
+                        }
+                        else {
+                            swal("預約取消", "太可惜拉~", "warning");
+                            getCourseList()
+                        }
+                    });//end then
+            }
         });
+        //**參數設定結束**************************************************************************/
 
+        //查詢按鈕觸發事件
         $("#queryBooking").click(function () {
             if (!$("#classLocation").val()) {
-                alert("未選擇場館，請選擇欲預約場館")
+                swal("提醒~", "未選擇場館，請選擇欲預約場館~", "warning");
+
             } else if (!$("#classType").val()) {
-                alert("未選擇課程，請選擇欲預約課程")
+                swal("提醒~", "未選擇課程，請選擇欲預約課程~", "warning");
             } else {
-                showCalendarEvent(classList.filter(item => item.classSubType == $("#classSubType").val()));
+                //取得可預約課程清單
+                getCourseList();
             }
 
         })
+        function checkBooking(item) {
 
+            $.ajax({
+                url: "http://localhost:8080/simplefitness-servlet/courseBooking/BookCourseServlet",
+                type: "POST",
+                data: JSON.stringify({
+                    courseId: item.courseId,
+                    courseListId: item.courseListId,
+                    gymId: item.gymId,
+                    coursebookStatus: "1",
+                    memId: mem_id
+                }),
+                // async: false,
+                contentType: 'application/json; charset=UTF-8',
+                dataType: "json",
+                success: function (data) {
+                    // console.log(data)
+                    if (data) {
+                        swal("預約成功", "太棒拉~", "success");
+                        getCourseList();
+                    }
+                    else {
+                        swal("預約失敗", "太雖拉~", "error");
+                    }
+                }
+            });
+            getCourseList();
+
+        }
+        //取得可預約課程清單
+        function getCourseList() {
+            $.ajax({
+                url: "http://localhost:8080/simplefitness-servlet/courseBooking/SearchCourseServlet",
+                type: "POST",
+                data: JSON.stringify({
+                    gymId: $('#classLocation').val(),
+                    courseListId: $('#classType').val(),
+                    memId: mem_id//目前寫死
+                }),
+                // async: false,
+                contentType: 'application/json; charset=UTF-8',
+                dataType: "json",
+                success: function (data) {
+                    console.log(data)
+                    showCalendarEvent(data);
+                }
+            });
+
+        }
+        // todo 取得下拉選單資訊
         function loadTeamClassList() {
             // $("#classSubType").show();
             // $("#coach").hide();
@@ -201,16 +294,24 @@
             })
         }
 
-        function showCalendarEvent(item) {
+        function showCalendarEvent(courses) {
             $('#example').fullCalendar('removeEvents')
-
-            item.forEach(e => {
+            console.log("清空日曆")
+            courses.forEach(course => {
                 var newEvent = new Object();
-                newEvent.title = e.title;
-                newEvent.start = moment(e.start).format();
+                newEvent.title = course.courseName;
+                newEvent.course = course.courseName;
+                newEvent.gym = course.gymName;
+                newEvent.emp = course.empName;
+                newEvent.start = moment(course.startTime).format();
                 newEvent.allDay = false;
+                newEvent.color = "#7ccc9e"
+                newEvent.resourse = course;
                 $('#example').fullCalendar('renderEvent', newEvent);
+
             });
+            console.log("填入日曆")
+
 
         }
     });
@@ -219,111 +320,6 @@
 </script>
 
 
-<script>
-//     var teamClassTypeList = [
-//         { name: "有氧舞蹈", value: "dancing" },
-//         { name: "皮拉提斯", value: "pilates" },
-//         { name: "拳擊", value: "boxing" },
-//         { name: "飛輪", value: "flywheel" },
-//     ];
-//     var coachList = [
-//         { name: "王教練", value: "coachWang" },
-//         { name: "李教練", value: "coachLee" },
-//         { name: "林教練", value: "coachLin" },
-//         { name: "陳教練", value: "coachChen" },
-//     ];
 
-//     var classList = [
-//         { title: "有氧舞蹈", start: "2022-08-01", end: "2022-08-01", classType: "teamClass", classSubType: "dancing" },
-//         { title: "皮拉提斯", start: "2022-08-04", end: "2022-08-04", classType: "teamClass", classSubType: "pilates" },
-//         { title: "拳擊", start: "2022-08-17", end: "2022-08-17", classType: "teamClass", classSubType: "boxing" },
-//         { title: "飛輪", start: "2022-08-15", end: "2022-08-15", classType: "teamClass", classSubType: "flywheel" },
-//         { title: "有氧舞蹈", start: "2022-08-13", end: "2022-08-13", classType: "teamClass", classSubType: "dancing" },
-//         { title: "有氧舞蹈", start: "2022-08-28", end: "2022-08-28", classType: "teamClass", classSubType: "dancing" },
-//         { title: "飛輪", start: "2022-08-25", end: "2022-08-25", classType: "teamClass", classSubType: "flywheel" },
-//     ];
-
-//     $(document).ready(function () {
-//         $("#classSubType").hide();
-//         // $("#coach").hide();
-
-//         $("#example").fullCalendar({
-//             // 參數設定[註1]
-//             header: { // 頂部排版
-//                 left: "prev,next today", // 左邊放置上一頁、下一頁和今天
-//                 center: "title", // 中間放置標題
-//                 right: "" // 右邊放置月、周、天
-//             },
-//             // defaultDate: "2022-08-12", // 起始日期
-//             weekends: true, // 顯示星期六跟星期日
-//             editable: true,  // 啟動拖曳調整日期
-//             allDay: true
-
-//         });
-
-//     });
-//     $("#classType").change(function () {
-//         //團克
-//         if ($("#classType").val() == "teamClass") {
-//             loadTeamClassList();
-//         }
-//         // else {
-//         //     loadCoachList();
-//         // }
-//     });
-
-
-//     $("#queryBooking").click(function () {
-//         //判斷有沒有正確選擇條件
-//         if ((!$("#classLocation").val()) || (!$("#classType").val()) || (!$("#classSubType").val() && !$("#coach").val())) {
-//             alert("請確認有無正確選擇查詢條件!")
-//         }
-//         else {
-//             if ($("#classType").val() == "teamClass") {
-//                 showCalendarEvent(classList.filter(item => item.classSubType == $("#classSubType").val()));
-//             }
-//         }
-//     });
-//     $("#createBooking").click(function () {
-
-//         aa();
-
-//     });
-
-//     function loadTeamClassList() {
-//         $("#classSubType").show();
-//         $("#coach").hide();
-
-//         $("#classSubType").empty();
-//         $("#classSubType").append("<option value=''>--請選擇課程--</option>");
-//         //獲得課程清單(暫時讀取前端已建立物件)
-//         teamClassTypeList.forEach(e => {
-//             $("#classSubType").append(`<option value=${e.value}>${e.name}</option>`);
-//         })
-//     }
-//     function loadCoachList() {
-//         $("#coach").show();
-//         $("#classSubType").hide();
-
-//         $("#coach").empty();
-//         $("#coach").append("<option value=''>--請選擇教練--</option>");
-//         //獲得課程清單(暫時讀取前端已建立物件)
-//         coachList.forEach(e => {
-//             $("#coach").append(`<option value=${e.value}>${e.name}</option>`);
-//         })
-//     }
-//     function showCalendarEvent(item) {
-//         $('#example').fullCalendar('removeEvents')
-
-//         item.forEach(e => {
-//             var newEvent = new Object();
-//             newEvent.title = e.title;
-//             newEvent.start = moment(e.start).format();
-//             newEvent.allDay = false;
-//             $('#example').fullCalendar('renderEvent', newEvent);
-//         });
-
-//     }
-</script>
 
 </html>

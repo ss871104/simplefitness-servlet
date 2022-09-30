@@ -15,7 +15,7 @@ public class CourseDaoSQL {
 	
 	public static final String SELECT_BY_GYMID_AND_STARTTIME = "select gym_id, start_time, cour_list_id, emp_id, status, public"
 																+ "	from course"
-																+ "	where gym_id = ? and start_time like concat( substr( ?, 1, 10), '%') "
+																+ "	where gym_id = ? and start_time between ? and date_add(?,interval 1 day)"
 																+ "	order by start_time;";
 
 }

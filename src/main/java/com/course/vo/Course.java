@@ -1,6 +1,8 @@
 package com.course.vo;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 import com.common.pojo.Common;
 
@@ -20,6 +22,10 @@ public class Course extends Common {
 	private String gymName;
 	private String empName;
 	private Integer courseBookId;
+	private LocalDate selectedDate;
+	private LocalDate dayOne;
+	private LocalDate daySeven;
+
 	
 	public Integer getCourseId() {
 		return courseId;
@@ -81,6 +87,7 @@ public class Course extends Common {
 	public void setCourseName(String courseName) {
 		this.courseName = courseName;
 	}
+<<<<<<< HEAD
 	public String getGymName() {
 		return gymName;
 	}
@@ -99,6 +106,28 @@ public class Course extends Common {
 	public void setCourseBookId(Integer courseBookId) {
 		this.courseBookId = courseBookId;
 	}
+
+	public LocalDate getSelectedDate() {
+		return selectedDate;
+	}
+	public void setSelectedDate(LocalDate selectedDate) {
+		this.selectedDate = selectedDate;
+	}
+	public LocalDate getDayOne() {
+		return dayOne;
+	}
+	public void setDayOne(LocalDate dayOne) {
+		this.dayOne = dayOne;
+	}
+	public LocalDate getDaySeven() {
+		return daySeven;
+	}
+	public void setDaySeven(LocalDate daySeven) {
+		this.daySeven = daySeven;
+	}
+	
+	
+
 	
 	
 }

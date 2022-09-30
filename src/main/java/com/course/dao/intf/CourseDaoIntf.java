@@ -1,7 +1,7 @@
 package com.course.dao.intf;
 
 import java.sql.Date;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 import com.common.dao.CommonDao;
@@ -30,7 +30,6 @@ public interface CourseDaoIntf extends CommonDao<Course, Integer> {
 	public boolean updateStatus(Course course);
 
 
-
 	/*
 	 * * Function: 取得課程可預約狀態 
 	 *   CreateBy: Iris 
@@ -38,6 +37,9 @@ public interface CourseDaoIntf extends CommonDao<Course, Integer> {
 	 */
 	public String getCourseStatusByCourseId(Integer courseId);
 
+
+	List<Course> selectCourseByGymIdAndStartTime(Integer gymId, LocalDate one, LocalDate seven);
+	
 	
 	/*
 	 * * Function: 取得會員已預約課程 

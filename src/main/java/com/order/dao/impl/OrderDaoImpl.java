@@ -33,8 +33,6 @@ public class OrderDaoImpl implements OrderDaoIntf {
 	@Override
 	public boolean insert(Order orderVo) {
 
-		int rowCount = 0;
-
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(INSERT);) {
 
 			System.out.println("連線成功");
@@ -45,11 +43,11 @@ public class OrderDaoImpl implements OrderDaoIntf {
 			pstmt.setTimestamp(4, orderVo.getOrderDate());
 			pstmt.setString(5, orderVo.getStatus());
 
-			rowCount = pstmt.executeUpdate();
+			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return rowCount != 0;
+		return true;
 	}
 
 	@Override

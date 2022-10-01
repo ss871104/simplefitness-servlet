@@ -1,9 +1,10 @@
 package com.order.vo;
 
-import java.io.Serializable;
 import java.sql.Timestamp;
 
-public class Order implements Serializable {
+import com.common.pojo.Common;
+
+public class Order extends Common {
 	
 	private static final long serialVersionUID = 1L;
 	private Integer orderId;

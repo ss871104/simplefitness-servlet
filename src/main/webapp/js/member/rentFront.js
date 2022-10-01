@@ -38,6 +38,7 @@ $("#gymName").change(function() {
 			var cartproducts = [];
 			var obj = {};
 			for (let i = 0; i < products["length"]; i++) {
+				obj.id = products[i].prodId;
 				obj.name = products[i].prodName;
 				obj.price = products[i].price;
 				obj.img = products[i].prodPicBase64;

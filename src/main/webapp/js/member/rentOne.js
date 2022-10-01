@@ -23,7 +23,7 @@ function cartNumbers(product) {
 	let cartItems = sessionStorage.getItem("productsInCart");
 	cartItems = JSON.parse(cartItems);
 	productNumbers = parseInt(productNumbers);
-	prdCount = parseInt($("#count").val());
+	let prdCount = parseInt($("#count").val());
 	if (productNumbers) {
 		if (cartItems[product.name] == undefined) {
 			sessionStorage.setItem("cartNumbers", productNumbers + prdCount);
@@ -44,6 +44,7 @@ function cartNumbers(product) {
 function setItem(product) {
 	let cartItems = sessionStorage.getItem("productsInCart");
 	cartItems = JSON.parse(cartItems);
+	let prdCount = parseInt($("#count").val());
 
 	if (cartItems != null) {
 

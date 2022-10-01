@@ -9,5 +9,6 @@ import com.product.vo.Product;
 public interface IdvProductServiceIntf {
 	
 	public List<IdvProduct> selectByGym(Integer gymId);
-	public List<Product> getProdInfoByProdId(Integer prodId);
+	public IdvProduct selectCount(Integer prodId);
+
 }

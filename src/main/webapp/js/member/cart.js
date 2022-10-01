@@ -43,18 +43,29 @@ $(function() {
 
 	$(".tab1_btn").on("click", function(e) {
 		e.preventDefault();
-		$(".tab").removeClass("-on");
-		$("a.tab[data-target= tab2]").addClass("-on");
-		$("div.tab2").addClass("-on");
-		history.pushState(null, null, "#" + "tab2");
+		let cartItems = sessionStorage.getItem("productsInCart");
+		if (cartItems !== null) {
+			$(".tab").removeClass("-on");
+			$("a.tab[data-target= tab2]").addClass("-on");
+			$("div.tab2").addClass("-on");
+			history.pushState(null, null, "#" + "tab2");
+		} else {
+			alert("請先選取租借商品");
+			location = "./rentFront.html"
+		}
+
 	});
-	$(".tab2_btn").on("click", function(e) {
-		e.preventDefault();
-		$(".tab").removeClass("-on");
-		$("a.tab[data-target= tab3]").addClass("-on");
-		$("div.tab3").addClass("-on");
-		history.pushState(null, null, "#" + "tab3");
-	});
+	//	$(".tab2_btn").on("click", function(e) {
+	//		e.preventDefault();
+	//		if (sessionStorage.getItem("payfor") !== null) {
+	//			//			$(".tab").removeClass("-on");
+	//			//			$("a.tab[data-target= tab3]").addClass("-on");
+	//			//			$("div.tab3").addClass("-on");
+	//			//			history.pushState(null, null, "#" + "tab3");
+	//		} else {
+	//			alert("請選擇付款方式");
+	//		}
+	//	});
 });
 
 window.addEventListener("popstate", function() {
@@ -179,6 +190,7 @@ function setItem(product) {
 $("#gymName").change(function() {
 	let gymName = $("#gymName option:selected").text();
 	sessionStorage.setItem("gymName", gymName);
+	sessionStorage.setItem("gymId", $("#gymName").val());
 });
 
 // 付款方式
@@ -312,3 +324,66 @@ function manageQuantity() {
 
 onLoadCartNumbers();
 displayCart();
+
+
+
+/*------- 訂單成立 -------*/
+
+$(".tab2_btn").on("click", function() {
+	let cartItems = sessionStorage.getItem("productsInCart");
+	cartItems = JSON.parse(cartItems);
+	//console.log(Object.values(cartItems).map(item => item.inCart))
+	
+	var a = Object.keys(cartItems);
+	var abc = [];
+	var obj = {};
+	for (let i = 0; i < a.length; i++) {
+		obj.prodId = cartItems[a[i]].id;
+		obj.inCart = cartItems[a[i]].inCart;
+		abc.push({ ...obj });
+	}
+
+	if (sessionStorage.getItem("payfor") !== null) {
+
+		fetch('http://localhost:8080/simplefitness-servlet/member/checkout', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(abc),
+		})
+			.then(resp => resp.json())
+			.then(body => {
+				if (body.msg !== "success") {
+					alert("租借數量大於庫存，請重新選取");
+					sessionStorage.removeItem("productsInCart");
+					sessionStorage.removeItem("cartNumbers");
+					location = "./rentFront.html";
+				} else {
+					let amount = sessionStorage.getItem("totalCost");
+					let gymId = sessionStorage.getItem("gymId");
+					fetch('http://localhost:8080/simplefitness-servlet/order/addOrder', {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({
+							memId: 1,
+							gymId: gymId,
+							amount: amount,
+							status: 2
+						}),
+					})
+						.then(resp => resp.json())
+						.then(body => {
+							$(".tab").removeClass("-on");
+							$("a.tab[data-target= tab3]").addClass("-on");
+							$("div.tab3").addClass("-on");
+							history.pushState(null, null, "#" + "tab3");
+							$(".startTime").text(body.orderDate);
+						});
+				}
+
+			});
+
+	} else {
+		alert("請選擇付款方式");
+	}
+
+});

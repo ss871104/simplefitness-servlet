@@ -92,12 +92,29 @@ public class IdvProductDaoImpl  implements IdvProductDaoIntf{
 		return list;
 	}
 
+
 	@Override
-	public List<Product> getProdInfoByProdId(Integer prodId) {
-		// TODO Auto-generated method stub
-		return null;
+	public IdvProduct selectCount(Integer prodId) {
+		IdvProduct idvProduct = null;
+		
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(FIND_COUNT);) {
+
+			System.out.println("連線成功");
+			
+			pstmt.setInt(1, prodId);
+			
+			try (ResultSet rs = pstmt.executeQuery()) {
+
+				if (rs.next()) {
+					idvProduct = new IdvProduct();
+					idvProduct.setCount(rs.getInt("count"));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return idvProduct;
 	}
-	
 	
 
 	

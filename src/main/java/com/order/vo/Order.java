@@ -13,6 +13,7 @@ public class Order extends Common {
 	private Integer amount;
 	private Timestamp orderDate;     
 	private String status;
+	private String gymName;
 	
 	public Order(Integer orderId, Integer memId, Integer gymId, Integer amount, Timestamp orderDate, String status) {
 		super();
@@ -75,5 +76,15 @@ public class Order extends Common {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+
+	public String getGymName() {
+		return gymName;
+	}
+
+
+	public void setGymName(String gymName) {
+		this.gymName = gymName;
 	}
 }

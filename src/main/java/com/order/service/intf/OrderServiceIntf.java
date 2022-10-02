@@ -8,6 +8,6 @@ public interface OrderServiceIntf {
 	
 	public List<Order> findAll();
 	public List<Order> SelectByMem(Integer memId);
-	Order addOrder(Order order);
-	
+	public Order addOrder(Order order);
+	public boolean CancelOrder(Order order);
 	}

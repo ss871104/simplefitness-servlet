@@ -30,13 +30,14 @@ public class OrderServiceImpl implements OrderServiceIntf {
 	public Order addOrder(Order order) {
 		order.setStatus("2");
 		order.setOrderDate(new java.sql.Timestamp(new Date().getTime()));
-		if (dao.insert(order) == true) {
-			order.setSuccessful(true);
-			return order;
-		}
-		order.setMessage("訂單新增失敗");
-		order.setSuccessful(false);
+		dao.insertGetOrderId(order);
 		return order;
+	}
+
+	@Override
+	public boolean CancelOrder(Order order) {
+		order.setStatus("0");
+		return dao.UpdateStatus(order);
 	}
 
 	

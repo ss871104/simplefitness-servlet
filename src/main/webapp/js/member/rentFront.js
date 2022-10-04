@@ -18,7 +18,7 @@ $("#gymName").change(function() {
 
 				let html = `
                     <li>
-                        <a href="./rentGlove.html">
+                        <a href="./rentOne.html" class="idvPage">
                             <div class="img_block">
                                 <img src="${products[i].prodPicBase64}"/>
                             </div>
@@ -34,55 +34,32 @@ $("#gymName").change(function() {
 
 				$(".item_list").append(html);
 			}
-			
-			let cartproducts = [
-				{
-					name: products[0].prodName,
-					price: products[0].price,
-					img: products[0].prodPicBase64,
-					intro: products[0].intro,
-					count:products[0].count,
-					inCart: 0
-				},
-				{
-					name: products[1].prodName,
-					price: products[1].price,
-					img: products[1].prodPicBase64,
-					intro: products[1].intro,
-					count:products[1].count,
-					inCart: 0
-				},
-				{
-					name: products[2].prodName,
-					price: products[2].price,
-					img: products[2].prodPicBase64,
-					intro: products[2].intro,
-					count:products[2].count,
-					inCart: 0
-				},
-				{
-					name: products[3].prodName,
-					price: products[3].price,
-					img: products[3].prodPicBase64,
-					intro: products[3].intro,
-					count:products[3].count,
-					inCart: 0
-				}]
-			
-			let carts = document.querySelectorAll(".cart-plus");
-			for (let i = 0; i < carts.length; i++) {
-				carts[i].addEventListener("click", (e) => {
-					console.log("click")
-					e.preventDefault();
-					cartNumbers(cartproducts[i]);
-					totalCost(cartproducts[i]);
-				})
 
+			var cartproducts = [];
+			var obj = {};
+			for (let i = 0; i < products["length"]; i++) {
+				obj.id = products[i].prodId;
+				obj.name = products[i].prodName;
+				obj.price = products[i].price;
+				obj.img = products[i].prodPicBase64;
+				obj.intro = products[i].intro;
+				obj.count = products[i].count;
+				obj.inCart = 0;
+				cartproducts.push({ ...obj });
 			}
 
+			let carts = document.querySelectorAll(".cart-plus");
+			let pages = document.querySelectorAll(".idvPage");
+			for (let i = 0; i < carts.length; i++) {
+				carts[i].addEventListener("click", (e) => {
+					e.preventDefault();
+					cartNumbers(cartproducts[i]);
+				})
+				
+				pages[i].addEventListener("click", () => {
+					sessionStorage.setItem("cartproduct", JSON.stringify(cartproducts[i]));
+				})
+			}
 
-		})
-
-
-
+		});
 });

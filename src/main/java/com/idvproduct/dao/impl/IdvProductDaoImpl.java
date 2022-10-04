@@ -2,6 +2,7 @@ package com.idvproduct.dao.impl;
 
 import static com.idvproduct.dao.sql.IdvProductDaoSQL.*;
 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -92,12 +93,47 @@ public class IdvProductDaoImpl  implements IdvProductDaoIntf{
 		return list;
 	}
 
+
 	@Override
-	public List<Product> getProdInfoByProdId(Integer prodId) {
-		// TODO Auto-generated method stub
-		return null;
+	public IdvProduct selectCount(Integer prodId) {
+		IdvProduct idvProduct = null;
+		
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(FIND_COUNT);) {
+
+			System.out.println("連線成功");
+			
+			pstmt.setInt(1, prodId);
+			
+			try (ResultSet rs = pstmt.executeQuery()) {
+
+				if (rs.next()) {
+					idvProduct = new IdvProduct();
+					idvProduct.setCount(rs.getInt("count"));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return idvProduct;
 	}
-	
+
+	@Override
+	public boolean UpdateStatus(String status, Integer id) {
+		int rowCount = 0;
+
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(UPDATE_STATUS);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setString(1, status);
+			pstmt.setInt(2, id);
+
+			rowCount = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rowCount != 0;
+	}
 	
 
 	

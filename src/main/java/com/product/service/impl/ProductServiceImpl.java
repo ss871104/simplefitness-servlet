@@ -1,8 +1,6 @@
 package com.product.service.impl;
 
 
-import java.util.List;
-
 import com.common.adapter.Base64Adapter;
 import com.product.dao.impl.ProductDaoImpl;
 import com.product.dao.intf.ProductDaoIntf;

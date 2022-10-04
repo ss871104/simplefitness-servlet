@@ -3,6 +3,8 @@ package com.orderdetail.vo;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+import com.idvproduct.vo.IdvProduct;
+
 public class OrderDetail implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -12,6 +14,9 @@ public class OrderDetail implements Serializable{
 	private Timestamp pickupTime;
 	private Timestamp returnTime;
 	private String status;
+	private Integer gymId;
+	private Integer prodId;
+	private Integer inCart;
 	
 	public OrderDetail(Integer orderCode, Integer orderId, Integer idvId, Timestamp pickupTime, Timestamp returnTime,
 			String status) {
@@ -73,6 +78,30 @@ public class OrderDetail implements Serializable{
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public Integer getGymId() {
+		return gymId;
+	}
+
+	public void setGymId(Integer gymId) {
+		this.gymId = gymId;
+	}
+
+	public Integer getProdId() {
+		return prodId;
+	}
+
+	public void setProdId(Integer prodId) {
+		this.prodId = prodId;
+	}
+
+	public Integer getInCart() {
+		return inCart;
+	}
+
+	public void setInCart(Integer inCart) {
+		this.inCart = inCart;
 	}
 
 	

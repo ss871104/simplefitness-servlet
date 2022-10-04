@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,11 +32,10 @@ public class OrderDaoImpl implements OrderDaoIntf {
 	}
 
 	@Override
-	public boolean insert(Order orderVo) {
+	public Integer insertGetOrderId(Order orderVo) {
+		Integer orderId = null;
 
-		int rowCount = 0;
-
-		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(INSERT);) {
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(INSERT,Statement.RETURN_GENERATED_KEYS);) {
 
 			System.out.println("連線成功");
 
@@ -45,11 +45,17 @@ public class OrderDaoImpl implements OrderDaoIntf {
 			pstmt.setTimestamp(4, orderVo.getOrderDate());
 			pstmt.setString(5, orderVo.getStatus());
 
-			rowCount = pstmt.executeUpdate();
+			pstmt.executeUpdate();
+			
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				orderId = rs.getInt(1);
+				System.out.println("keyValue= " + orderId );
+			} 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return rowCount != 0;
+		return orderId;
 	}
 
 	@Override
@@ -171,6 +177,7 @@ public class OrderDaoImpl implements OrderDaoIntf {
 					order.setAmount(rs.getInt("amount"));
 					order.setOrderDate(rs.getTimestamp("order_date"));
 					order.setStatus(rs.getString("status"));
+					order.setGymName(rs.getString("gym_name"));
 					list.add(order);
 				}
 			}
@@ -227,6 +234,12 @@ public class OrderDaoImpl implements OrderDaoIntf {
 			e.printStackTrace();
 		}
 		return rowCount != 0;
+	}
+
+	@Override
+	public boolean insert(Order vo) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

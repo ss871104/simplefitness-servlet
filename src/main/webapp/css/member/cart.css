@@ -1,9 +1,7 @@
 .main {
     margin-left: 15%;
     padding:30px;
-    /* border: 1px solid blue; */
     font-family: 'Noto Sans TC', sans-serif;
-
 }
 .container{
     width: 90%;
@@ -17,7 +15,6 @@ ul.tabList{
     width: 95%;
     justify-content: space-around;
     padding-left: 0rem;
-    /* border: 1px solid black; */
     background-color:rgba(199, 195, 195, 0.447) ;
 }
 
@@ -40,7 +37,6 @@ ul.tabList{
 
 div.tab{
     width: 95%;
-    /* border: 1px solid black; */
     padding: 10px;
     display: none;
 }
@@ -67,7 +63,6 @@ div.tab1 > ul{
     margin: 0;
 }
 
-
 .item_header{
     display: flex;
     width: 100%;
@@ -75,7 +70,6 @@ div.tab1 > ul{
     background-color: #fff;
     border-radius: 3px;
     border-bottom: 1px solid #888;
- 
 }
 .item_header div{
     color: #888;
@@ -88,7 +82,6 @@ div.tab1 > ul{
 .item_header .prdImg{
     width: 21%;
     padding-left: 20px;
-
 }
 .item_header .prdName{
     width: 15%;
@@ -119,7 +112,6 @@ div.tab1 > ul{
 .product .prdImg{
     width: 21%;
     padding-left: 20px;
-
 }
 .product .prdName{
     width: 15%;
@@ -181,11 +173,14 @@ label{
     padding: 5px 7px;
 }
 
-/* -------------------Step 2-------------------- */
+/* -------------------Step 3-------------------- */
 .tab3 h4{
     margin: 0.5rem 1.5rem;
 }
-
-
-
+.prdList{
+	margin-bottom: 10px;
+}
+button{
+    cursor: pointer;
+}
 

@@ -1,18 +1,6 @@
 package com.idvproduct.vo;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 import com.common.pojo.Common;
-import com.product.vo.Product;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 public class IdvProduct extends Common{
 	private static final long serialVersionUID = 1L;
@@ -22,9 +10,7 @@ public class IdvProduct extends Common{
 	private Integer prodId;
 	private String status;
 	private Integer count;
-	
-//	private Product product;
-
+	private Integer inCart;
 	
 	public Integer getIdvId() {
 		return idvId;
@@ -55,6 +41,12 @@ public class IdvProduct extends Common{
 	}
 	public void setCount(Integer count) {
 		this.count = count;
+	}
+	public Integer getInCart() {
+		return inCart;
+	}
+	public void setInCart(Integer inCart) {
+		this.inCart = inCart;
 	}
 	
 	

@@ -5,13 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>租借首頁</title>
-    
+    <link rel="stylesheet" href="../../css/boostrap/bootstrap.min.css" />
     <link rel="stylesheet" href="../../css/member/rent.css" />
     <link rel="stylesheet" href="../../css/member/order.css" />
     
 
     <script src="../../js/jquery-3.6.0.min.js"></script>
-  
+<!--   	<script src="../../js/boostrap/bootstrap.min.js"></script> -->
   </head>
   <body>
     <!-- header -->
@@ -108,19 +108,21 @@
         <!-- main -->
         <main class="main">
           <div class="container">
-            <table id="title">
-              <tr>
-                <th width="100">訂單編號</th>
-                <th width="150">租借場館</th>
-                <th width="100">訂單金額</th>
-                <th width="200">租借日期</th>
-                <th width="120">訂單狀態</th>
-                <th width="120">訂單明細</th>
-              </tr>
-            </table>
+            <table class="table table-hover">
+              <thead class="title">
+                <tr>
+                  <th>訂單編號</th>
+                  <th>租借場館</th>
+                  <th>訂單金額</th>
+                  <th>租借日期</th>
+                  <th>訂單狀態</th>
+                  <th></th>
+                </tr>
+              </thead>
 
-            <table class="orderList">
-              
+              <tbody class="orderList">
+                
+              </tbody>
             </table>
           </div>
         </main>

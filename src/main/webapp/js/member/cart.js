@@ -332,15 +332,15 @@ displayCart();
 $(".tab2_btn").on("click", function() {
 	let cartItems = sessionStorage.getItem("productsInCart");
 	cartItems = JSON.parse(cartItems);
-	//console.log(Object.values(cartItems).map(item => item.inCart))
-	
+//	console.log(Object.values(cartItems).map(item => item.id))
+//	console.log(cartItems);
 	var a = Object.keys(cartItems);
-	var abc = [];
+	var prodsInCart = [];
 	var obj = {};
 	for (let i = 0; i < a.length; i++) {
 		obj.prodId = cartItems[a[i]].id;
 		obj.inCart = cartItems[a[i]].inCart;
-		abc.push({ ...obj });
+		prodsInCart.push({ ...obj });
 	}
 
 	if (sessionStorage.getItem("payfor") !== null) {
@@ -348,7 +348,7 @@ $(".tab2_btn").on("click", function() {
 		fetch('http://localhost:8080/simplefitness-servlet/member/checkout', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify(abc),
+			body: JSON.stringify(prodsInCart),
 		})
 			.then(resp => resp.json())
 			.then(body => {
@@ -367,7 +367,7 @@ $(".tab2_btn").on("click", function() {
 							memId: 1,
 							gymId: gymId,
 							amount: amount,
-							status: 2
+							orderList:prodsInCart
 						}),
 					})
 						.then(resp => resp.json())

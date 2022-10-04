@@ -10,5 +10,4 @@ public interface IdvProductServiceIntf {
 	
 	public List<IdvProduct> selectByGym(Integer gymId);
 	public IdvProduct selectCount(Integer prodId);
-
 }

@@ -2,6 +2,7 @@ package com.idvproduct.dao.impl;
 
 import static com.idvproduct.dao.sql.IdvProductDaoSQL.*;
 
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -114,6 +115,24 @@ public class IdvProductDaoImpl  implements IdvProductDaoIntf{
 			e.printStackTrace();
 		}
 		return idvProduct;
+	}
+
+	@Override
+	public boolean UpdateStatus(String status, Integer id) {
+		int rowCount = 0;
+
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(UPDATE_STATUS);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setString(1, status);
+			pstmt.setInt(2, id);
+
+			rowCount = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rowCount != 0;
 	}
 	
 

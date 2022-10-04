@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,22 +32,27 @@ public class OrderDetailDaoImpl implements OrderDetailDaoIntf {
 	}
 
 	@Override
-	public boolean insert(OrderDetail orderDetailVo) {
-		int rowCount = 0;
-
-		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(INSERT);) {
+	public Integer insert2(Integer orderId, Integer gymId, Integer prodId) {
+		Integer orderCode = null;
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(INSERT,Statement.RETURN_GENERATED_KEYS);) {
 
 			System.out.println("連線成功");
 
-			pstmt.setInt(1, orderDetailVo.getOrderId());
-			pstmt.setInt(2, orderDetailVo.getIdvId());
-			pstmt.setString(3, orderDetailVo.getStatus());
+			pstmt.setInt(1, orderId);
+			pstmt.setInt(2, gymId);
+			pstmt.setInt(3, prodId);
 
-			rowCount = pstmt.executeUpdate();
+			pstmt.executeUpdate();
+			ResultSet rs = pstmt.getGeneratedKeys();
+			if (rs.next()) {
+				orderCode = rs.getInt(1);
+				System.out.println("keyValue= " + orderCode );
+			} 
+			return orderCode;
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return null;
 		}
-		return rowCount != 0;
 	}
 
 	@Override
@@ -202,6 +208,12 @@ public class OrderDetailDaoImpl implements OrderDetailDaoIntf {
 			e.printStackTrace();
 		}
 		return rowCount != 0;
+	}
+
+	@Override
+	public boolean insert(OrderDetail vo) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

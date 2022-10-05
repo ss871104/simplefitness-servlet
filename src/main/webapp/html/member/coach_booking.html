@@ -118,22 +118,12 @@
             <p><i class="fa-solid fa-list-check"> 預約教練課</i></p>
             <select class="select" id="classLocation" name="classLocation">
                 <option value="" selected>選擇場館</option>
-                <option value="1">忠孝</option>
-                <option value="2">善導寺</option>
             </select>
-            <select class="select" id="classType" name="classType">
+            <select class="select" id="personalCoach" name="personalCoach">
                 <option value="" selected>選擇教練</option>
-                <option value="teamClass">教練1</option>
-                <option value="coachClass">教練2</option>
-            </select>
-            <select class="select" id="classSubType" name="classSubType">
-            </select>
-            <select class="select" id="coach" name="coach">
             </select>
             <div class="titleBtn">
                 <button type="submit" id="queryBooking" class="btn_submit">查詢課程</button>
-                <!-- <button type="submit" id="createBooking" class="btn_submit">新增預約</button> -->
-            </div>
         </div>
         <div class="contentBody">
             <div id="example" class="calendarArea"></div>
@@ -145,111 +135,6 @@
 
 </body>
 
-<script>
-    // var teamClassTypeList = [
-    //     { name: "有氧舞蹈", value: "dancing" },
-    //     { name: "皮拉提斯", value: "pilates" },
-    //     { name: "拳擊", value: "boxing" },
-    //     { name: "飛輪", value: "flywheel" },
-    // ];
-    var coachList = [
-        { name: "王教練", value: "coachWang" },
-        { name: "李教練", value: "coachLee" },
-        { name: "林教練", value: "coachLin" },
-        { name: "陳教練", value: "coachChen" },
-    ];
-
-    // var classList = [
-    //     { title: "有氧舞蹈", start: "2022-08-01", end: "2022-08-01", classType: "teamClass", classSubType: "dancing" },
-    //     { title: "皮拉提斯", start: "2022-08-04", end: "2022-08-04", classType: "teamClass", classSubType: "pilates" },
-    //     { title: "拳擊", start: "2022-08-17", end: "2022-08-17", classType: "teamClass", classSubType: "boxing" },
-    //     { title: "飛輪", start: "2022-08-15", end: "2022-08-15", classType: "teamClass", classSubType: "flywheel" },
-    //     { title: "有氧舞蹈", start: "2022-08-13", end: "2022-08-13", classType: "teamClass", classSubType: "dancing" },
-    //     { title: "有氧舞蹈", start: "2022-08-28", end: "2022-08-28", classType: "teamClass", classSubType: "dancing" },
-    //     { title: "飛輪", start: "2022-08-25", end: "2022-08-25", classType: "teamClass", classSubType: "flywheel" },
-    // ];
-
-    $(document).ready(function () {
-        $("#classSubType").hide();
-        $("#coach").hide();
-
-        $("#example").fullCalendar({
-            // 參數設定[註1]
-            header: { // 頂部排版
-                left: "prev,next today", // 左邊放置上一頁、下一頁和今天
-                center: "title", // 中間放置標題
-                right: "" // 右邊放置月、周、天
-            },
-            // defaultDate: "2022-08-12", // 起始日期
-            weekends: true, // 顯示星期六跟星期日
-            editable: true,  // 啟動拖曳調整日期
-            allDay: true
-
-        });
-
-    });
-    $("#classType").change(function () {
-        //團克
-        if ($("#classType").val() == "teamClass") {
-            loadTeamClassList();
-        }
-        else {
-            loadCoachList();
-        }
-    });
-
-
-    $("#queryBooking").click(function () {
-        //判斷有沒有正確選擇條件
-        if ((!$("#classLocation").val()) || (!$("#classType").val()) || (!$("#classSubType").val() && !$("#coach").val())) {
-            alert("請確認有無正確選擇查詢條件!")
-        }
-        else {
-            if ($("#classType").val() == "teamClass") {
-                showCalendarEvent(classList.filter(item => item.classSubType == $("#classSubType").val()));
-            }
-        }
-    });
-    $("#createBooking").click(function () {
-
-        aa();
-
-    });
-
-    function loadTeamClassList() {
-        $("#classSubType").show();
-        $("#coach").hide();
-
-        $("#classSubType").empty();
-        $("#classSubType").append("<option value=''>--請選擇課程--</option>");
-        //獲得課程清單(暫時讀取前端已建立物件)
-        teamClassTypeList.forEach(e => {
-            $("#classSubType").append(`<option value=${e.value}>${e.name}</option>`);
-        })
-    }
-    function loadCoachList() {
-        $("#coach").show();
-        $("#classSubType").hide();
-
-        $("#coach").empty();
-        $("#coach").append("<option value=''>--請選擇教練--</option>");
-        //獲得課程清單(暫時讀取前端已建立物件)
-        coachList.forEach(e => {
-            $("#coach").append(`<option value=${e.value}>${e.name}</option>`);
-        })
-    }
-    function showCalendarEvent(item) {
-        $('#example').fullCalendar('removeEvents')
-
-        item.forEach(e => {
-            var newEvent = new Object();
-            newEvent.title = e.title;
-            newEvent.start = moment(e.start).format();
-            newEvent.allDay = false;
-            $('#example').fullCalendar('renderEvent', newEvent);
-        });
-
-    }
-</script>
+<script src="../../js/member/coach_booking.js"> </script>
 
 </html>

@@ -40,7 +40,7 @@ $(function () {
                     html: "課程名稱:" + date.course + "<br>"
                         + "課程場館:" + date.gym + "<br>"
                         + "課程教練:" + date.emp + "<br>"
-                        + "課程時間:" + moment(date.start).format("YYYY-MM-DD") + "\n" + moment(date.start).format("HH:mm"),
+                        + "課程時間:" + moment(date.start).format("YYYY-MM-DD HH:mm"),
                     type: "info",//success,error,warning
                     showCancelButton: true//顯示取消按鈕
                 }).then(
@@ -188,7 +188,6 @@ $(function () {
                     }
                 }
             });
-            getCourseList();
         }
 
     });

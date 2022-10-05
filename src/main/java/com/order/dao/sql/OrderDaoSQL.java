@@ -2,7 +2,7 @@ package com.order.dao.sql;
 
 public class OrderDaoSQL {
 	public static final String INSERT =
-			"insert into orders (mem_id, gym_id, amount, order_date, status) values (?, ?, ?, ?, ?)";
+			"insert into orders (mem_id, gym_id, amount, status) values (?, ?, ?, ?)";
 	public static final String SELECT_ALL = 
 			"select order_id, mem_id, gym_id, amount, order_date, status from orders order by order_id";
 	public static final String SELECT_BY_ID = 

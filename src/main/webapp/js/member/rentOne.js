@@ -13,7 +13,7 @@ $(".cart-plus").on("click", function(e) {
 	e.preventDefault();
 	cartNumbers(cartproduct);
 })
-$(".cart-check").on("click", function(e) {
+$(".cart-check").on("click", function() {
 	cartNumbers(cartproduct);
 	location = "./cart.html";
 })

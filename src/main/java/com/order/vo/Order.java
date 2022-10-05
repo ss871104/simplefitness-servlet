@@ -1,6 +1,7 @@
 package com.order.vo;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.common.pojo.Common;
@@ -19,7 +20,7 @@ public class Order extends Common {
 	private Integer memId;
 	private Integer gymId;
 	private Integer amount;
-	private Timestamp orderDate;     
+	private LocalDateTime orderDate;     
 	private String status;
 	private String gymName;
 	private String memName;

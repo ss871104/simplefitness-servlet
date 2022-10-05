@@ -145,6 +145,7 @@ public class OrderDetailDaoImpl implements OrderDetailDaoIntf {
 					orderdetail.setPickupTime(rs.getTimestamp("pickup_time"));
 					orderdetail.setReturnTime(rs.getTimestamp("return_time"));
 					orderdetail.setStatus(rs.getString("status"));
+					orderdetail.setProdName(rs.getString("prod_name"));
 					list.add(orderdetail);
 				}
 			}

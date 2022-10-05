@@ -39,8 +39,8 @@ public class OrderServiceImpl implements OrderServiceIntf {
 	@Override
 	public Order addOrder(Order order,Integer prodId) {
 		order.setStatus("2");
-//		order.setOrderDate(new java.sql.Timestamp(new Date().getTime()));
 		Integer orderId = dao.insertGetOrderId(order);
+		
 		Integer orderCode;
 		
 		System.out.println(orderId);
@@ -52,6 +52,8 @@ public class OrderServiceImpl implements OrderServiceIntf {
 				idvDao.UpdateStatus("2", detailDao.selectById(orderCode).getIdvId());
 			}
 		}
+		
+		order = dao.selectById(orderId);
 		
 		
 		

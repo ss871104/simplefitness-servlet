@@ -17,6 +17,7 @@ public class OrderDetail implements Serializable{
 	private Integer gymId;
 	private Integer prodId;
 	private Integer inCart;
+	private String prodName;
 	
 	public OrderDetail(Integer orderCode, Integer orderId, Integer idvId, Timestamp pickupTime, Timestamp returnTime,
 			String status) {
@@ -102,6 +103,14 @@ public class OrderDetail implements Serializable{
 
 	public void setInCart(Integer inCart) {
 		this.inCart = inCart;
+	}
+
+	public String getProdName() {
+		return prodName;
+	}
+
+	public void setProdName(String prodName) {
+		this.prodName = prodName;
 	}
 
 	

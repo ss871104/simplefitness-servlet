@@ -4,8 +4,11 @@ import java.util.List;
 
 import com.coach.vo.Coach;
 import com.coachbooking.vo.CoachBooking;
+import com.emp.vo.Employee;
 
 public interface CoachBookingServiceIntf {
+	
+	public List<Employee> searchCoachByJob();
 
 	public List<Coach> searchCoachByGymIdAndEmpId(CoachBooking coachbook);
 

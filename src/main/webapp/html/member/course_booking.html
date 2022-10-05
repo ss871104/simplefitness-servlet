@@ -26,13 +26,13 @@
 
     <div class="topnav">
 
-        <a class="img_link" href="http://localhost:5500/html/home.html">
+        <a class="img_link" href="../guest/home.html">
             <img class="logoImg" src="../../img/Simple_Fitness-logos_white.png" alt="">
         </a>
 
         <ul class="list-inline">
             <li class="dropdown">
-                <a class="topnavBtn" id="home" href="http://localhost:5500/html/home.html">
+                <a class="topnavBtn" id="home" href="../guest/home.html">
                     <img class="icon" src="../../img/home.png" alt="" title="首頁">
                 </a>
                 <div class="dropdown-content">
@@ -76,23 +76,23 @@
                 </a>
             </li>
             <li>
-                <a href="http://localhost:5500/html/booking.html">
+                <a href="booking.html">
                     <i class="fa fa-gavel" aria-hidden="true"></i>
                     課程預約
                 </a>
                 <ul>
                     <li>
-                        <a href="http://localhost:5500/html/course_booking.html">
+                        <a href="course_booking.html">
                             預約團課
                         </a>
                     </li>
                     <li>
-                        <a href="http://localhost:5500/html/coach_booking.html">
+                        <a href="coach_booking.html">
                             預約教練課
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="my_booking.html">
                             我的預約
                         </a>
                     </li>
@@ -120,22 +120,9 @@
             <p><i class="fa-solid fa-list-check"> 預約團課</i></p>
             <select class="select" id="classLocation" name="classLocation">
                 <option value="" selected>選擇場館</option>
-                <option value="1">內湖康寧館</option>
-                <option value="2">台北忠孝館</option>
-                <option value="3">信義松仁館</option>
-                <option value="4">新北三重館</option>
-                <option value="5">新北汐止館</option>
             </select>
             <select class="select" id="classType" name="classType">
                 <option value="" selected>選擇課程</option>
-                <option value="1">基礎拳擊</option>
-                <option value="2">拳擊有氧</option>
-                <option value="3">入門瑜珈</option>
-                <option value="4">進階瑜珈</option>
-                <option value="5">空中瑜珈</option>
-                <option value="6">飛輪燃脂</option>
-                <option value="7">Zumba</option>
-                <!-- <option value="coachClass">皮拉提斯</option> -->
             </select>
             <div class="titleBtn">
                 <button type="submit" id="queryBooking" class="btn_submit">查詢課程</button>
@@ -150,176 +137,7 @@
 
 
 </body>
-<script>
-            var mem_id = 1;
 
-    $(document).ready(function () {
-
-        //**參數設定開始**************************************************************************/
-        //會員編號(先寫死)
-
-        //SWAL按鈕設定
-        swal.setDefaults({
-            //確認按鈕顯示文字
-            confirmButtonText: "確定",
-            //取消按鈕顯示文字
-            cancelButtonText: "取消",
-            // 畫面鎖定設定
-            allowOutsideClick: false
-        });
-
-        $("#example").fullCalendar({
-            // 參數設定
-            header: { // 頂部排版
-                left: "prev,next today", // 左邊放置上一頁、下一頁和今天
-                center: "title", // 中間放置標題
-                right: "" // 右邊放置月、周、天
-            },
-            // defaultDate: "2022-09-12", // 起始日期
-            weekends: true, // 顯示星期六跟星期日
-            //editable: true,  // 啟動拖曳調整日期
-            //allDay: true
-            locale: 'zh-cn', //中文设置
-            timeFormat: "HH:mm",
-            eventClick: function (date, event, view) {
-                swal({
-                    title: "請確認是否預約",
-                    html: "課程名稱:" + date.course + "<br>"
-                        + "課程場館:" + date.gym + "<br>"
-                        + "課程教練:" + date.emp + "<br>"
-                        + "課程時間:" + moment(date.start).format("YYYY-MM-DD") + "\n" + moment(date.start).format("HH:mm"),
-                    type: "info",//success,error,warning
-                    showCancelButton: true//顯示取消按鈕
-                }).then(
-                    function (result) {
-                        //點擊確認事件
-                        if (result.value) {
-                            checkBooking(date.resourse);
-                            getCourseList();
-                        }
-                        else {
-                            swal("預約取消", "太可惜拉~", "warning");
-                            getCourseList()
-                        }
-                    });//end then
-            }
-        });
-        //**參數設定結束**************************************************************************/
-
-        //查詢按鈕觸發事件
-        $("#queryBooking").click(function () {
-            if (!$("#classLocation").val()) {
-                swal("提醒~", "未選擇場館，請選擇欲預約場館~", "warning");
-
-            } else if (!$("#classType").val()) {
-                swal("提醒~", "未選擇課程，請選擇欲預約課程~", "warning");
-            } else {
-                //取得可預約課程清單
-                getCourseList();
-            }
-
-        })
-        function checkBooking(item) {
-
-            $.ajax({
-                url: "http://localhost:8080/simplefitness-servlet/courseBooking/BookCourseServlet",
-                type: "POST",
-                data: JSON.stringify({
-                    courseId: item.courseId,
-                    courseListId: item.courseListId,
-                    gymId: item.gymId,
-                    coursebookStatus: "1",
-                    memId: mem_id
-                }),
-                // async: false,
-                contentType: 'application/json; charset=UTF-8',
-                dataType: "json",
-                success: function (data) {
-                    // console.log(data)
-                    if (data) {
-                        swal("預約成功", "太棒拉~", "success");
-                        getCourseList();
-                    }
-                    else {
-                        swal("預約失敗", "太雖拉~", "error");
-                    }
-                }
-            });
-            getCourseList();
-
-        }
-        //取得可預約課程清單
-        function getCourseList() {
-            $.ajax({
-                url: "http://localhost:8080/simplefitness-servlet/courseBooking/SearchCourseServlet",
-                type: "POST",
-                data: JSON.stringify({
-                    gymId: $('#classLocation').val(),
-                    courseListId: $('#classType').val(),
-                    memId: mem_id//目前寫死
-                }),
-                // async: false,
-                contentType: 'application/json; charset=UTF-8',
-                dataType: "json",
-                success: function (data) {
-                    console.log(data)
-                    showCalendarEvent(data);
-                }
-            });
-
-        }
-        // todo 取得下拉選單資訊
-        function loadTeamClassList() {
-            // $("#classSubType").show();
-            // $("#coach").hide();
-
-            // $("#classSubType").empty();
-            // $("#classSubType").append("<option value=''>--請選擇課程--</option>");
-            // //獲得課程清單(暫時讀取前端已建立物件)
-            // teamClassTypeList.forEach(e => {
-            //     $("#classSubType").append(`<option value=${e.value}>${e.name}</option>`);
-            // })
-            $.ajax({
-                url: "",
-                type: "GET",
-                data: {},
-                dataType: "json",
-                beforeSend: function () {
-
-                }, success: function () {
-
-                }, error: function () {
-
-                }
-            })
-        }
-
-        function showCalendarEvent(courses) {
-            $('#example').fullCalendar('removeEvents')
-            console.log("清空日曆")
-            courses.forEach(course => {
-                var newEvent = new Object();
-                newEvent.title = course.courseName;
-                newEvent.course = course.courseName;
-                newEvent.gym = course.gymName;
-                newEvent.emp = course.empName;
-                newEvent.start = moment(course.startTime).format();
-                newEvent.allDay = false;
-                newEvent.color = "#7ccc9e"
-                newEvent.resourse = course;
-                $('#example').fullCalendar('renderEvent', newEvent);
-
-            });
-            console.log("填入日曆")
-
-
-        }
-    });
-
-
-</script>
-
-
-
+<script src="../../js/member/course_booking.js"> </script>
 
 </html>

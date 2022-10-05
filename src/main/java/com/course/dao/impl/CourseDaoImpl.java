@@ -213,7 +213,7 @@ public class CourseDaoImpl implements CourseDaoIntf {
 				+ "from course course \r\n"
 				+ "join cour_list courseType on course.cour_list_id=courseType.cour_list_id \r\n"
 				+ "join gym on course.gym_id = gym.gym_id\r\n" + "join emp on course.emp_id = emp.emp_id\r\n"
-				+ "where courseType.`status`='1' and course.`status`='1' and public='1' and gym.gym_id=? and courseType.cour_list_id=?;";
+				+ "where course.start_time >now() and courseType.`status`='1' and course.`status`='1' and public='1' and gym.gym_id=? and courseType.cour_list_id=?;";
 
 		List<Course> canBookCourseList = new ArrayList<Course>();
 

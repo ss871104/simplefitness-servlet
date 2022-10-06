@@ -57,13 +57,11 @@ public class OrderDetailDaoImpl implements OrderDetailDaoIntf {
 
 	@Override
 	public boolean update(OrderDetail vo) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean delete(Integer id) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -145,6 +143,7 @@ public class OrderDetailDaoImpl implements OrderDetailDaoIntf {
 					orderdetail.setPickupTime(rs.getTimestamp("pickup_time"));
 					orderdetail.setReturnTime(rs.getTimestamp("return_time"));
 					orderdetail.setStatus(rs.getString("status"));
+					orderdetail.setProdName(rs.getString("prod_name"));
 					list.add(orderdetail);
 				}
 			}
@@ -212,7 +211,6 @@ public class OrderDetailDaoImpl implements OrderDetailDaoIntf {
 
 	@Override
 	public boolean insert(OrderDetail vo) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

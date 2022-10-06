@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,8 +43,7 @@ public class OrderDaoImpl implements OrderDaoIntf {
 			pstmt.setInt(1, orderVo.getMemId());
 			pstmt.setInt(2, orderVo.getGymId());
 			pstmt.setInt(3, orderVo.getAmount());
-			pstmt.setTimestamp(4, orderVo.getOrderDate());
-			pstmt.setString(5, orderVo.getStatus());
+			pstmt.setString(4, orderVo.getStatus());
 
 			pstmt.executeUpdate();
 			
@@ -117,7 +117,7 @@ public class OrderDaoImpl implements OrderDaoIntf {
 					order.setMemId(rs.getInt("mem_id"));
 					order.setGymId(rs.getInt("gym_id"));
 					order.setAmount(rs.getInt("amount"));
-					order.setOrderDate(rs.getTimestamp("order_date"));
+					order.setOrderDate(rs.getObject("order_date", LocalDateTime.class));
 					order.setStatus(rs.getString("status"));
 				}
 			}
@@ -144,7 +144,7 @@ public class OrderDaoImpl implements OrderDaoIntf {
 					order.setMemId(rs.getInt("mem_id"));
 					order.setGymId(rs.getInt("gym_id"));
 					order.setAmount(rs.getInt("amount"));
-					order.setOrderDate(rs.getTimestamp("order_date"));
+					order.setOrderDate(rs.getObject("order_date", LocalDateTime.class));
 					order.setStatus(rs.getString("status"));
 					list.add(order);
 				}
@@ -175,7 +175,7 @@ public class OrderDaoImpl implements OrderDaoIntf {
 					order.setMemId(rs.getInt("mem_id"));
 					order.setGymId(rs.getInt("gym_id"));
 					order.setAmount(rs.getInt("amount"));
-					order.setOrderDate(rs.getTimestamp("order_date"));
+					order.setOrderDate(rs.getObject("order_date", LocalDateTime.class));
 					order.setStatus(rs.getString("status"));
 					order.setGymName(rs.getString("gym_name"));
 					list.add(order);
@@ -207,7 +207,7 @@ public class OrderDaoImpl implements OrderDaoIntf {
 					order.setMemId(rs.getInt("mem_id"));
 					order.setGymId(rs.getInt("gym_id"));
 					order.setAmount(rs.getInt("amount"));
-					order.setOrderDate(rs.getTimestamp("order_date"));
+					order.setOrderDate(rs.getObject("order_date", LocalDateTime.class));
 					order.setStatus(rs.getString("status"));
 					list.add(order);
 				}
@@ -238,7 +238,6 @@ public class OrderDaoImpl implements OrderDaoIntf {
 
 	@Override
 	public boolean insert(Order vo) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

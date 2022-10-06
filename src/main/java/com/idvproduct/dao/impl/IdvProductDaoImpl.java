@@ -38,31 +38,26 @@ public class IdvProductDaoImpl  implements IdvProductDaoIntf{
 
 	@Override
 	public boolean insert(IdvProduct vo) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean update(IdvProduct vo) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean delete(Integer id) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public IdvProduct selectById(Integer id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public List<IdvProduct> selectAll() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

@@ -55,17 +55,6 @@ $(function() {
 		}
 
 	});
-	//	$(".tab2_btn").on("click", function(e) {
-	//		e.preventDefault();
-	//		if (sessionStorage.getItem("payfor") !== null) {
-	//			//			$(".tab").removeClass("-on");
-	//			//			$("a.tab[data-target= tab3]").addClass("-on");
-	//			//			$("div.tab3").addClass("-on");
-	//			//			history.pushState(null, null, "#" + "tab3");
-	//		} else {
-	//			alert("請選擇付款方式");
-	//		}
-	//	});
 });
 
 window.addEventListener("popstate", function() {
@@ -73,36 +62,9 @@ window.addEventListener("popstate", function() {
 });
 
 // 卡號欄位
-$(function() {
-	$(".cardNo").focus(function(e) {
-		$(".cardNo").keyup(function(e) {
-			if (e.which >= 48 && e.which <= 57 || e.which == 8) {
-				return true;
-			} else {
-				$(this).val("")
-			}
-		});
 
-		$("#cardNo_1").keyup(function(e) {
-			if ($(this).val().length == 4)
-				$("#cardNo_1").next().focus();
-		})
-		$("#cardNo_2").keyup(function(e) {
-			if ($(this).val().length == 4)
-				$("#cardNo_2").next().focus();
-		})
-		$("#cardNo_3").keyup(function(e) {
-			if ($(this).val().length == 4)
-				$("#cardNo_3").next().focus();
-		})
-	});
-
-
-	$("#date").keyup(function(e) {
-
-		if ($(this).val().length == 2) {
-			$(this).val($(this).val() + "/")
-		}
+$(".cardNo").focus(function() {
+	$(".cardNo").keyup(function(e) {
 		if (e.which >= 48 && e.which <= 57 || e.which == 8) {
 			return true;
 		} else {
@@ -110,15 +72,42 @@ $(function() {
 		}
 	});
 
-	$("#cvv").keyup(function(e) {
-
-		if (e.which >= 48 && e.which <= 57 || e.which == 8) {
-			return true;
-		} else {
-			$(this).val("")
-		}
-	});
+	$("#cardNo_1").keyup(function() {
+		if ($(this).val().length == 4)
+			$("#cardNo_1").next().focus();
+	})
+	$("#cardNo_2").keyup(function() {
+		if ($(this).val().length == 4)
+			$("#cardNo_2").next().focus();
+	})
+	$("#cardNo_3").keyup(function() {
+		if ($(this).val().length == 4)
+			$("#cardNo_3").next().focus();
+	})
 });
+
+
+$("#date").keyup(function(e) {
+
+	if ($(this).val().length == 2) {
+		$(this).val($(this).val() + "/")
+	}
+	if (e.which >= 48 && e.which <= 57 || e.which == 8) {
+		return true;
+	} else {
+		$(this).val("")
+	}
+});
+
+$("#cvv").keyup(function(e) {
+
+	if (e.which >= 48 && e.which <= 57 || e.which == 8) {
+		return true;
+	} else {
+		$(this).val("")
+	}
+});
+
 
 
 /*------- 購物相關操作 -------*/
@@ -364,7 +353,7 @@ $(".tab2_btn").on("click", function() {
 						method: 'POST',
 						headers: { 'Content-Type': 'application/json' },
 						body: JSON.stringify({
-							memId: 1,
+							
 							gymId: gymId,
 							amount: amount,
 							orderList:prodsInCart
@@ -372,11 +361,14 @@ $(".tab2_btn").on("click", function() {
 					})
 						.then(resp => resp.json())
 						.then(body => {
+							sessionStorage.clear();
+							document.querySelector("#cart span").textContent = 0
 							$(".tab").removeClass("-on");
 							$("a.tab[data-target= tab3]").addClass("-on");
 							$("div.tab3").addClass("-on");
 							history.pushState(null, null, "#" + "tab3");
-							$(".startTime").text(body.orderDate);
+							$(".startTime").text(body.orderDate.replace("T"," "));
+							$(".memName").text(body.memName);
 						});
 				}
 

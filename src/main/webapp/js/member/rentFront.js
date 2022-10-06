@@ -12,7 +12,9 @@ $("#gymName").change(function() {
 	})
 		.then(resp => resp.json())
 		.then(products => {
-
+			if(products == ""){
+				alert("此場館無商品可借用，請選擇其他場館")
+			}
 
 			for (i = 0; i < products["length"]; i++) {
 

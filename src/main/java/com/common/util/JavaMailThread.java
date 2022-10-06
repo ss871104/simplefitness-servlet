@@ -32,7 +32,7 @@ public class JavaMailThread extends Thread{
 	private final static String SENDER = "testinghuang411@gmail.com";
 	private final static String PASSWORD = "ayvrqjjoquhbnwbk";
 	public static String to;
-	public static String subject = "忘記密碼確認信";
+	public static String subject;
 	public static String ch_name;
 	public static String passRandom;
 	public static String messageText;

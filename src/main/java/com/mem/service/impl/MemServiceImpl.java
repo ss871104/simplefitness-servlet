@@ -236,6 +236,7 @@ public class MemServiceImpl implements MemServiceIntf {
 		mem.setMemName(dao.selectForPass(username, email).getMemName());
 		// JavaMail執行緒
 		JavaMailThread.to = mem.getMemEmail();
+		JavaMailThread.subject = "忘記密碼確認信";
 		JavaMailThread.ch_name = mem.getMemName();
 		VerificationCode code = new VerificationCode();
 		JavaMailThread.passRandom = code.getRandom();

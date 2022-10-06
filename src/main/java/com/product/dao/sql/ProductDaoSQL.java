@@ -11,4 +11,7 @@ public class ProductDaoSQL {
 			+ "		on p.prod_id = i.prod_id  ";
 	
 	public static final String SELECT_BY_ID = "select * from product where prod_id = ?";
+	
+	public static final String SELECT_ALL = "select * from product ;"; 
+	
 }

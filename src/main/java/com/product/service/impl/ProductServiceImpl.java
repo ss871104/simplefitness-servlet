@@ -25,8 +25,12 @@ public class ProductServiceImpl implements ProductServiceIntf{
 	public Product selectById(Integer prodId) {
 		Product prod = dao.selectById(prodId);
 		prod.setProdPicBase64(base64.Encoder(prod.getProdPic()));
-		System.out.println(prod.getProdPic());
 		return prod;
+	}
+
+	@Override
+	public List<Product> getAll() {
+		return dao.selectAll();
 	}
 
 }

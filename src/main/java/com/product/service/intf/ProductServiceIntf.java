@@ -8,4 +8,6 @@ import com.product.vo.Product;
 
 public interface ProductServiceIntf {
 	public Product selectById(Integer prodId);
+	
+	public List<Product> getAll();
 }

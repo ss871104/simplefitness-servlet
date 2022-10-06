@@ -2,7 +2,6 @@ package com.product.dao.impl;
 
 import static com.product.dao.sql.ProductDaoSQL.*;
 
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,8 +17,8 @@ import javax.sql.DataSource;
 import com.product.dao.intf.ProductDaoIntf;
 import com.product.vo.Product;
 
-public class ProductDaoImpl implements ProductDaoIntf{
-	
+public class ProductDaoImpl implements ProductDaoIntf {
+
 	private static DataSource ds = null;
 
 	static {
@@ -30,7 +29,7 @@ public class ProductDaoImpl implements ProductDaoIntf{
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public boolean insert(Product vo) {
 		// TODO Auto-generated method stub
@@ -51,8 +50,8 @@ public class ProductDaoImpl implements ProductDaoIntf{
 
 	@Override
 	public Product selectById(Integer prodId) {
-		Product product =null;
-		
+		Product product = null;
+
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SELECT_BY_ID);) {
 
 			System.out.println("連線成功");
@@ -75,15 +74,36 @@ public class ProductDaoImpl implements ProductDaoIntf{
 			e.printStackTrace();
 		}
 		return product;
-	
+
 	}
 
 	@Override
 	public List<Product> selectAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
+		List<Product> list = new ArrayList<Product>();
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SELECT_ALL);) {
+			try (ResultSet rs = pstmt.executeQuery()) {
 
+				
+
+				while (rs.next()) {
+					Product product = new Product();
+					product.setProdId(rs.getInt("prod_id"));
+					product.setProdName(rs.getString("prod_name"));
+					product.setPrice(rs.getInt("price"));
+					product.setIntro(rs.getString("intro"));
+					product.setProdPic(rs.getBytes("pic"));
+					list.add(product);
+
+				}
+
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
+		return list;
+	}
 
 }

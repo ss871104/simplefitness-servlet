@@ -238,7 +238,6 @@ public class OrderDaoImpl implements OrderDaoIntf {
 
 	@Override
 	public boolean insert(Order vo) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

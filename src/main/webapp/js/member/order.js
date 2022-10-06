@@ -1,10 +1,4 @@
-fetch("http://localhost:8080/simplefitness-servlet/order/getMemOrder", {
-	method: 'POST',
-	headers: { 'Content-Type': 'application/json' },
-	body: JSON.stringify({
-		memId: 1
-	}),
-})
+fetch("http://localhost:8080/simplefitness-servlet/order/getMemOrder")
 	.then(resp => resp.json())
 	.then(order => {
 

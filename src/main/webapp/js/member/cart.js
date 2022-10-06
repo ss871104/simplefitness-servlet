@@ -353,7 +353,7 @@ $(".tab2_btn").on("click", function() {
 						method: 'POST',
 						headers: { 'Content-Type': 'application/json' },
 						body: JSON.stringify({
-							memId: 1,
+							
 							gymId: gymId,
 							amount: amount,
 							orderList:prodsInCart
@@ -368,6 +368,7 @@ $(".tab2_btn").on("click", function() {
 							$("div.tab3").addClass("-on");
 							history.pushState(null, null, "#" + "tab3");
 							$(".startTime").text(body.orderDate.replace("T"," "));
+							$(".memName").text(body.memName);
 						});
 				}
 

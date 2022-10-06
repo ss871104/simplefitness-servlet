@@ -1,6 +1,5 @@
 package com.order.vo;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -24,6 +23,7 @@ public class Order extends Common {
 	private String status;
 	private String gymName;
 	private String memName;
+	private String memEmail;
 	private List<CountVO> orderList;
 	
 }

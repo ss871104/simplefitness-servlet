@@ -1,18 +1,16 @@
 package com.order.service.impl;
 
-import java.util.Date;
 import java.util.List;
 
+import com.common.util.JavaMailThread;
 import com.idvproduct.dao.impl.IdvProductDaoImpl;
 import com.idvproduct.dao.intf.IdvProductDaoIntf;
-import com.idvproduct.vo.IdvProduct;
 import com.order.dao.impl.OrderDaoImpl;
 import com.order.dao.intf.OrderDaoIntf;
 import com.order.service.intf.OrderServiceIntf;
 import com.order.vo.Order;
 import com.orderdetail.dao.impl.OrderDetailDaoImpl;
 import com.orderdetail.dao.intf.OrderDetailDaoIntf;
-import com.orderdetail.vo.OrderDetail;
 
 public class OrderServiceImpl implements OrderServiceIntf {
 
@@ -47,33 +45,21 @@ public class OrderServiceImpl implements OrderServiceIntf {
 		for (int i = 0; i < order.getOrderList().size(); i++) {
 			for (int j = 0; j < order.getOrderList().get(i).getInCart(); j++) {
 				orderCode =  detailDao.insert2(orderId, order.getGymId(), order.getOrderList().get(i).getProdId());
-				System.out.println(orderCode);
-				System.out.println(detailDao.selectById(orderCode).getIdvId());
 				idvDao.UpdateStatus("2", detailDao.selectById(orderCode).getIdvId());
 			}
 		}
 		
-		order = dao.selectById(orderId);
+		Order o = dao.selectById(orderId);
 		
+		// JavaMail執行緒
+		JavaMailThread.to = order.getMemEmail();
+		JavaMailThread.subject = "訂單成立通知";
+		JavaMailThread.ch_name = order.getMemName();
+		JavaMailThread.messageText = "Hello!" + JavaMailThread.ch_name +"租借成功，請至會員中心查看"+ "\n" +"http://localhost:8080/simplefitness-servlet/html/member/order.html";
+		JavaMailThread jmt = new JavaMailThread();
+		jmt.start();
 		
-		
-//		if (orderId != null) {
-//			for (Object orders : order.getOrderList()) {
-//				detailDao.insert2(orderId, order.getGymId(), orders[0]);
-//			}
-//		}
-//		OrderDetail orderDetail = new OrderDetail();
-		
-//		orderDetail.setOrderId(orderId);
-		
-		
-//		for (int i = 0; i < list.size(); i++) {
-//			OrderDetail orderDetail = new OrderDetail();
-//			orderDetail.setOrderId(orderId);
-//			detailDao.insert(orderDetail);
-//		}
-		
-		return order;
+		return o;
 	}
 
 	@Override
@@ -81,9 +67,5 @@ public class OrderServiceImpl implements OrderServiceIntf {
 		order.setStatus("0");
 		return dao.UpdateStatus(order);
 	}
-
-	
-	
-	
 
 }

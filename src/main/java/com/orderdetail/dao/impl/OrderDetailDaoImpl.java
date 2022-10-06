@@ -57,13 +57,11 @@ public class OrderDetailDaoImpl implements OrderDetailDaoIntf {
 
 	@Override
 	public boolean update(OrderDetail vo) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean delete(Integer id) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
@@ -213,7 +211,6 @@ public class OrderDetailDaoImpl implements OrderDetailDaoIntf {
 
 	@Override
 	public boolean insert(OrderDetail vo) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 

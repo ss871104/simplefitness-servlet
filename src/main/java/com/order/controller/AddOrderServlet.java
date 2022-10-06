@@ -29,15 +29,20 @@ public class AddOrderServlet extends HttpServlet {
 			throws ServletException, IOException {
 		final HttpSession session = request.getSession();
 
-//		final Integer memId = ((Member) session.getAttribute("member")).getMemId();
-//		final String memName = ((Member) session.getAttribute("member")).getMemName();
+		final Integer memId = ((Member) session.getAttribute("member")).getMemId();
+		final String memName = ((Member) session.getAttribute("member")).getMemName();
+		final String memEmail = ((Member) session.getAttribute("member")).getMemEmail();
 
 		Order order = json2Pojo(request, Order.class);
-		System.out.println(order);
-
+		order.setMemId(memId);	
+		order.setMemName(memName);
+		order.setMemEmail(memEmail);
+		
 		order = SERVICE.addOrder(order,order.getOrderList().get(0).getProdId());
-		System.out.println(order.getOrderDate());
-		writePojo2Json(response, order.getOrderDate());
+		
+		order.setMemName(memName);
+	
+		writePojo2Json(response, order);
 
 	}
 }

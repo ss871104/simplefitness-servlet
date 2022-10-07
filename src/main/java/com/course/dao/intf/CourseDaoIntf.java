@@ -2,6 +2,7 @@ package com.course.dao.intf;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.common.dao.CommonDao;
@@ -55,5 +56,13 @@ public interface CourseDaoIntf extends CommonDao<Course, Integer> {
 	 *   CreateDate: 2022/09/30
 	 */
 	public void setCourseEnable(Integer courseId);
+	
+	
+	/*
+	 * * Function: 確認此時間此教練是否已有團課  
+	 *   CreateBy: Natalie
+	 *   CreateDate: 2022/10/06
+	 */
+	public List<Course> selectCourseByEmpIdAndStartTime(Integer empId, LocalDateTime startTime);
 
 }

@@ -13,4 +13,5 @@ public class CoachDaoSQL {
 	
 	public static final String SELECT_ALL = "select * from coach order by coa_id;";
 
+	public static final String SELECT_COACH_BY_EMPID_AND_STARTTIME = "select emp_id, start_time from coach where emp_id = ? and ? >= start_time and ? < end_time;";
 }

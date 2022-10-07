@@ -14,4 +14,5 @@ public interface CourseServiceIntf {
 	
 	List<Course> selectCourseByGymIdAndStartTime(Course course);
 	
+	
 }

@@ -1,6 +1,7 @@
 package com.course.controller;
 
 import static com.common.util.Constants.GSON;
+import static com.common.util.GsonUtil.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -35,8 +36,7 @@ public class AddCourseServlet extends HttpServlet {
         
         course = SERVICE.addCourse(course);
         
-		PrintWriter pw = response.getWriter();
-        pw.print(GSON.toJson(course));
+        writePojo2Json(response, course);
 	}
 	
 	@Override

@@ -1,10 +1,10 @@
 package com.coach.dao.intf;
 
-import com.common.dao.CommonDao;
-
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.coach.vo.Coach;
+import com.common.dao.CommonDao;
 
 
 public interface CoachDaoIntf extends CommonDao<Coach, Integer> {
@@ -23,6 +23,11 @@ public interface CoachDaoIntf extends CommonDao<Coach, Integer> {
 	 * */
 	public boolean updateStatus(Coach coach);
 	
-
+	/*
+	 * * Function: 確認此時間此教練是否已有教練課 
+	 *   CreateBy: Natalie
+	 *   CreateDate: 2022/10/06
+	 */
+	public List<Coach> selectCoachByEmpIdAndStartTime(Integer empId, LocalDateTime startTime);
 
 }

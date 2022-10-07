@@ -388,4 +388,39 @@ public class CourseDaoImpl implements CourseDaoIntf {
 		}
 	}
 
+	/*
+	 * * Function: 確認此時間此教練是否已有團課 
+	 *   CreateBy: Natalie
+	 *   CreateDate: 2022/10/06
+	 */
+	public List<Course> selectCourseByEmpIdAndStartTime(Integer empId, LocalDateTime startTime) {
+		
+		List<Course> list = new ArrayList<Course>();
+		Course course = null;
+		
+		try (Connection con = ds.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(SELECT_COURSE_BY_EMPID_AND_STARTTIME);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setInt(1, empId);
+			pstmt.setObject(2, startTime);
+			pstmt.setObject(3, startTime);
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+
+				while (rs.next()) {
+					course = new Course();
+					course.setEmpId(rs.getInt("emp_id"));
+					course.setStartTime(rs.getObject("start_time", LocalDateTime.class));
+					course.setSuccessful(true);
+					list.add(course);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return list;
+	}
 }

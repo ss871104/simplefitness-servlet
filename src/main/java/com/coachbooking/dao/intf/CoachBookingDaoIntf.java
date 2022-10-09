@@ -7,9 +7,8 @@ import com.common.dao.CommonDao;
 
 public interface CoachBookingDaoIntf extends CommonDao<CoachBooking, Integer>{
 
-	public Boolean updateStatus(CoachBooking coachbook);
+	public Boolean updateCoachBookingStatus(CoachBooking coachbook);
 
-	public List<CoachBooking> selectByMemberId(Integer memId);
+	public List<CoachBooking> selectBookingCoachClassByMemIdAndGymId(Integer memberId, Integer gymId);
 	
-
 }

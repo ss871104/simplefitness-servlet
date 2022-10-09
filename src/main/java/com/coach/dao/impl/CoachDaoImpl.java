@@ -172,7 +172,11 @@ public class CoachDaoImpl implements CoachDaoIntf {
 	public List<Coach> selectCoachByGymIdAndEmpId(Integer gymId, Integer empId) {
 		
 		Coach coach = null;
-		var sqlStr ="select coa_id,gym_id,coach.emp_id,emp_name,start_time,end_time from coach coach join emp emp on emp.emp_id=coach.emp_id where coach.`status`='1' and public='1' and gym_id=? and coach.emp_id=?;";
+		var sqlStr ="select coa_id,gym.gym_id,gym.gym_name,coach.emp_id,emp.emp_name,start_time,end_time \r\n"
+				+ "from coach coach \r\n"
+				+ "join emp emp on emp.emp_id=coach.emp_id \r\n"
+				+ "join gym on emp.gym_id=gym.gym_id\r\n"
+				+ "where coach.start_time>now() and coach.`status`='1' and public='1' and gym.gym_id=? and coach.emp_id=?;";
 		
 		List<Coach> canBookCoachList = new ArrayList<Coach>();
 		
@@ -190,6 +194,7 @@ public class CoachDaoImpl implements CoachDaoIntf {
 					coach = new Coach();
 					coach.setCoaId(rs.getInt("coa_id"));
 					coach.setGymId(rs.getInt("gym_id"));
+					coach.setGymName(rs.getString("gym_name"));
 					coach.setEmpId(rs.getInt("emp_id"));
 					coach.setEmpName(rs.getString("emp_name"));
 					coach.setStartTime(rs.getObject("start_time",LocalDateTime.class));
@@ -203,6 +208,50 @@ public class CoachDaoImpl implements CoachDaoIntf {
 		}
 		return canBookCoachList;
 	}
+	
+	/* *
+	 *  Function:取得會員教練課程詳細資料
+	 *  CreateBy: Iris
+	 *  CreateDate: 2022/10/06
+	 * */
+	public Coach selectCoachClassDetailByCoachId(Integer coachId){
+		Coach coach = null;
+		var sqlStr = "select coach.*,gym.gym_id,gym.gym_name,emp.emp_name\r\n"
+				+ "from coach coach\r\n"
+				+ "join emp emp on emp.emp_id=coach.emp_id \r\n"
+				+ "join gym on emp.gym_id=gym.gym_id\r\n"
+				+ "where coa_id=?;";
+
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(sqlStr);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setInt(1, coachId);
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+
+				coach = new Coach();
+
+				if (rs.next()) {
+					coach.setCoaId(rs.getInt("coa_id"));
+					coach.setEmpId(rs.getInt("emp_id"));
+					coach.setStartTime(rs.getObject("start_time", LocalDateTime.class));
+					coach.setEndTime(rs.getObject("end_time", LocalDateTime.class));
+					coach.setUploadTime(rs.getObject("upload_time", LocalDateTime.class));
+					coach.setStatus(rs.getString("status"));
+					coach.setPubStatus(rs.getString("public"));
+					coach.setGymName(rs.getString("gym_name"));
+					coach.setEmpName(rs.getString("emp_name"));
+					coach.setGymId(rs.getInt("gym_id"));
+
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return coach;
+	}
+	
 
 	/* *
 	 *  Function:修改教練課清單狀態
@@ -210,7 +259,7 @@ public class CoachDaoImpl implements CoachDaoIntf {
 	 *  CreateDate: 2022/09/24
 	 * */
 	@Override
-	public boolean updateStatus(Coach coach) {
+	public boolean updateCoachStatus(Coach coach) {
 		
 		boolean flag=true;
 		var sqlStr = "update coach set status=? where coa_id  = ?";
@@ -227,6 +276,27 @@ public class CoachDaoImpl implements CoachDaoIntf {
 			return false;
 		}
 		return flag;
+	}
+	
+	/*
+	 * * Function: 開放教練課預約狀態為可預約 
+	 *   CreateBy: Iris 
+	 *   CreateDate: 2022/10/06
+	 */
+	public void setCoachEnable(Integer coaId) {
+		var sqlStr = "Update simple_fitness.coach Set `status` ='1' Where coa_id=?;";
+
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(sqlStr);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setInt(1, coaId);
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 }

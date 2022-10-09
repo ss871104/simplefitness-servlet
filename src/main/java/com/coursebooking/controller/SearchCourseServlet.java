@@ -45,10 +45,10 @@ public class SearchCourseServlet extends HttpServlet {
 		// 取得可預約課程
 		List<Course> courseBookingResult = _courseBookingService.searchCourseByGymIdAndCourseListId(courseBooking);
 		// 取得已預約課程
-		List<Course> courseBookedResult = _courseBookingService.checkBookingCourseByMemberId(courseBooking);
+		List<CourseBooking> courseBookedResult = _courseBookingService.checkBookingCourseByMemberId(courseBooking);
 
 		// 轉換出已預約課程編號清單
-		List<Integer> bookedCourseIdList = courseBookedResult.stream().map(Course::getCourseId)
+		List<Integer> bookedCourseIdList = courseBookedResult.stream().map(CourseBooking::getCourseId)
 				.collect(Collectors.toList());
 		// 將課程中有出現在編號清單中的課程過濾掉
 		courseBookingResult = courseBookingResult.stream()

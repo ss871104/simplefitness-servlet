@@ -27,7 +27,7 @@ public interface CourseDaoIntf extends CommonDao<Course, Integer> {
 	 *   CreateBy: Iris 
 	 *   CreateDate: 2022/09/26
 	 */
-	public boolean updateStatus(Course course);
+	public boolean updateCourseStatus(Course course);
 
 
 	/*
@@ -39,14 +39,6 @@ public interface CourseDaoIntf extends CommonDao<Course, Integer> {
 
 
 	List<Course> selectCourseByGymIdAndStartTime(Integer gymId, LocalDate one, LocalDate seven);
-	
-	
-	/*
-	 * * Function: 取得會員已預約課程 
-	 *   CreateBy: Iris 
-	 *   CreateDate: 2022/09/27
-	 */
-	public List<Course> selectBookedCourseByMemberIdAndGymId(Integer memId,Integer gymId);
 
 
 	/*
@@ -55,5 +47,13 @@ public interface CourseDaoIntf extends CommonDao<Course, Integer> {
 	 *   CreateDate: 2022/09/30
 	 */
 	public void setCourseEnable(Integer courseId);
+
+
+	/* *
+	 *  Function:取得會員團課程詳細資料
+	 *  CreateBy: Iris
+	 *  CreateDate: 2022/10/09
+	 * */
+	public Course selectCourseClassDetailByCourseId(Integer courseId);
 
 }

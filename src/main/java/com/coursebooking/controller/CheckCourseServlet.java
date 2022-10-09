@@ -42,7 +42,7 @@ public class CheckCourseServlet extends HttpServlet {
 		CourseBooking courseBooking = GSON.fromJson(json, CourseBooking.class);
 
 		// Step.2 執行SVC
-		List<Course> courseBookingResult = _courseBookingService.checkBookingCourseByMemberId(courseBooking);
+		List<CourseBooking> courseBookingResult = _courseBookingService.checkBookingCourseByMemberId(courseBooking);
 
 		PrintWriter pw = response.getWriter();
 		pw.print(GSON.toJson(courseBookingResult));

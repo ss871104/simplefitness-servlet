@@ -42,11 +42,11 @@ public class CreateCoachBookingServlet extends HttpServlet{
         //Step.2 執行SVC
         boolean insertCoachBookingResult=_coachBookingService.createCoachBooking(coachBooking);
         if(insertCoachBookingResult) {
+        	_coachBookingService.sendCheckBookingMail(coachBooking.getEmpId());
         	Coach coach = new Coach();
         	coach.setCoaId(coachBooking.getCoachId());
         	coachBookingResult=_coachBookingService.setCoachStatusUnableBooking(coach);
         	}
-
 
 		PrintWriter pw = response.getWriter();
         pw.print(GSON.toJson(coachBookingResult));

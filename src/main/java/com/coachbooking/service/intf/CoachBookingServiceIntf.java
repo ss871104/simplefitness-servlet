@@ -16,9 +16,22 @@ public interface CoachBookingServiceIntf {
 	
 	public boolean setCoachStatusUnableBooking(Coach coach);
 	
-	public boolean sendInvitationToCoach(CoachBooking coachbook);
+	public boolean cancelCoachByCoachBookingId(CoachBooking coachbook);
 	
-	public boolean cancelCoachByMemberId(CoachBooking coachbook);
+	public List<CoachBooking> checkBookingCoachByMemberId(CoachBooking coachbook);
 	
-	public List<CoachBooking> checkBookingCourseByMemberId(CoachBooking coachbook);
+	public void setCoachBookingEnable(Integer coachId);
+	
+	
+	//寄送預約確認信給教練
+	public void sendCheckBookingMail(Integer empId);
+	
+	//寄送取消預約信給教練
+	public void sendCancelMailToCaoch(Integer empId);
+
+	//寄送預約成功信給會員
+	public void sendBookingSuccessMail(Integer memberId);
+	
+	//寄送取消預約信給會員
+	public void sendCancelMailToMember(Integer memberId);
 }

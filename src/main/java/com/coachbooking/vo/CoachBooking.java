@@ -2,6 +2,8 @@ package com.coachbooking.vo;
 
 import java.time.LocalDateTime;
 
+import com.coach.vo.Coach;
+
 public class CoachBooking {
 	private Integer coachbookId;
 	private Integer memId;
@@ -11,7 +13,15 @@ public class CoachBooking {
 	private LocalDateTime checkTime;
 	private Integer gymId;
 	private Integer empId;
+	private Coach coachClass;
 	
+	
+	public Coach getCoachClass() {
+		return coachClass;
+	}
+	public void setCoachClass(Coach coachClass) {
+		this.coachClass = coachClass;
+	}
 	public Integer getCoachbookId() {
 		return coachbookId;
 	}

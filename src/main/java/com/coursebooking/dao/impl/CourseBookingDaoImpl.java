@@ -13,6 +13,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.course.vo.Course;
 import com.coursebooking.dao.intf.CourseBookingDaoIntf;
 import com.coursebooking.dao.sql.CourseBookingDaoSQL;
 import com.coursebooking.vo.CourseBooking;
@@ -166,7 +167,7 @@ public class CourseBookingDaoImpl implements CourseBookingDaoIntf {
 	}
 
 	@Override
-	public int getcourseBookedCount(Integer courseId) {
+	public int getCourseBookedCount(Integer courseId) {
 
 		int courseBookedCount = 0;
 		var sqlStr = "SELECT count(cour_Id) as count FROM simple_fitness.cour_booking Where status='1' and cour_id=? Group by cour_id;";
@@ -188,6 +189,42 @@ public class CourseBookingDaoImpl implements CourseBookingDaoIntf {
 		return courseBookedCount;
 	}
 
-	
+	/*
+	 * * Function: 取得會員已預約團課 CreateBy: Iris CreateDate: 2022/09/27
+	 */
+	public List<CourseBooking> selectBookedCourseByMemberIdAndGymId(Integer memId, Integer gymId) {
+		
+		CourseBooking courseBooking = null;
+		var sqlStr = "select courseBooking.*\r\n"
+				+ "from cour_booking courseBooking\r\n"
+				+ "join course on courseBooking.cour_id = course.cour_id\r\n"
+				+ "where courseBooking.`status`='1' and mem_id = ? and gym_id = ?;";
+		List<CourseBooking> courseBookedList = new ArrayList<CourseBooking>();
+		
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(sqlStr);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setInt(1, memId);
+			pstmt.setInt(2, gymId);
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+
+				while (rs.next()) {
+					courseBooking = new CourseBooking();
+					courseBooking.setCoursebookId(rs.getInt("cour_book_Id"));
+					courseBooking.setMemId(rs.getInt("mem_Id"));
+					courseBooking.setCourseId(rs.getInt("cour_Id"));
+					courseBooking.setCoursebookTime(rs.getObject("booking_time",LocalDateTime.class));
+					courseBooking.setCoursebookStatus(rs.getString("status"));
+
+					courseBookedList.add(courseBooking);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return courseBookedList;
+	}
 	
 }

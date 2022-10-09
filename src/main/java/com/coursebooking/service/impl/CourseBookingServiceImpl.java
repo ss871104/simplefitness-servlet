@@ -45,7 +45,7 @@ public class CourseBookingServiceImpl implements CourseBookingServiceIntf {
 		var courseList = _courseListDao.getCourseListByCourseId(courseId);
 
 		// 取得目前預約人數
-		var courseBookedCount = _courseBookingDao.getcourseBookedCount(courseId);
+		var courseBookedCount = _courseBookingDao.getCourseBookedCount(courseId);
 
 		// 執行判斷
 		// 人數跟上限比較
@@ -55,7 +55,7 @@ public class CourseBookingServiceImpl implements CourseBookingServiceIntf {
 			Course course = new Course();
 			course.setCourseId(courseId);
 			course.setStatus("3");
-			_courseDao.updateStatus(course);
+			_courseDao.updateCourseStatus(course);
 		}
 	}
 
@@ -68,9 +68,16 @@ public class CourseBookingServiceImpl implements CourseBookingServiceIntf {
 	}
 
 	// 取出該會員的預約清單(List)
-	public List<Course> checkBookingCourseByMemberId(CourseBooking coursebook) {
-
-		return _courseDao.selectBookedCourseByMemberIdAndGymId(coursebook.getMemId(), coursebook.getGymId());
+	public List<CourseBooking> checkBookingCourseByMemberId(CourseBooking coursebook) {
+		List<CourseBooking> courseBookingList = _courseBookingDao
+				.selectBookedCourseByMemberIdAndGymId(coursebook.getMemId(), coursebook.getGymId());
+		
+		if(!courseBookingList.isEmpty()) {
+			courseBookingList.forEach(courseBooking -> {
+				courseBooking.setCourseDetail(_courseDao.selectCourseClassDetailByCourseId(courseBooking.getCourseId()));
+			});
+		}		
+		return courseBookingList;
 	}
 
 	// 獲取可預約團課課程清單

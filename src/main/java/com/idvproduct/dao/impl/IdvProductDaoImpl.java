@@ -71,7 +71,8 @@ public class IdvProductDaoImpl  implements IdvProductDaoIntf{
 
 			System.out.println("連線成功");
 			
-			pstmt.setInt(1, gymId);
+			pstmt.setString(1, "1");
+			pstmt.setInt(2, gymId);
 			
 			try (ResultSet rs = pstmt.executeQuery()) {
 
@@ -90,14 +91,16 @@ public class IdvProductDaoImpl  implements IdvProductDaoIntf{
 
 
 	@Override
-	public IdvProduct selectCount(Integer prodId) {
+	public IdvProduct selectCount(Integer gymId, Integer prodId) {
 		IdvProduct idvProduct = null;
 		
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(FIND_COUNT);) {
 
 			System.out.println("連線成功");
 			
-			pstmt.setInt(1, prodId);
+			pstmt.setString(1, "1");
+			pstmt.setInt(2, gymId);
+			pstmt.setInt(3, prodId);
 			
 			try (ResultSet rs = pstmt.executeQuery()) {
 

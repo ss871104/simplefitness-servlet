@@ -38,18 +38,19 @@ public class CheckoutServlet extends HttpServlet {
 		String json = br.readLine();
 		ArrayList<IdvProduct> idvproducts = gson.fromJson(json, idvProductListType); 
 
+		int success = 0;
 		for (int i = 0; i < idvproducts.size(); i++) {
-			IdvProduct count =IDV_SERVICE.selectCount(idvproducts.get(i).getProdId());
+			IdvProduct count =IDV_SERVICE.selectCount(idvproducts.get(i).getGymId(), idvproducts.get(i).getProdId());
 			Integer inCart = idvproducts.get(i).getInCart();
-			if(count != null) {
-				if(inCart <= count.getCount()) {
-					respObject.addProperty("msg", "success");
-				}
-			}else {
-				respObject.addProperty("msg", "failed");
-			}	
+			if(inCart <= count.getCount()) {
+				success += 1;
+ 			}
 		}
-
+		
+		if(success == idvproducts.size()) {
+			respObject.addProperty("msg", "success");
+		}
+		
 		PrintWriter pw = response.getWriter();
         pw.print(GSON.toJson(respObject));
 

@@ -184,3 +184,9 @@ button{
     cursor: pointer;
 }
 
+.tab3 div{
+	margin-left: 1rem;
+}
+.tab3 div ul li{
+    padding-bottom: 5px;
+}

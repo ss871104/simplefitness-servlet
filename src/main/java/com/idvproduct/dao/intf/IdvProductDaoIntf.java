@@ -12,7 +12,7 @@ import com.product.vo.Product;
 public interface IdvProductDaoIntf extends CommonDao<IdvProduct, Integer> {
 	
 	public List<IdvProduct> selectByGym(Integer gymId);
-	public IdvProduct selectCount(Integer prodId);
+	public IdvProduct selectCount(Integer gymId, Integer prodId);
 	public boolean UpdateStatus(String status, Integer id);
 	
 }

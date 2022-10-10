@@ -319,6 +319,7 @@ displayCart();
 /*------- 訂單成立 -------*/
 
 $(".tab2_btn").on("click", function() {
+	let gymId = sessionStorage.getItem("gymId");
 	let cartItems = sessionStorage.getItem("productsInCart");
 	cartItems = JSON.parse(cartItems);
 //	console.log(Object.values(cartItems).map(item => item.id))
@@ -329,9 +330,10 @@ $(".tab2_btn").on("click", function() {
 	for (let i = 0; i < a.length; i++) {
 		obj.prodId = cartItems[a[i]].id;
 		obj.inCart = cartItems[a[i]].inCart;
+		obj.gymId = gymId;
 		prodsInCart.push({ ...obj });
 	}
-
+	
 	if (sessionStorage.getItem("payfor") !== null) {
 
 		fetch('http://localhost:8080/simplefitness-servlet/member/checkout', {

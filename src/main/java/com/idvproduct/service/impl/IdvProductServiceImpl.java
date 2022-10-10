@@ -25,8 +25,8 @@ public class IdvProductServiceImpl implements IdvProductServiceIntf{
 
 
 	@Override
-	public IdvProduct selectCount(Integer prodId) {
-		return dao.selectCount(prodId);
+	public IdvProduct selectCount(Integer gymId, Integer prodId) {
+		return dao.selectCount(gymId, prodId);
 	}
 
 

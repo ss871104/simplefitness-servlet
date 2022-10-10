@@ -41,6 +41,7 @@ public class OrderDetailDaoImpl implements OrderDetailDaoIntf {
 			pstmt.setInt(1, orderId);
 			pstmt.setInt(2, gymId);
 			pstmt.setInt(3, prodId);
+			pstmt.setString(4, "1");
 
 			pstmt.executeUpdate();
 			ResultSet rs = pstmt.getGeneratedKeys();

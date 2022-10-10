@@ -193,6 +193,11 @@ $(function () {
             }
         })
 
+        //點擊登出觸發事件
+        $("#logout").click(function(){
+            logout();
+        })
+
         //取得此會員已預約團課清單
         function getMemberCourseList() {
             $.ajax({
@@ -317,6 +322,8 @@ $(function () {
             }
 
         }
+
+        
 
     });
 })

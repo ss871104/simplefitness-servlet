@@ -221,7 +221,7 @@ $(function () {
         //取得此會員已預約教練課清單
         function getMemberCoachList() {
             $.ajax({
-                url: "http://localhost:8080/simplefitness-servlet/coachBooking/CheckBookingCoachByMemberIdServlet",
+                url: "http://localhost:8080/simplefitness-servlet/coachBooking/CheckCoachBookingByMemberIdServlet",
                 type: "POST",
                 data: JSON.stringify({
                     gymId: $('#classLocation').val(),

@@ -14,17 +14,22 @@ import com.common.util.JavaMailThread;
 import com.emp.dao.impl.EmployeeDaoImpl;
 import com.emp.dao.intf.EmployeeDaoIntf;
 import com.emp.vo.Employee;
+import com.mem.dao.impl.MemDaoImpl;
+import com.mem.dao.intf.MemDaoIntf;
+import com.mem.vo.Member;
 
 public class CoachBookingServiceImpl implements CoachBookingServiceIntf {
 
 	private CoachBookingDaoIntf _coachBookingDao;
 	private CoachDaoIntf _coachDao;
 	private EmployeeDaoIntf _empDao;
+	private MemDaoIntf _memberDao;
 
 	public CoachBookingServiceImpl() {
 		_coachBookingDao = new CoachBookingDaoImpl();
 		_coachDao = new CoachDaoImpl();
 		_empDao = new EmployeeDaoImpl();
+		_memberDao = new MemDaoImpl();
 
 	}
 
@@ -63,7 +68,7 @@ public class CoachBookingServiceImpl implements CoachBookingServiceIntf {
 		return _coachDao.updateCoachStatus(coach);
 	}
 
-	// 會員取消教練課
+	// 取消教練課
 	public boolean cancelCoachByCoachBookingId(CoachBooking coachbook) {
 		coachbook.setCoachbookStatus("0");
 		return _coachBookingDao.updateCoachBookingStatus(coachbook);
@@ -75,8 +80,8 @@ public class CoachBookingServiceImpl implements CoachBookingServiceIntf {
 				.selectBookingCoachClassByMemIdAndGymId(coachbook.getMemId(), coachbook.getGymId());
 
 		if (!coachBookingList.isEmpty()) {
-			coachBookingList.forEach(coachBooking -> {
-				coachBooking.setCoachClass(_coachDao.selectCoachClassDetailByCoachId(coachBooking.getCoachId()));
+			coachBookingList.forEach(item -> {
+				item.setCoachClass(_coachDao.selectCoachClassDetailByCoachId(item.getCoachId()));
 			});
 		}
 		return coachBookingList;
@@ -120,14 +125,42 @@ public class CoachBookingServiceImpl implements CoachBookingServiceIntf {
 
 	//寄送預約成功信給會員
 	public void sendBookingSuccessMail(Integer memberId) {
-		// TODO Auto-generated method stub
+		Member member = new Member();
+		member = _memberDao.selectById(memberId);
+		var mailText =  "Hello!" + member.getMemName() + "感謝您的預約，教練已接受您的預約，請至會員專區確認" + "\n"
+				+ "http://localhost:8080/simplefitness-servlet/html/member/member_home.html";
+		sendMail(member.getMemEmail(),"教練課預約成功通知",mailText);
 		
 	}
 
 	//寄送取消預約信給會員
 	public void sendCancelMailToMember(Integer memberId) {
-		// TODO Auto-generated method stub
+		Member member = new Member();
+		member = _memberDao.selectById(memberId);
+		var mailText =  "Hello!" + member.getMemName() + "很抱歉因教練個人因素，取消您已預約的課程，請至會員專區確認，很感謝您的預約" + "\n"
+				+ "http://localhost:8080/simplefitness-servlet/html/member/member_home.html";
+		sendMail(member.getMemEmail(),"取消教練課預約通知",mailText);
 		
+	}
+
+	//取出該教練的預約清單
+	public List<CoachBooking> checkBookingCoachByEmpId(CoachBooking coachBooking) {
+		List<CoachBooking> coachBookingList = _coachBookingDao
+				.selectBookingCoachClassByEmpId(coachBooking.getEmpId());
+		
+		if(!coachBookingList.isEmpty()) {
+			coachBookingList.forEach(item -> {
+				item.setMemberDetail(_memberDao.selectById(item.getMemId()));
+				item.setCoachClass(_coachDao.selectCoachClassDetailByCoachId(item.getCoachId()));
+			});
+		}
+		return coachBookingList;
+	}
+
+	//教練接受預約
+	public boolean acceptCoachByCoachBookingId(CoachBooking coachBooking) {
+		coachBooking.setCoachbookStatus("2");
+		return _coachBookingDao.updateCoachBookingStatus(coachBooking);
 	}
 
 }

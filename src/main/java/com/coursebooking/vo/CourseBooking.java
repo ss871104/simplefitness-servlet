@@ -12,8 +12,15 @@ public class CourseBooking {
 	private String coursebookStatus;
 	private Integer courseListId;
 	private Integer gymId;
+	private Integer empId;
 	private Course courseDetail;
-	
+		
+	public Integer getEmpId() {
+		return empId;
+	}
+	public void setEmpId(Integer empId) {
+		this.empId = empId;
+	}
 	public Integer getCoursebookId() {
 		return coursebookId;
 	}

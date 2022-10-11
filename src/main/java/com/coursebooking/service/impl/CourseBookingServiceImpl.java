@@ -1,7 +1,10 @@
 package com.coursebooking.service.impl;
 
+import java.io.Console;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.coachbooking.vo.CoachBooking;
 import com.course.dao.impl.CourseDaoImpl;
 import com.course.dao.intf.CourseDaoIntf;
 import com.course.vo.Course;
@@ -73,8 +76,8 @@ public class CourseBookingServiceImpl implements CourseBookingServiceIntf {
 				.selectBookedCourseByMemberIdAndGymId(coursebook.getMemId(), coursebook.getGymId());
 		
 		if(!courseBookingList.isEmpty()) {
-			courseBookingList.forEach(courseBooking -> {
-				courseBooking.setCourseDetail(_courseDao.selectCourseClassDetailByCourseId(courseBooking.getCourseId()));
+			courseBookingList.forEach(item -> {
+				item.setCourseDetail(_courseDao.selectCourseClassDetailByCourseId(item.getCourseId()));
 			});
 		}		
 		return courseBookingList;
@@ -91,6 +94,13 @@ public class CourseBookingServiceImpl implements CourseBookingServiceIntf {
 	public void setCourseBookingEnable(Integer courseId) {
 		_courseDao.setCourseEnable(courseId);
 
+	}
+
+	// 取出該教練的課程清單(List)
+	public List<Course> checkBookingCourseByEmpId(Course course) {
+		List<Course> courseList = _courseDao.selectCourseDetailList(course.getEmpId());
+		
+		return courseList;
 	}
 
 }

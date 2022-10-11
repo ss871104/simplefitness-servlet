@@ -203,4 +203,38 @@ public class CoachBookingDaoImpl implements CoachBookingDaoIntf {
 		return coachBookedList;
 	}
 
+	//取得該教練的預約清單(coachBooking)
+	public List<CoachBooking> selectBookingCoachClassByEmpId(Integer empId) {
+		CoachBooking coachBooking = null;
+		var sqlStr = "select coachBooking.* from coa_booking coachBooking\r\n"
+				+ "join coach coach on coach.coa_id = coachBooking.coa_id\r\n"
+				+ "where coachBooking.status in (1,2) and coach.emp_id=?;";
+		List<CoachBooking> coachBookedList = new ArrayList<CoachBooking>();
+
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(sqlStr);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setInt(1, empId);
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+
+				while (rs.next()) {
+					coachBooking = new CoachBooking();
+					coachBooking.setCoachbookId(rs.getInt("coa_book_id"));
+					coachBooking.setMemId(rs.getInt("mem_id"));
+					coachBooking.setCoachId(rs.getInt("coa_id"));
+					coachBooking.setCoachbookTime(rs.getObject("booking_time", LocalDateTime.class));
+					coachBooking.setCoachbookStatus(rs.getString("status"));
+					coachBooking.setCheckTime(rs.getObject("check_time", LocalDateTime.class));
+
+					coachBookedList.add(coachBooking);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return coachBookedList;
+	}
+
 }

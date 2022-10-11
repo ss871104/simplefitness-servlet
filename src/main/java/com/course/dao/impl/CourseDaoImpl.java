@@ -1,6 +1,11 @@
 package com.course.dao.impl;
 
-import static com.course.dao.sql.CourseDaoSQL.*;
+import static com.course.dao.sql.CourseDaoSQL.DELETE;
+import static com.course.dao.sql.CourseDaoSQL.INSERT;
+import static com.course.dao.sql.CourseDaoSQL.SELECT_ALL;
+import static com.course.dao.sql.CourseDaoSQL.SELECT_BY_GYMID_AND_STARTTIME;
+import static com.course.dao.sql.CourseDaoSQL.SELECT_BY_ID;
+import static com.course.dao.sql.CourseDaoSQL.UPDATE;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -17,10 +22,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import com.coach.vo.Coach;
 import com.course.dao.intf.CourseDaoIntf;
 import com.course.vo.Course;
-import com.coursebooking.vo.CourseBooking;
 
 public class CourseDaoImpl implements CourseDaoIntf {
 
@@ -395,6 +398,54 @@ public class CourseDaoImpl implements CourseDaoIntf {
 			e.printStackTrace();
 		}
 		return course;
+	}
+
+	/* *
+	 *  Function:取得團課課程清單詳細資料
+	 *  CreateBy: Iris
+	 *  CreateDate: 2022/10/11
+	 * */
+	public List<Course> selectCourseDetailList(Integer empId) {
+		
+		List<Course> courseList = new ArrayList<Course>();
+		Course course = null;
+		var sqlStr = "select course.*,gym_name,courseType.cour_name,emp.emp_name\r\n"
+				+ "from course course\r\n"
+				+ "join cour_list courseType on courseType.cour_list_id=course.cour_list_id\r\n"
+				+ "join emp emp on emp.emp_id=course.emp_id\r\n"
+				+ "join gym gym on gym.gym_id=course.gym_id\r\n"
+				+ "where emp.emp_id=?;";
+		
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(sqlStr);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setInt(1, empId);
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+
+				while (rs.next()) {
+					course = new Course();
+					course.setCourseId(rs.getInt("cour_id"));
+					course.setEmpId(rs.getInt("emp_id"));
+					course.setGymId(rs.getInt("gym_id"));
+					course.setCourseListId(rs.getInt("cour_list_id"));
+					course.setStartTime(rs.getObject("start_time", LocalDateTime.class));
+					course.setEndTime(rs.getObject("end_time", LocalDateTime.class));
+					course.setUploadTime(rs.getObject("upload_time", LocalDateTime.class));
+					course.setStatus(rs.getString("status"));
+					course.setPubStatus(rs.getString("public"));
+					course.setGymName(rs.getString("gym_name"));
+					course.setEmpName(rs.getString("emp_name"));
+					course.setCourseName(rs.getString("cour_name"));
+					courseList.add(course);		
+
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return courseList;
 	}
 
 }

@@ -34,4 +34,8 @@ public interface CoachBookingServiceIntf {
 	
 	//寄送取消預約信給會員
 	public void sendCancelMailToMember(Integer memberId);
+
+	public List<CoachBooking> checkBookingCoachByEmpId(CoachBooking coachBooking);
+
+	public boolean acceptCoachByCoachBookingId(CoachBooking coachBooking);
 }

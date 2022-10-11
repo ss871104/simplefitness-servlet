@@ -19,5 +19,7 @@ public interface CourseBookingServiceIntf {
 
 	public void setCourseBookingEnable(Integer courseId);
 
+	public List<Course> checkBookingCourseByEmpId(Course course);
+
 
 }

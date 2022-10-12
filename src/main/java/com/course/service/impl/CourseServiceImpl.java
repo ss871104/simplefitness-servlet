@@ -1,14 +1,10 @@
 package com.course.service.impl;
 
-import java.io.Console;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import org.hibernate.result.NoMoreReturnsException;
 
 import com.coach.dao.impl.CoachDaoImpl;
 import com.coach.dao.intf.CoachDaoIntf;
@@ -18,13 +14,11 @@ import com.course.dao.intf.CourseDaoIntf;
 import com.course.service.intf.CourseServiceIntf;
 import com.course.vo.Course;
 
-import lombok.experimental.var;
-import net.bytebuddy.utility.dispatcher.JavaDispatcher.IsConstructor;
-
 public class CourseServiceImpl implements CourseServiceIntf {
 
 	private CourseDaoIntf _courseDao;
 	private CoachDaoIntf _coachDao;
+	
 	public CourseServiceImpl() {
 		_courseDao = new CourseDaoImpl();
 		_coachDao = new CoachDaoImpl();
@@ -136,10 +130,26 @@ public class CourseServiceImpl implements CourseServiceIntf {
 	@Override
 	public Course editCourse(Course course) {
 		
-		// 
-		
-		
-		return null;
+		try {
+			if (course.getGymId() == 0) {
+				course.setMessage("請選擇場館");
+				course.setSuccessful(false);
+				return course;
+			}
+//			if (_courseDao.update(course) == false) {
+//				course.setMessage("新增發生錯誤!");
+//				course.setSuccessful(false);
+//				return course;
+//			}
+			course.setEndTime(course.getStartTime().plusMinutes(60));
+			_courseDao.update(course);
+			course.setMessage("編輯成功");
+			course.setSuccessful(true);
+			return course;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	@Override
@@ -147,28 +157,12 @@ public class CourseServiceImpl implements CourseServiceIntf {
 		return _courseDao.selectAll();
 	}
 
-//	@Override
-//	public List<Course> checkCourseExists(Course course) {
-//		
-//		try {
-//			// 確認sql拿到的資料是否有值
-//			List<Course> list = _courseDao.selectCourseByEmpIdAndStartTime(course.getEmpId(),course.getStartTime());
-//			System.out.println(list);
-//			
-//			// 沒值=可insert
-//			if (list.isEmpty()) {
-//				course.setSuccessful(true);
-//			} else {
-//				course.setSuccessful(false);
-//			}
-//			return list;
-//			
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return null;
-//		}
-//	}
+	@Override
+	public Course findById(Course course) {
+		return _courseDao.selectById(course.getCourseId());
+	}
 
+	
 	
 
 	

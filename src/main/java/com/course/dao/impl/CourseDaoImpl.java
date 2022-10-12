@@ -74,6 +74,7 @@ public class CourseDaoImpl implements CourseDaoIntf {
 			pstmt.setObject(5, courseVo.getEndTime());
 			pstmt.setString(6, courseVo.getStatus());
 			pstmt.setString(7, courseVo.getPubStatus());
+			pstmt.setInt(8, courseVo.getCourseId());
 
 			rowCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -126,7 +127,6 @@ public class CourseDaoImpl implements CourseDaoIntf {
 					course.setUploadTime(rs.getObject("upload_time", LocalDateTime.class));
 					course.setStatus(rs.getString("status"));
 					course.setPubStatus(rs.getString("public"));
-
 				}
 			}
 		} catch (SQLException e) {
@@ -266,7 +266,11 @@ public class CourseDaoImpl implements CourseDaoIntf {
 		return flag;
 	}
 
-	// 取得已安排團課
+	/*
+	 * * Function: 取得已安排團課
+	 *   CreateBy: Natalie
+	 *   CreateDate: 2022/09/
+	 */
 	public List<Course> selectCourseByGymIdAndStartTime(Integer gymId, LocalDate one, LocalDate seven) {
 
 		List<Course> list = new ArrayList<Course>();
@@ -285,6 +289,7 @@ public class CourseDaoImpl implements CourseDaoIntf {
 
 				while (rs.next()) {
 					course = new Course();
+					course.setCourseId(rs.getInt("cour_id"));
 					course.setGymId(rs.getInt("gym_id"));
 					course.setStartTime(rs.getObject("start_time", LocalDateTime.class));
 					course.setCourseListId(rs.getInt("cour_list_id"));

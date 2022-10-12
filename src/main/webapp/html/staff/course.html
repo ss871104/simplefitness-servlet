@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/boostrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/boostrap/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/staff/course.css">
     <script src="../../js/jquery-3.6.0.min.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
@@ -15,8 +15,6 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>員工專區</title>
-
-
 </head>
 
 <body>
@@ -151,24 +149,20 @@
                 <option value="0" selected>選擇場館</option>
                 <!-- getAllGym 拿場館 -->
             </select>
-            <input type="date" class="select" id="dateRange" value="">
+            <input type="date" class="select" id="dateRange">
             <div class="titleBtn">
                 <button type="submit" id="queryCourse" class="btn_submit">查詢課程</button>
-                <button type="button" id="newCourse" class="btn_submit" data-toggle="modal"
-                    data-target="#addCourse">新增團課</button>
+                <button type="button" id="newCourse" class="btn_submit" data-toggle="modal" data-target="#addCourse">新增團課</button>
             </div>
         </div>
 
-        <!-- 團體課程清單 -->
         <div class="contentBody">
             <!-- searchCourse 列出現有課程 -->
-            
         </div>
     </div>
 
-    <!-- 新增預約Modal -->
-    <div class="modal fade" id="addCourse" tabindex="-1" role="dialog" aria-labelledby="addCourseTitle"
-        aria-hidden="true">
+    <!-- 新增團課Modal -->
+    <div class="modal fade" id="addCourse" tabindex="-1" role="dialog" aria-labelledby="addCourseTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -198,11 +192,50 @@
                             <option value="" selected>公開狀態</option>
                         </select><br>
                         <div id="errMsg" class="error" style="color: red;"></div>
-
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
                     <button type="button" class="btn btn-primary" id="add">新增</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 編輯團課Modal -->
+    <div class="modal fade" id="editCourse" tabindex="-1" role="dialog" aria-labelledby="editCourseTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editCourseTitle">編輯團課</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <select class="addselect" id="editGym" name="editGym">
+                        <option value="0">場館</option>
+                        <!-- getAllGym 拿場館 -->
+                    </select>
+                    <select class="addselect" id="editCoach" name="editCoach">
+                        <option value="0" >教練</option>
+                        <!-- getAllEmp 拿教練名稱 -->
+                    </select><br>
+                    <input type="date" class="addselect" id="editCourseDate" name="editCourseDate">
+                    <input type="time" class="addselect" id="editStartTime" name="editStartTime" value="06:00"><br>
+                    <select class="addselect" id="editCourseName" name="editCourseName">
+                        <option value="0" >課程名稱</option>
+                    </select>
+                    <select class="addselect" id="editStatus" name="editStatus">
+                        <option value="" >預約狀態</option>
+                    </select>
+                    <select class="addselect" id="editPubStatus" name="editPubStatus">
+                        <option value="" >公開狀態</option>
+                    </select><br>
+                    <div id="errMsg" class="error" style="color: red;"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="editCancel" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="editSave">儲存</button>
                 </div>
             </div>
         </div>

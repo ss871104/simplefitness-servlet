@@ -1,14 +1,15 @@
 $(function () {
-    var emp_id = 11;
+    var emp_id;
     var CourseList = [];
     var bookingCoachList = [];
     $(document).ready(function () {
 
-        // getEmpId();
+        getEmpId();
 
-        getEmpCourseList();
 
-        getEmpCoachList();
+
+        // window.setTimeout(getEmpCourseList(), 2000);
+        // window.setTimeout(getEmpCoachList(), 2000);
 
         //**參數設定開始**************************************************************************/
 
@@ -182,17 +183,30 @@ $(function () {
         //**參數設定結束**************************************************************************/
 
         //取得登入員工資料
-        // function getMemberId() {
-        //     $.ajax({
-        //         url: "http://localhost:8080/simplefitness-servlet/member/session",
-        //         type: "GET",
-        //         dataType: "json",
-        //         success: function (data) {
-        //             mem_id = data.memId;
-        //             // console.log(mem_id)
-        //         }
-        //     })
-        // }
+        function getEmpId() {
+            $.ajax({
+                url: "http://localhost:8080/simplefitness-servlet/staff/session",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    if (data.job == "1") {
+                        emp_id = data.empId;
+                        getEmpCourseList();
+                        getEmpCoachList();
+                    } else {
+                        swal({
+                            title: "教練專區",
+                            html: "您不是教練，不能進入教練專區喔!",
+                            type: "error",//success,error,warning
+                            confirmButtonText: "確認",
+                        }).then(
+                            function () {
+                                window.location.href = "staff_home.html"
+                            });
+                    }
+                }
+            })
+        }
 
         //點擊登出觸發事件
         // $("#logout").click(function(){
@@ -201,6 +215,7 @@ $(function () {
 
         //取得此教練的團課清單
         function getEmpCourseList() {
+            console.log("EMP:" + emp_id)
             $.ajax({
                 url: "http://localhost:8080/simplefitness-servlet/courseBooking/CheckCourseByEmpIdServlet",
                 type: "POST",

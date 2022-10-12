@@ -1,5 +1,7 @@
 package com.coach.dao.intf;
 
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.coach.vo.Coach;
@@ -37,6 +39,11 @@ public interface CoachDaoIntf extends CommonDao<Coach, Integer> {
 	public void setCoachEnable(Integer coaId);
 
 	
-
+	/*
+	 * * Function: 確認此時間此教練是否已有教練課 
+	 *   CreateBy: Natalie
+	 *   CreateDate: 2022/10/06
+	 */
+	public List<Coach> selectCoachByEmpIdAndStartTime(Integer empId, LocalDateTime startTime);
 
 }

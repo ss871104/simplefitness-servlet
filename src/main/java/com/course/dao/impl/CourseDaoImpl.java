@@ -78,6 +78,7 @@ public class CourseDaoImpl implements CourseDaoIntf {
 			pstmt.setObject(5, courseVo.getEndTime());
 			pstmt.setString(6, courseVo.getStatus());
 			pstmt.setString(7, courseVo.getPubStatus());
+			pstmt.setInt(8, courseVo.getCourseId());
 
 			rowCount = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -130,7 +131,6 @@ public class CourseDaoImpl implements CourseDaoIntf {
 					course.setUploadTime(rs.getObject("upload_time", LocalDateTime.class));
 					course.setStatus(rs.getString("status"));
 					course.setPubStatus(rs.getString("public"));
-
 				}
 			}
 		} catch (SQLException e) {
@@ -271,7 +271,11 @@ public class CourseDaoImpl implements CourseDaoIntf {
 		return flag;
 	}
 
-	// 取得已安排團課
+	/*
+	 * * Function: 取得已安排團課
+	 *   CreateBy: Natalie
+	 *   CreateDate: 2022/09/
+	 */
 	public List<Course> selectCourseByGymIdAndStartTime(Integer gymId, LocalDate one, LocalDate seven) {
 
 		List<Course> list = new ArrayList<Course>();
@@ -290,6 +294,7 @@ public class CourseDaoImpl implements CourseDaoIntf {
 
 				while (rs.next()) {
 					course = new Course();
+					course.setCourseId(rs.getInt("cour_id"));
 					course.setGymId(rs.getInt("gym_id"));
 					course.setStartTime(rs.getObject("start_time", LocalDateTime.class));
 					course.setCourseListId(rs.getInt("cour_list_id"));
@@ -417,35 +422,72 @@ public class CourseDaoImpl implements CourseDaoIntf {
 				+ "where emp.emp_id=?;";
 		
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(sqlStr);) {
-
+			
 			System.out.println("連線成功");
-
+			
 			pstmt.setInt(1, empId);
 
 			try (ResultSet rs = pstmt.executeQuery()) {
 
 				while (rs.next()) {
-					course = new Course();
-					course.setCourseId(rs.getInt("cour_id"));
-					course.setEmpId(rs.getInt("emp_id"));
-					course.setGymId(rs.getInt("gym_id"));
-					course.setCourseListId(rs.getInt("cour_list_id"));
-					course.setStartTime(rs.getObject("start_time", LocalDateTime.class));
-					course.setEndTime(rs.getObject("end_time", LocalDateTime.class));
-					course.setUploadTime(rs.getObject("upload_time", LocalDateTime.class));
-					course.setStatus(rs.getString("status"));
-					course.setPubStatus(rs.getString("public"));
-					course.setGymName(rs.getString("gym_name"));
-					course.setEmpName(rs.getString("emp_name"));
-					course.setCourseName(rs.getString("cour_name"));
-					courseList.add(course);		
-
+						course = new Course();
+						course.setCourseId(rs.getInt("cour_id"));
+						course.setEmpId(rs.getInt("emp_id"));
+						course.setGymId(rs.getInt("gym_id"));
+						course.setCourseListId(rs.getInt("cour_list_id"));
+						course.setStartTime(rs.getObject("start_time", LocalDateTime.class));
+						course.setEndTime(rs.getObject("end_time", LocalDateTime.class));
+						course.setUploadTime(rs.getObject("upload_time", LocalDateTime.class));
+						course.setStatus(rs.getString("status"));
+						course.setPubStatus(rs.getString("public"));
+						course.setGymName(rs.getString("gym_name"));
+						course.setEmpName(rs.getString("emp_name"));
+						course.setCourseName(rs.getString("cour_name"));
+						courseList.add(course);
+						
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+
 		}
 		return courseList;
 	}
+	
+	/*
+	 * * Function: 確認此時間此教練是否已有團課 
+	 *   CreateBy: Natalie
+	 *   CreateDate: 2022/10/06
+	 */
+	public List<Course> selectCourseByEmpIdAndStartTime(Integer empId, LocalDateTime startTime) {
+		
+		List<Course> list = new ArrayList<Course>();
+		Course course = null;
+		
+		try (Connection con = ds.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(SELECT_COURSE_BY_EMPID_AND_STARTTIME);) {
 
+			System.out.println("連線成功");
+
+			pstmt.setInt(1, empId);
+			pstmt.setObject(2, startTime);
+			pstmt.setObject(3, startTime);
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+				
+				while (rs.next()) {
+					course = new Course();
+					course.setEmpId(rs.getInt("emp_id"));
+					course.setStartTime(rs.getObject("start_time", LocalDateTime.class));
+					course.setSuccessful(true);
+					list.add(course);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return list;
+	}
+	
 }

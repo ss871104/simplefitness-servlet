@@ -5,17 +5,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/boostrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/boostrap/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/staff/course.css">
     <script src="../../js/jquery-3.6.0.min.js"></script>
-    <script src="../js/boostrap/bootstrap.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/moment.min.js"></script>
     
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <title>員工專區</title>
-
-
 </head>
 
 <body>
@@ -150,105 +149,20 @@
                 <option value="0" selected>選擇場館</option>
                 <!-- getAllGym 拿場館 -->
             </select>
-            <input type="date" class="select" id="dateRange" min="2022-09-01" max="2022-10-30" value="">
+            <input type="date" class="select" id="dateRange">
             <div class="titleBtn">
-                <button type="submit" id="queryCourse" class="btn_submit">查詢預約</button>
-                <button type="button" id="newCourse" class="btn_submit" data-toggle="modal"
-                    data-target="#addCourse">新增團課</button>
+                <button type="submit" id="queryCourse" class="btn_submit">查詢課程</button>
+                <button type="button" id="newCourse" class="btn_submit" data-toggle="modal" data-target="#addCourse">新增團課</button>
             </div>
         </div>
 
-        <!-- 團體課程清單 -->
         <div class="contentBody">
-            <p>
-                <button class="btn btn-block" id="btndate" type="button" data-toggle="collapse"
-                    data-target="#courList1">
-                    2022/08/28(日)
-                </button>
-            <div class="collapse" id="courList1">
-                <div class="card card-body">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">場館</th>
-                                <th scope="col">課程時間</th>
-                                <th scope="col">課程名稱</th>
-                                <th scope="col">教練</th>
-                                <th scope="col">預約狀態</th>
-                                <th scope="col">公開狀態</th>
-                                <th scope="col"></th>
-                                <th scope="col"></th>
-                            </tr>
-                        </thead>
-                        <tbody id="courList" name="courList">
-                            <!-- searchCourse 列出現有課程 -->
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            </p>
-            <p>
-                <button class="btn btn-block" id="btndate" type="button" data-toggle="collapse"
-                    data-target="#courList2">
-                    2022/08/29(一)
-                </button>
-            <div class="collapse" id="courList2">
-                <div class="card card-body">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">場館</th>
-                                <th scope="col">課程時間</th>
-                                <th scope="col">課程名稱</th>
-                                <th scope="col">教練</th>
-                                <th scope="col">預約狀態</th>
-                                <th scope="col">公開狀態</th>
-                            </tr>
-                        </thead>
-                        <tbody id="courList2">
-                            <tr>
-                                <td>台北忠孝館</td>
-                                <td>11:00-12:00</td>
-                                <td>入門瑜珈</td>
-                                <td>空條承太郎</td>
-                                <td>可預約</td>
-                                <td>公開</td>
-                            </tr>
-                            <tr>
-                                <td>台北忠孝館</td>
-                                <td>17:00-18:00</td>
-                                <td>飛輪燃脂</td>
-                                <td>喬魯諾·喬巴拿</td>
-                                <td>額滿</td>
-                                <td>公開</td>
-                            </tr>
-                            <tr>
-                                <td>台北忠孝館</td>
-                                <td>17:00-18:00</td>
-                                <td>飛輪燃脂</td>
-                                <td>喬魯諾·喬巴拿</td>
-                                <td>額滿</td>
-                                <td>公開</td>
-                            </tr>
-                            <tr>
-                                <td>台北忠孝館</td>
-                                <td>17:00-18:00</td>
-                                <td>飛輪燃脂</td>
-                                <td>喬魯諾·喬巴拿</td>
-                                <td>額滿</td>
-                                <td>公開</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            </p>
+            <!-- searchCourse 列出現有課程 -->
         </div>
     </div>
 
-    <!-- 新增預約Modal -->
-    <div class="modal fade" id="addCourse" tabindex="-1" role="dialog" aria-labelledby="addCourseTitle"
-        aria-hidden="true">
+    <!-- 新增團課Modal -->
+    <div class="modal fade" id="addCourse" tabindex="-1" role="dialog" aria-labelledby="addCourseTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -258,56 +172,70 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div>
-                        <select class="addselect" id="addgym" name="addgym">
-                            <option value="" selected>場館</option>
-                            <option value="1">台北忠孝館</option>
-                            <option value="2">善導寺館</option>
+                        <select class="addselect" id="newGym" name="newGym">
+                            <option value="0" selected>場館</option>
+                            <!-- getAllGym 拿場館 -->
                         </select>
-                        <select class="addselect" id="coach" name="coach">
-                            <option value="" selected>教練</option>
-                            <option value="1">教練1</option>
-                            <option value="2">教練2</option>
+                        <select class="addselect" id="newCoach" name="newCoach">
+                            <option value="0" selected>教練</option>
+                            <!-- getAllEmp 拿教練名稱 -->
+                        </select><br>
+                        <input type="date" class="addselect" id="newCourseDate" name="newCourseDate">
+                        <input type="time" class="addselect" id="newStartTime" name="newStartTime" value="06:00"><br>
+                        <select class="addselect" id="newCourseName" name="newCourseName">
+                            <option value="0" selected>課程名稱</option>
                         </select>
-                    </div>
-                    <div>
-                        <select class="addselect" id="courseDate" name="courseDate">
-                            <option value="" selected>日期</option>
-                            <option value="1">2022/08/28(日)</option>
-                            <option value="2">2022/08/29(一)</option>
-                            <option value="3">2022/08/30(二)</option>
-                        </select>
-                        <select class="addselect" id="startTime" name="startTime">
-                            <option value="" selected>上課時間</option>
-                            <option value="1">09:00-10:00</option>
-                            <option value="2">11:00</option>
-                            <option value="3">17:00</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select class="addselect" id="courseName" name="courseName">
-                            <option value="" selected>課程名稱</option>
-                            <option value="1">入門瑜珈</option>
-                            <option value="2">飛輪燃脂</option>
-                        </select>
-                    </div>
-                    <div>
-                        <select class="addselect" id="status" name="status">
+                        <select class="addselect" id="newStatus" name="newStatus">
                             <option value="" selected>預約狀態</option>
-                            <option value="1">不可預約</option>
-                            <option value="2">可預約</option>
-                            <option value="3">額滿</option>
                         </select>
-                        <select class="addselect" id="pubStatus" name="pubStatus">
+                        <select class="addselect" id="newPubStatus" name="newPubStatus">
                             <option value="" selected>公開狀態</option>
-                            <option value="1">非公開</option>
-                            <option value="2">公開</option>
-                        </select>
-                    </div>
+                        </select><br>
+                        <div id="errMsg" class="error" style="color: red;"></div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    <button type="button" class="btn btn-primary">新增</button>
+                    <button type="button" class="btn btn-primary" id="add">新增</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 編輯團課Modal -->
+    <div class="modal fade" id="editCourse" tabindex="-1" role="dialog" aria-labelledby="editCourseTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editCourseTitle">編輯團課</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <select class="addselect" id="editGym" name="editGym">
+                        <option value="0">場館</option>
+                        <!-- getAllGym 拿場館 -->
+                    </select>
+                    <select class="addselect" id="editCoach" name="editCoach">
+                        <option value="0" >教練</option>
+                        <!-- getAllEmp 拿教練名稱 -->
+                    </select><br>
+                    <input type="date" class="addselect" id="editCourseDate" name="editCourseDate">
+                    <input type="time" class="addselect" id="editStartTime" name="editStartTime" value="06:00"><br>
+                    <select class="addselect" id="editCourseName" name="editCourseName">
+                        <option value="0" >課程名稱</option>
+                    </select>
+                    <select class="addselect" id="editStatus" name="editStatus">
+                        <option value="" >預約狀態</option>
+                    </select>
+                    <select class="addselect" id="editPubStatus" name="editPubStatus">
+                        <option value="" >公開狀態</option>
+                    </select><br>
+                    <div id="errMsg" class="error" style="color: red;"></div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="editCancel" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-primary" id="editSave">儲存</button>
                 </div>
             </div>
         </div>

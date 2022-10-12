@@ -1,5 +1,7 @@
 package com.coach.dao.impl;
 
+import static com.coach.dao.sql.CoachDaoSQL.*;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,6 +18,7 @@ import javax.sql.DataSource;
 import com.coach.dao.intf.CoachDaoIntf;
 import com.coach.dao.sql.CoachDaoSQL;
 import com.coach.vo.Coach;
+import com.course.vo.Course;
 
 public class CoachDaoImpl implements CoachDaoIntf {
 
@@ -299,4 +302,39 @@ public class CoachDaoImpl implements CoachDaoIntf {
 		
 	}
 
+	/*
+	 * * Function: 確認此時間此教練是否已有教練課  
+	 *   CreateBy: Natalie
+	 *   CreateDate: 2022/10/06
+	 */
+	public List<Coach> selectCoachByEmpIdAndStartTime(Integer empId, LocalDateTime startTime) {
+		
+		List<Coach> list = new ArrayList<Coach>();
+		Coach coach = null;
+		
+		try (Connection con = ds.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(SELECT_COACH_BY_EMPID_AND_STARTTIME);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setInt(1, empId);
+			pstmt.setObject(2, startTime);
+			pstmt.setObject(3, startTime);
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+
+				while (rs.next()) {
+					coach = new Coach();
+					coach.setEmpId(rs.getInt("emp_id"));
+					coach.setStartTime(rs.getObject("start_time", LocalDateTime.class));
+					coach.setSuccessful(true);
+					list.add(coach);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return list;
+	}
 }

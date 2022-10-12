@@ -1,11 +1,6 @@
 package com.course.dao.impl;
 
-import static com.course.dao.sql.CourseDaoSQL.DELETE;
-import static com.course.dao.sql.CourseDaoSQL.INSERT;
-import static com.course.dao.sql.CourseDaoSQL.SELECT_ALL;
-import static com.course.dao.sql.CourseDaoSQL.SELECT_BY_GYMID_AND_STARTTIME;
-import static com.course.dao.sql.CourseDaoSQL.SELECT_BY_ID;
-import static com.course.dao.sql.CourseDaoSQL.UPDATE;
+import static com.course.dao.sql.CourseDaoSQL.*;
 
 import java.sql.Connection;
 import java.sql.Date;

@@ -16,4 +16,6 @@ public interface CourseServiceIntf {
 	
 	Course findById(Course course);
 	
+	Course deteleCourse(Course course);
+	
 }

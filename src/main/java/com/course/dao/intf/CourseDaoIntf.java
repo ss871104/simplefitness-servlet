@@ -73,4 +73,10 @@ public interface CourseDaoIntf extends CommonDao<Course, Integer> {
 	 * */
 	public List<Course> selectCourseDetailList(Integer empId);
 
+	/* *
+	 *  Function: 變更團課公開狀態
+	 *  CreateBy: Natalie
+	 *  CreateDate: 2022/10/12
+	 * */
+	public boolean updateCoursePublicStatus(Course course);
 }

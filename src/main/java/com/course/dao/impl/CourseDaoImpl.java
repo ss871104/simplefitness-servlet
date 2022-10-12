@@ -484,5 +484,29 @@ public class CourseDaoImpl implements CourseDaoIntf {
 		}
 		return list;
 	}
+
+	
+	/*
+	 * * Function: 更新團課公開狀態 
+	 *   CreateBy: Natalie
+	 *   CreateDate: 2022/10/12
+	 */
+	public boolean updateCoursePublicStatus(Course course) {
+		boolean flag = true;
+
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(UPDATE_PUBLIC_STATUS_BY_ID);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setString(1, course.getPubStatus());
+			pstmt.setInt(2, course.getCourseId());
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return flag;
+	}
 	
 }

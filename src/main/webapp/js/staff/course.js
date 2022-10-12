@@ -8,20 +8,19 @@
   const editCourseName = document.querySelector("#editCourseName");
   const editStatus = document.querySelector("#editStatus");
   const editPubStatus = document.querySelector("#editPubStatus");
-  const editSave = document.querySelector("#editSave");
 
   // 預約狀態
   const statusList = [
     { status: 0, value: "已取消" },
     { status: 1, value: "可預約" },
     { status: 2, value: "不可預約" },
-    { status: 3, value: "額滿" },
+    { status: 3, value: "額滿" }
   ];
 
   // 公開狀態
   const publicStatusList = [
     { status: 0, value: "未公開" },
-    { status: 1, value: "公開" },
+    { status: 1, value: "公開" }
   ];
 
   // 拿場館
@@ -154,11 +153,9 @@
                               <td>${courseName}</td>
                               <td>${empName}</td>
                               <td>${statusList[course[i].status].value}</td>
-                              <td>${
-                                publicStatusList[course[i].pubStatus].value
-                              }</td>
+                              <td>${publicStatusList[course[i].pubStatus].value}</td>
                               <td><button type="button" class="btn btn-secondary" id="edit${course[i].courseId}" value="${course[i].courseId}" data-toggle="modal" data-target="#editCourse">編輯</button></td>
-                              <td><button type="button" class="btn btn-secondary" id="delete${course[i].courseId}" value="${course[i].courseId}">刪除</button></td>
+                              <td><button type="button" class="btn btn-secondary" id="delete${course[i].courseId}" value="${course[i].courseId}" data-toggle="modal" data-target="#deleteCourse">刪除</button></td>
                             </tr>
                           </tbody>
                       </table>
@@ -175,7 +172,7 @@
               <td>${statusList[course[i].status].value}</td>
               <td>${publicStatusList[course[i].pubStatus].value}</td>
               <td><button type="button" class="btn btn-secondary" id="edit${course[i].courseId}" value="${course[i].courseId}" data-toggle="modal" data-target="#editCourse">編輯</button></td>
-              <td><button type="button" class="btn btn-secondary" id="delete${course[i].courseId}" value="${course[i].courseId}">刪除</button></td>
+              <td><button type="button" class="btn btn-secondary" id="delete${course[i].courseId}" value="${course[i].courseId}" data-toggle="modal" data-target="#deleteCourse">刪除</button></td>
             </tr>`;
 
             // 如果日期標頭已存在就新增內容，不存在才新增標頭+內容
@@ -188,10 +185,10 @@
             // 點擊編輯
             let courseData = course[i];
             document.querySelector(`#edit${course[i].courseId}`).onclick = () => {
+              console.log(courseData);
                 let date = moment(courseData.startTime).format("YYYY-MM-DD");
                 let startTime = moment(courseData.startTime).format("HH:mm");
 
-                console.log(courseData);
                 editStartTime.value = startTime;
                 editCourseDate.value = date;
                 editGym.value = courseData.gymId;
@@ -263,6 +260,36 @@
                     });
                 };
               };
+            
+            // 點擊刪除
+            document.querySelector(`#delete${course[i].courseId}`).onclick = () => {
+              // 確定刪除
+              document.querySelector("#delete").onclick = () => {
+                console.log(courseData);
+                fetch(
+                  "http://localhost:8080/simplefitness-servlet/course/deleteCourse",
+                  {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      courseId: courseData.courseId
+                    }),
+                  }
+                )
+                  .then((resp) => resp.json())
+                  .then((body) => {
+                    errMsg.textContent = "";
+                    const { successful, message } = body;
+                    if (successful) {
+                      alert("刪除成功 ^_^!");
+                      history.go(0);
+                    } else {
+                      errMsg.textContent = message;
+                    }
+                  });
+              }
+            }
+              
           }
           $("#courList" + selectedDate.value).collapse("show");
         } else {

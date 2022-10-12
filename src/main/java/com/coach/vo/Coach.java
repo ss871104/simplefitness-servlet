@@ -15,7 +15,9 @@ public class Coach extends Common {
 	private String status;
 	private String pubStatus;
 	private Integer gymId;
+	private String gymName;
 	private String empName;
+	private Integer memId;
 	
 	
 	public Integer getCoaId() {
@@ -66,12 +68,25 @@ public class Coach extends Common {
 	public void setGymId(Integer gymId) {
 		this.gymId = gymId;
 	}
+	public String getGymName() {
+		return gymName;
+	}
+	public void setGymName(String gymName) {
+		this.gymName = gymName;
+	}
 	public String getEmpName() {
 		return empName;
 	}
 	public void setEmpName(String empName) {
 		this.empName = empName;
 	}
+	public Integer getMemId() {
+		return memId;
+	}
+	public void setMemId(Integer memId) {
+		this.memId = memId;
+	}
+
 	
 
 	

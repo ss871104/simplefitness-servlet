@@ -1,6 +1,11 @@
 package com.course.dao.impl;
 
-import static com.course.dao.sql.CourseDaoSQL.*;
+import static com.course.dao.sql.CourseDaoSQL.DELETE;
+import static com.course.dao.sql.CourseDaoSQL.INSERT;
+import static com.course.dao.sql.CourseDaoSQL.SELECT_ALL;
+import static com.course.dao.sql.CourseDaoSQL.SELECT_BY_GYMID_AND_STARTTIME;
+import static com.course.dao.sql.CourseDaoSQL.SELECT_BY_ID;
+import static com.course.dao.sql.CourseDaoSQL.UPDATE;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -19,7 +24,6 @@ import javax.sql.DataSource;
 
 import com.course.dao.intf.CourseDaoIntf;
 import com.course.vo.Course;
-import com.coursebooking.vo.CourseBooking;
 
 public class CourseDaoImpl implements CourseDaoIntf {
 
@@ -212,7 +216,8 @@ public class CourseDaoImpl implements CourseDaoIntf {
 		var sqlStr = "select cour_id,gym.gym_id,gym_name,emp_name,courseType.cour_list_id,cour_name,start_time,end_time\r\n"
 				+ "from course course \r\n"
 				+ "join cour_list courseType on course.cour_list_id=courseType.cour_list_id \r\n"
-				+ "join gym on course.gym_id = gym.gym_id\r\n" + "join emp on course.emp_id = emp.emp_id\r\n"
+				+ "join gym on course.gym_id = gym.gym_id\r\n" 
+				+ "join emp on course.emp_id = emp.emp_id\r\n"
 				+ "where course.start_time >now() and courseType.`status`='1' and course.`status`='1' and public='1' and gym.gym_id=? and courseType.cour_list_id=?;";
 
 		List<Course> canBookCourseList = new ArrayList<Course>();
@@ -249,7 +254,7 @@ public class CourseDaoImpl implements CourseDaoIntf {
 	/*
 	 * * Function: 更新團課預約狀態(Course) CreateBy: Iris CreateDate: 2022/09/26
 	 */
-	public boolean updateStatus(Course course) {
+	public boolean updateCourseStatus(Course course) {
 		boolean flag = true;
 		var sqlstr = "update course set status=? where cour_id  = ?";
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(sqlstr);) {
@@ -331,47 +336,6 @@ public class CourseDaoImpl implements CourseDaoIntf {
 	}
 
 	/*
-	 * * Function: 取得會員已預約課程 CreateBy: Iris CreateDate: 2022/09/27
-	 */
-	public List<Course> selectBookedCourseByMemberIdAndGymId(Integer memId, Integer gymId) {
-		Course course = null;
-		List<Course> courseBookedList = new ArrayList<Course>();
-		var sqlStr = "select cour_book_id,mem_id,gym.gym_id,gym_name,cour_name,emp_name,cour_booking.cour_id,cour_booking.`status`,course.cour_list_id,start_time,end_time \r\n"
-				+ "from cour_booking  \r\n" + "join course on cour_booking.cour_id = course.cour_id \r\n"
-				+ "join cour_list on course.cour_list_id = cour_list.cour_list_id \r\n"
-				+ "join gym on course.gym_id = gym.gym_id\r\n" + "join emp on course.emp_id = emp.emp_id\r\n"
-				+ "where cour_booking.`status`='1' and mem_id = ? and gym.gym_id = ?;";
-		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(sqlStr);) {
-
-			System.out.println("連線成功");
-
-			pstmt.setInt(1, memId);
-			pstmt.setInt(2, gymId);
-
-			try (ResultSet rs = pstmt.executeQuery()) {
-
-				while (rs.next()) {
-					course = new Course();
-					course.setCourseId(rs.getInt("cour_id"));
-					course.setGymId(rs.getInt("gym_id"));
-					course.setGymName(rs.getString("gym_name"));
-					course.setCourseListId(rs.getInt("cour_list_id"));
-					course.setCourseBookId(rs.getInt("cour_book_id"));
-					course.setCourseName(rs.getString("cour_name"));
-					course.setEmpName(rs.getString("emp_name"));
-					course.setStartTime(rs.getObject("start_time", LocalDateTime.class));
-					course.setEndTime(rs.getObject("end_time", LocalDateTime.class));
-
-					courseBookedList.add(course);
-				}
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return courseBookedList;
-	}
-
-	/*
 	 * * Function: 開放團課預約狀態為可預約 CreateBy: Iris CreateDate: 2022/09/30
 	 */
 	public void setCourseEnable(Integer courseId) {
@@ -382,10 +346,106 @@ public class CourseDaoImpl implements CourseDaoIntf {
 			System.out.println("連線成功");
 
 			pstmt.setInt(1, courseId);
+			pstmt.executeUpdate();
+
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/* *
+	 *  Function:取得會員團課程詳細資料
+	 *  CreateBy: Iris
+	 *  CreateDate: 2022/10/09
+	 * */
+	public Course selectCourseClassDetailByCourseId(Integer courseId) {
+		Course course = null;
+		var sqlStr = "select course.*,gym_name,courseType.cour_name,emp.emp_name\r\n"
+				+ "from course course\r\n"
+				+ "join cour_list courseType on courseType.cour_list_id=course.cour_list_id\r\n"
+				+ "join emp emp on emp.emp_id=course.emp_id\r\n"
+				+ "join gym gym on gym.gym_id=course.gym_id\r\n"
+				+ "where cour_id=?;";
+
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(sqlStr);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setInt(1, courseId);
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+
+				course = new Course();
+
+				if (rs.next()) {
+					course = new Course();
+					course.setCourseId(rs.getInt("cour_id"));
+					course.setEmpId(rs.getInt("emp_id"));
+					course.setGymId(rs.getInt("gym_id"));
+					course.setCourseListId(rs.getInt("cour_list_id"));
+					course.setStartTime(rs.getObject("start_time", LocalDateTime.class));
+					course.setEndTime(rs.getObject("end_time", LocalDateTime.class));
+					course.setUploadTime(rs.getObject("upload_time", LocalDateTime.class));
+					course.setStatus(rs.getString("status"));
+					course.setPubStatus(rs.getString("public"));
+					course.setGymName(rs.getString("gym_name"));
+					course.setEmpName(rs.getString("emp_name"));
+					course.setCourseName(rs.getString("cour_name"));
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return course;
+	}
+
+	/* *
+	 *  Function:取得團課課程清單詳細資料
+	 *  CreateBy: Iris
+	 *  CreateDate: 2022/10/11
+	 * */
+	public List<Course> selectCourseDetailList(Integer empId) {
+		
+		List<Course> courseList = new ArrayList<Course>();
+		Course course = null;
+		var sqlStr = "select course.*,gym_name,courseType.cour_name,emp.emp_name\r\n"
+				+ "from course course\r\n"
+				+ "join cour_list courseType on courseType.cour_list_id=course.cour_list_id\r\n"
+				+ "join emp emp on emp.emp_id=course.emp_id\r\n"
+				+ "join gym gym on gym.gym_id=course.gym_id\r\n"
+				+ "where emp.emp_id=?;";
+		
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(sqlStr);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setInt(1, empId);
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+
+				while (rs.next()) {
+					course = new Course();
+					course.setCourseId(rs.getInt("cour_id"));
+					course.setEmpId(rs.getInt("emp_id"));
+					course.setGymId(rs.getInt("gym_id"));
+					course.setCourseListId(rs.getInt("cour_list_id"));
+					course.setStartTime(rs.getObject("start_time", LocalDateTime.class));
+					course.setEndTime(rs.getObject("end_time", LocalDateTime.class));
+					course.setUploadTime(rs.getObject("upload_time", LocalDateTime.class));
+					course.setStatus(rs.getString("status"));
+					course.setPubStatus(rs.getString("public"));
+					course.setGymName(rs.getString("gym_name"));
+					course.setEmpName(rs.getString("emp_name"));
+					course.setCourseName(rs.getString("cour_name"));
+					courseList.add(course);		
+
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return courseList;
 	}
 
 }

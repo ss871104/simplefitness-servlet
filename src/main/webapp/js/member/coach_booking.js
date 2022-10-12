@@ -1,7 +1,6 @@
 $(function () {
     var mem_id;
     var canBookingCoachList = [];
-    var gymList=[];
     $(document).ready(function () {
 
         getMemberId();
@@ -66,8 +65,8 @@ $(function () {
             console.log("清空日曆")
             coaches.forEach(coach => {
                 var newEvent = new Object();
-                // newEvent.title = coach.empName;
-                newEvent.gym = gymList.find(item=>item.gymId==coach.gymId).gymName;
+                newEvent.title = coach.empName;
+                newEvent.gym = coach.gymName;
                 newEvent.emp = coach.empName;
                 newEvent.start = moment(coach.startTime).format();
                 newEvent.allDay = false;
@@ -144,6 +143,11 @@ $(function () {
             }
         })
 
+        //點擊登出觸發事件
+        $("#logout").click(function(){
+            logout();
+        })
+
         //取得可預約課程清單
         function getCoachClassList() {
             $.ajax({
@@ -158,7 +162,7 @@ $(function () {
                 contentType: 'application/json; charset=UTF-8',
                 dataType: "json",
                 success: function (data) {
-                    console.log(data)
+                    // console.log(data)
                     canBookingCoachList = data;
                     showCalendarEvent(data);
                 }
@@ -171,7 +175,7 @@ $(function () {
                 url: "http://localhost:8080/simplefitness-servlet/coachBooking/CreateCoachBookingServlet",
                 type: "POST",
                 data: JSON.stringify({
-                    coachId: item.coachId,
+                    coachId: item.coaId,
                     empId: item.empId,
                     gymId: item.gymId,
                     coachbookStatus: "1",
@@ -182,7 +186,9 @@ $(function () {
                 dataType: "json",
                 success: function (data) {
                     if (data) {
-                        swal("預約成功", "太棒拉~", "success");
+                        console.log(data)
+                        swal("已送出預約邀請", "太棒拉~", "success");
+                        
                         getCoachClassList();
                     }
                     else {

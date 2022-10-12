@@ -18,8 +18,8 @@ import com.coursebooking.service.impl.CourseBookingServiceImpl;
 import com.coursebooking.service.intf.CourseBookingServiceIntf;
 import com.coursebooking.vo.CourseBooking;
 
-@WebServlet("/courseBooking/CheckCourseServlet")
-public class CheckCourseServlet extends HttpServlet {
+@WebServlet("/courseBooking/CheckCourseByEmpIdServlet")
+public class CheckCourseByEmpIdServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private CourseBookingServiceIntf _courseBookingService = new CourseBookingServiceImpl();
@@ -39,10 +39,10 @@ public class CheckCourseServlet extends HttpServlet {
 		String json = br.readLine();
 
 		// Step.1 接值
-		CourseBooking courseBooking = GSON.fromJson(json, CourseBooking.class);
+		Course course = GSON.fromJson(json, Course.class);
 
 		// Step.2 執行SVC
-		List<CourseBooking> courseBookingResult = _courseBookingService.checkBookingCourseByMemberId(courseBooking);
+		List<Course> courseBookingResult = _courseBookingService.checkBookingCourseByEmpId(course);
 
 		PrintWriter pw = response.getWriter();
 		pw.print(GSON.toJson(courseBookingResult));

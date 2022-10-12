@@ -142,6 +142,11 @@ $(function () {
             }
         })
 
+        //點擊登出觸發事件
+        $("#logout").click(function(){
+            logout();
+        })
+
         //取得可預約課程清單
         function getCourseList() {
             $.ajax({

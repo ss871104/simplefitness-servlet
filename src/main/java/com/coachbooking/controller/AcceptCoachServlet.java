@@ -5,7 +5,6 @@ import static com.common.util.Constants.GSON;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,40 +16,48 @@ import com.coachbooking.service.impl.CoachBookingServiceImpl;
 import com.coachbooking.service.intf.CoachBookingServiceIntf;
 import com.coachbooking.vo.CoachBooking;
 
-@WebServlet("/coachBooking/CheckBookingCourseByMemberIdServlet")
-public class CheckBookingCourseByMemberIdServlet extends HttpServlet{
+@WebServlet("/coachBooking/AcceptCoachServlet")
+public class AcceptCoachServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private CoachBookingServiceIntf _coachBookingService = new CoachBookingServiceImpl();
-       
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		setHeaders(response);
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
-		
-        BufferedReader br = request.getReader();
-        String json = br.readLine();
 
-        //Step.1 接值
-        CoachBooking coachBooking = GSON.fromJson(json, CoachBooking.class);
-        
-        //Step.2 執行SVC
-        List<CoachBooking> coachBookingResult=_coachBookingService.checkBookingCourseByMemberId(coachBooking);
+		BufferedReader br = request.getReader();
+		String json = br.readLine();
 
+		// Step.1 接值
+		CoachBooking coachBooking = GSON.fromJson(json, CoachBooking.class);
+
+	
+		// Step.2 執行SVC
+		// 接受該次課程預約
+		boolean coachBookingResult = _coachBookingService.acceptCoachByCoachBookingId(coachBooking);
+		// 寄送預約成功信給會員
+		if (coachBookingResult) {
+			_coachBookingService.sendBookingSuccessMail(coachBooking.getMemId());
+		}
 
 		PrintWriter pw = response.getWriter();
-        pw.print(GSON.toJson(coachBookingResult));
+		pw.print(GSON.toJson(coachBookingResult));
 	}
-	
+
 	@Override
-	protected void doOptions(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doOptions(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		setHeaders(response);
 	}
-	
+
 	private void setHeaders(HttpServletResponse response) {
 
 		response.setContentType("application/json;charset=UTF-8"); // 重要

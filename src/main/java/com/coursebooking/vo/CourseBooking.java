@@ -2,6 +2,8 @@ package com.coursebooking.vo;
 
 import java.time.LocalDateTime;
 
+import com.course.vo.Course;
+
 public class CourseBooking {
 	private Integer coursebookId;
 	private Integer memId;
@@ -10,7 +12,15 @@ public class CourseBooking {
 	private String coursebookStatus;
 	private Integer courseListId;
 	private Integer gymId;
-	
+	private Integer empId;
+	private Course courseDetail;
+		
+	public Integer getEmpId() {
+		return empId;
+	}
+	public void setEmpId(Integer empId) {
+		this.empId = empId;
+	}
 	public Integer getCoursebookId() {
 		return coursebookId;
 	}
@@ -52,6 +62,12 @@ public class CourseBooking {
 	}
 	public void setGymId(Integer gymId) {
 		this.gymId = gymId;
+	}
+	public Course getCourseDetail() {
+		return courseDetail;
+	}
+	public void setCourseDetail(Course course) {
+		this.courseDetail = course;
 	}
 	
 	

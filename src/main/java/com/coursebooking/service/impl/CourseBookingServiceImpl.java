@@ -1,7 +1,10 @@
 package com.coursebooking.service.impl;
 
+import java.io.Console;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.coachbooking.vo.CoachBooking;
 import com.course.dao.impl.CourseDaoImpl;
 import com.course.dao.intf.CourseDaoIntf;
 import com.course.vo.Course;
@@ -45,7 +48,7 @@ public class CourseBookingServiceImpl implements CourseBookingServiceIntf {
 		var courseList = _courseListDao.getCourseListByCourseId(courseId);
 
 		// 取得目前預約人數
-		var courseBookedCount = _courseBookingDao.getcourseBookedCount(courseId);
+		var courseBookedCount = _courseBookingDao.getCourseBookedCount(courseId);
 
 		// 執行判斷
 		// 人數跟上限比較
@@ -55,7 +58,7 @@ public class CourseBookingServiceImpl implements CourseBookingServiceIntf {
 			Course course = new Course();
 			course.setCourseId(courseId);
 			course.setStatus("3");
-			_courseDao.updateStatus(course);
+			_courseDao.updateCourseStatus(course);
 		}
 	}
 
@@ -68,9 +71,16 @@ public class CourseBookingServiceImpl implements CourseBookingServiceIntf {
 	}
 
 	// 取出該會員的預約清單(List)
-	public List<Course> checkBookingCourseByMemberId(CourseBooking coursebook) {
-
-		return _courseDao.selectBookedCourseByMemberIdAndGymId(coursebook.getMemId(), coursebook.getGymId());
+	public List<CourseBooking> checkBookingCourseByMemberId(CourseBooking coursebook) {
+		List<CourseBooking> courseBookingList = _courseBookingDao
+				.selectBookedCourseByMemberIdAndGymId(coursebook.getMemId(), coursebook.getGymId());
+		
+		if(!courseBookingList.isEmpty()) {
+			courseBookingList.forEach(item -> {
+				item.setCourseDetail(_courseDao.selectCourseClassDetailByCourseId(item.getCourseId()));
+			});
+		}		
+		return courseBookingList;
 	}
 
 	// 獲取可預約團課課程清單
@@ -84,6 +94,13 @@ public class CourseBookingServiceImpl implements CourseBookingServiceIntf {
 	public void setCourseBookingEnable(Integer courseId) {
 		_courseDao.setCourseEnable(courseId);
 
+	}
+
+	// 取出該教練的課程清單(List)
+	public List<Course> checkBookingCourseByEmpId(Course course) {
+		List<Course> courseList = _courseDao.selectCourseDetailList(course.getEmpId());
+		
+		return courseList;
 	}
 
 }

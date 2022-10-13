@@ -6,11 +6,6 @@ $(function () {
 
         getEmpId();
 
-
-
-        // window.setTimeout(getEmpCourseList(), 2000);
-        // window.setTimeout(getEmpCoachList(), 2000);
-
         //**參數設定開始**************************************************************************/
 
         //SWAL按鈕設定
@@ -209,9 +204,9 @@ $(function () {
         }
 
         //點擊登出觸發事件
-        // $("#logout").click(function(){
-        //     logout();
-        // })
+        $("#logout").click(function(){
+            logout();
+        })
 
         //取得此教練的團課清單
         function getEmpCourseList() {

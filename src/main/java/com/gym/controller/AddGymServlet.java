@@ -18,13 +18,13 @@ import com.gym.vo.Gym;
 @WebServlet("/gym/addGym")
 public class AddGymServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private GymServiceIntf SERVICE = new GymServiceImpl();
+	private GymServiceIntf service = new GymServiceImpl();
        
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         
         Gym gym = json2Pojo(request, Gym.class);
         
-        gym = SERVICE.add(gym);
+        gym = service.add(gym);
             
         writePojo2Json(response, gym);
 	}

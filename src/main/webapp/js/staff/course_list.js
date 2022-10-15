@@ -62,7 +62,7 @@
 			body: JSON.stringify({
 				courseName: name.value,
 				courseMaxP: count.value,
-				courseintro: intro.value,
+				courseIntro: intro.value,
 				courseStatus: selected_status.value
 			}),
 		})

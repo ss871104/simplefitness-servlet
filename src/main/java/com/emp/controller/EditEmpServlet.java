@@ -17,13 +17,13 @@ import com.emp.vo.Employee;
 @WebServlet("/staff/edit")
 public class EditEmpServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public EmployeeServiceIntf SERVICE = new EmployeeServiceImpl();
+	public EmployeeServiceIntf service = new EmployeeServiceImpl();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		Employee emp = json2Pojo(request, Employee.class);
 		
-		emp = SERVICE.editEmp(emp);
+		emp = service.editEmp(emp);
         
         writePojo2Json(response, emp);
 	}

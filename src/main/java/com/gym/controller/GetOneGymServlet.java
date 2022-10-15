@@ -20,21 +20,16 @@ import com.gym.vo.GymPic;
 @WebServlet("/gym/getGymById")
 public class GetOneGymServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private GymServiceIntf SERVICE = new GymServiceImpl();
+	private GymServiceIntf service = new GymServiceImpl();
        
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		Gym gym = json2Pojo(request, Gym.class);
         
-        Gym info  = SERVICE.findById(gym);
+        Gym info  = service.findById(gym);
         
-        List<GymPic> picList = SERVICE.findPicById(gym);
-        
-//        System.out.println(picList.get(gym.getGymId()).getPicBase64());
-            
         writePojo2Json(response, info);
         
-//        writePojo2Json(response, picList);
 	}
 
 }

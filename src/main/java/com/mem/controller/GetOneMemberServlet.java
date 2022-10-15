@@ -18,13 +18,13 @@ import com.mem.vo.Member;
 @WebServlet("/member/getMemById")
 public class GetOneMemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private MemServiceIntf SERVICE = new MemServiceImpl();
+	private MemServiceIntf service = new MemServiceImpl();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		Member member = json2Pojo(request, Member.class);
 		
-		member = SERVICE.findById(member);
+		member = service.findById(member);
         
         writePojo2Json(response, member);
 	

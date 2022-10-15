@@ -17,13 +17,13 @@ import com.courselist.vo.CourseList;
 @WebServlet("/courseList/getOneCourse")
 public class GetOneCourseServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private CourseListServiceIntf SERVICE = new CourseListServiceImpl();
+	private CourseListServiceIntf service = new CourseListServiceImpl();
        
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		CourseList cList = json2Pojo(request, CourseList.class);
 		
-		cList = SERVICE.findById(cList);
+		cList = service.findById(cList);
 		
 		writePojo2Json(response, cList);
 	}

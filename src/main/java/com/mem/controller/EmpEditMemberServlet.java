@@ -17,13 +17,13 @@ import com.mem.vo.Member;
 @WebServlet("/member/empEditMember")
 public class EmpEditMemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private MemServiceIntf SERVICE = new MemServiceImpl();
+	private MemServiceIntf service = new MemServiceImpl();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		Member member = json2Pojo(request, Member.class);
 		
-		member = SERVICE.empEdit(member);
+		member = service.empEdit(member);
         
         writePojo2Json(response, member);
 	}

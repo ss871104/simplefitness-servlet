@@ -19,13 +19,13 @@ import com.emp.vo.Employee;
 @WebServlet("/staff/login")
 public class EmployeeLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public EmployeeServiceIntf SERVICE = new EmployeeServiceImpl();
+	public EmployeeServiceIntf service = new EmployeeServiceImpl();
        
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
         Employee emp = json2Pojo(request, Employee.class);
         
-        emp = SERVICE.login(emp);
+        emp = service.login(emp);
         
 		if (emp.isSuccessful()) {
 			if (request.getSession(false) != null) {

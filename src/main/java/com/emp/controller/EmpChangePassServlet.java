@@ -17,13 +17,13 @@ import com.emp.vo.Employee;
 @WebServlet("/staff/changePass")
 public class EmpChangePassServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public EmployeeServiceIntf SERVICE = new EmployeeServiceImpl();
+	public EmployeeServiceIntf service = new EmployeeServiceImpl();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		Employee emp = json2Pojo(request, Employee.class);
 		
-		emp = SERVICE.passChange(emp);
+		emp = service.passChange(emp);
         
         writePojo2Json(response, emp);
 	}

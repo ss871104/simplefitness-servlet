@@ -18,11 +18,11 @@ import com.courselist.vo.CourseList;
 @WebServlet("/courseList/getAllCourse")
 public class GetAllCourseServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private CourseListServiceIntf SERVICE = new CourseListServiceImpl();
+	private CourseListServiceIntf service = new CourseListServiceImpl();
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		List<CourseList> cList = SERVICE.findAll();
+		List<CourseList> cList = service.findAll();
 		
 		writePojo2Json(response, cList);
 	}

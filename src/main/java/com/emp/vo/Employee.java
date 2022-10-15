@@ -11,7 +11,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.common.pojo.CommonHibernate;
-import com.emp.enums.JobEnum;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,9 +38,7 @@ public class Employee extends CommonHibernate{
 	private String username;
 	@Column(name = "pass", insertable = false)
 	private String password;
-	@Column(insertable = false)
 	private String phone;
-	@Column(insertable = false)
 	private String email;
 	private String job;
 	private String gender;
@@ -60,11 +57,5 @@ public class Employee extends CommonHibernate{
 	@Transient
 	private String newPassword;
 	
-//	public JobEnum getJob() {
-//		return job;
-//	}
-//	public void setJob(JobEnum number) {
-//		job = number;
-//	}
 
 }

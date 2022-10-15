@@ -18,11 +18,11 @@ import com.emp.vo.Employee;
 @WebServlet("/staff/getAllEmp")
 public class GetAllEmpServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	public EmployeeServiceIntf SERVICE = new EmployeeServiceImpl();
+	public EmployeeServiceIntf service = new EmployeeServiceImpl();
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		List<Employee> emp = SERVICE.findAll();
+		List<Employee> emp = service.findAll();
 		
 		writePojo2Json(response, emp);
 	}

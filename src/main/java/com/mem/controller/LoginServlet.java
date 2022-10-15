@@ -1,10 +1,9 @@
 package com.mem.controller;
 
-import static com.common.util.Constants.GSON;
+import static com.common.util.GsonUtil.json2Pojo;
+import static com.common.util.GsonUtil.writePojo2Json;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,15 +19,13 @@ import com.mem.vo.Member;
 @WebServlet("/member/login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private MemServiceIntf SERVICE = new MemServiceImpl();
+	private MemServiceIntf service = new MemServiceImpl();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-        BufferedReader br = request.getReader();
-        String json = br.readLine();
-        Member member = GSON.fromJson(json, Member.class);
+		Member member = json2Pojo(request, Member.class);
         
-        member = SERVICE.login(member);
+        member = service.login(member);
         
 		if (member.isSuccessful()) {
 			if (request.getSession(false) != null) {
@@ -38,8 +35,8 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("loggedin", true);
 			session.setAttribute("member", member);
 		}
-		PrintWriter pw = response.getWriter();
-        pw.print(GSON.toJson(member));
+		
+		writePojo2Json(response, member);
 	}
 
 }

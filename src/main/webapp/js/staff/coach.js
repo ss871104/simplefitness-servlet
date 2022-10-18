@@ -1,4 +1,5 @@
 const gym = document.querySelector("#gym");
+const selectedCoach = document.querySelector("#coach");
 const selectedDate = document.querySelector("#dateRange");
 const editGym = document.querySelector("#editGym");
 const editCoach = document.querySelector("#editCoach");
@@ -39,10 +40,8 @@ let CourseList = [];
     });
 
   // 拿教練名稱
-  fetch(
-    "http://localhost:8080/simplefitness-servlet/coachBooking/SearchCoachByJobServlet",
-    {
-      method: "POST",
+  fetch("http://localhost:8080/simplefitness-servlet/coachBooking/SearchCoachByJobServlet", {
+    method: "POST"
     }
   )
     .then((resp) => resp.json())
@@ -51,6 +50,7 @@ let CourseList = [];
         sessionStorage.setItem(`'emp${emp[i].empId}'`, `${emp[i].empName}`);
         let text = `
 				<option value="${emp[i].empId}">${emp[i].empName}</option>`;
+        $("#coach").append(text);
         $("#newCoach").append(text);
         $("#editCoach").append(text);
       }
@@ -90,6 +90,7 @@ let CourseList = [];
       body: JSON.stringify({
         gymId: gym.value,
         selectedDate: selectedDate.value,
+        empId: selectedCoach.value
       }),
     })
       .then((resp) => resp.json())
@@ -287,7 +288,6 @@ let CourseList = [];
                     errMsg.textContent = "";
                     const { successful, message } = body;
                     if (successful) {
-                      console.log(body.coaId);
                       document.querySelector(`#course${body.coaId}`).innerHTML = '';
                       CloseAlert('deleteCoach')                      
                       alert("刪除成功 ^_^!");

@@ -21,10 +21,9 @@ public class CoachDaoSQL {
 																+ " where c.public != 2 and e.gym_id = ? and c.start_time between ? and date_add(? ,interval 1 day) order by c.start_time;";
 	
 	public static final String SELECT_BY_GYMID_AND_STARTTIME_AND_EMPID = "select c.coa_id, e.gym_id, c.start_time, c.end_time, c.emp_id, c.status, c.public"
-																		+ "from coach c"
-																		+ "join emp e on e.emp_id = c.emp_id"
-																		+ "where c.public != 2 and e.gym_id = ? and emp_id = ? and c.start_time between ? and date_add(?, interval 1 day)"
-																		+ "order by c.start_time;";
+																		+ " from coach c"
+																		+ " join emp e on e.emp_id = c.emp_id"
+																		+ " where c.public != 2 and e.gym_id = ? and c.emp_id = ? and (c.start_time between ? and date_add(?, interval 1 day)) order by c.start_time;";
 	
 	public static final String UPDATE_PUBLIC_STATUS_BY_ID = "update coach set public = ? where coa_id = ?;";
 }

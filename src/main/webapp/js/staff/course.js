@@ -260,8 +260,7 @@ let CourseList = [];
                     courseData.courseId,
                   ];
                  
-                  fetch(
-                    "http://localhost:8080/simplefitness-servlet/course/editCourse",
+                  fetch("http://localhost:8080/simplefitness-servlet/course/editCourse",
                     {
                       method: "POST",
                       headers: { "Content-Type": "application/json" },
@@ -283,18 +282,18 @@ let CourseList = [];
                       if (successful) {
                         alert("編輯成功 ^_^!");
 
- 
-                        let gymName = sessionStorage.getItem(`'gym${CourseList[INDEX].gymId}'`);
+                        // let gymName = sessionStorage.getItem(`'gym${CourseList[INDEX].gymId}'`);
+                        let gymName = sessionStorage.getItem(`'gym${body.gymId}'`);
                         let courseName = sessionStorage.getItem(`'courseList${courseListId}'`);
-                        let empName = sessionStorage.getItem(`'emp${CourseList[INDEX].empId}'`);
-                        let statusData = statusList[CourseList[INDEX].status].value
-                        let public = publicStatusList[CourseList[INDEX].pubStatus].value;
+                        // let empName = sessionStorage.getItem(`'emp${CourseList[INDEX].empId}'`);
+                        let empName = sessionStorage.getItem(`'emp${body.empId}'`);
+                        let statusData = statusList[body.status].value;
+                        let public = publicStatusList[body.pubStatus].value;
                         let StartTime = moment(startTime).format("HH:mm");
                         let endTime = moment(startTime).add(1, "hours").format("HH:mm");
                 
                         id.innerHTML = EditTemplate(id,gymName,StartTime,endTime,courseName,empName,statusData,public)
-                        CloseAlert('editCourse')
-
+                        CloseAlert('editCourse');
                       } else {
                         errMsg.textContent = message;
                       }
@@ -395,7 +394,6 @@ let CourseList = [];
       .then((body) => {
         errMsg.textContent = "";
         const { successful, message } = body;
-        console.log(successful);
         if (successful) {
           alert("新增成功 ^_^!");
           history.go();

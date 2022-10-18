@@ -12,8 +12,9 @@ import com.coach.service.intf.CoachServiceIntf;
 import com.coach.vo.Coach;
 import com.course.dao.impl.CourseDaoImpl;
 import com.course.dao.intf.CourseDaoIntf;
-import com.course.service.intf.CourseServiceIntf;
 import com.course.vo.Course;
+
+import net.bytebuddy.utility.dispatcher.JavaDispatcher.IsConstructor;
 
 public class CoachServiceImpl implements CoachServiceIntf {
 
@@ -121,9 +122,10 @@ public class CoachServiceImpl implements CoachServiceIntf {
 	}
 
 	@Override
-	public List<Coach> selectCoachByGymIdAndStartTime(Coach coach) {
+	public List<Coach> selectCoach(Coach coach) {
 		final Integer gymId = coach.getGymId();
 		final LocalDate selectedDate = coach.getSelectedDate();
+		final Integer empId = coach.getEmpId();
 		
 		// 拿到所選日期當週第一天 & 最後一天
 		coach.setDayOne(selectedDate.with(DayOfWeek.MONDAY));
@@ -138,8 +140,13 @@ public class CoachServiceImpl implements CoachServiceIntf {
 				list.add(coach);
 				return list;
 			}
-			
-			list = _coachDao.selectCoachByGymIdAndStartTime(coach.getGymId(), coach.getDayOne(), coach.getDaySeven());
+			System.out.println(empId);
+			// 條件沒選教練跑沒教練的dao
+			if(empId == null || empId == 0) {
+				list = _coachDao.selectCoachByGymIdAndStartTime(coach.getGymId(), coach.getDayOne(), coach.getDaySeven());				
+			} else {
+				list = _coachDao.selectCoachByGymIdAndStartTimeAndEmpId(coach.getGymId(), coach.getDayOne(), coach.getDaySeven(), coach.getEmpId());
+			}
 			
 			return list;	
 			

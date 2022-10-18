@@ -338,7 +338,7 @@ public class CoachDaoImpl implements CoachDaoIntf {
 	}
 	
 	/*
-	 * * Function: 取得已安排團課
+	 * * Function: 取得已安排團課by場館+日期
 	 *   CreateBy: Natalie
 	 *   CreateDate: 2022/10/14
 	 */
@@ -378,6 +378,47 @@ public class CoachDaoImpl implements CoachDaoIntf {
 		return list;
 	}
 
+	/*
+	 * * Function: 取得已安排教練課by場館+日期+教練
+	 *   CreateBy: Natalie
+	 *   CreateDate: 2022/10/18
+	 */
+	public List<Coach> selectCoachByGymIdAndStartTimeAndEmpId(Integer gymId, LocalDate one, LocalDate seven, Integer empId) {
+		List<Coach> list = new ArrayList<Coach>();
+		Coach coach = null;
+
+		try (Connection con = ds.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(SELECT_BY_GYMID_AND_STARTTIME_AND_EMPID);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setInt(1, gymId);
+			pstmt.setInt(2, empId);
+			pstmt.setObject(3, one);
+			pstmt.setObject(4, seven);
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+
+				while (rs.next()) {
+					coach = new Coach();
+					coach.setCoaId(rs.getInt("coa_id"));
+					coach.setGymId(rs.getInt("gym_id"));
+					coach.setStartTime(rs.getObject("start_time", LocalDateTime.class));
+					coach.setEmpId(rs.getInt("emp_id"));
+					coach.setStatus(rs.getString("status"));
+					coach.setPubStatus(rs.getString("public"));
+					coach.setSuccessful(true);
+
+					list.add(coach);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return list;
+	}
+	
 	/* *
 	 *  Function: 變更團課公開狀態
 	 *  CreateBy: Natalie
@@ -400,4 +441,6 @@ public class CoachDaoImpl implements CoachDaoIntf {
 		}
 		return flag;
 	}
+
+
 }

@@ -48,12 +48,19 @@ public interface CoachDaoIntf extends CommonDao<Coach, Integer> {
 	public List<Coach> selectCoachByEmpIdAndStartTime(Integer empId, LocalDateTime startTime);
 	
 	/*
-	 * * Function: 取得已安排教練課
+	 * * Function: 取得已安排教練課by場館+日期
 	 *   CreateBy: Natalie
 	 *   CreateDate: 2022/10/14
 	 */
 	public List<Coach> selectCoachByGymIdAndStartTime(Integer gymId, LocalDate one, LocalDate seven);
 
+	/*
+	 * * Function: 取得已安排教練課by場館+日期+教練
+	 *   CreateBy: Natalie
+	 *   CreateDate: 2022/10/18
+	 */
+	public List<Coach> selectCoachByGymIdAndStartTimeAndEmpId(Integer gymId, LocalDate one, LocalDate seven, Integer empId);
+	
 	/* *
 	 *  Function: 變更團課公開狀態
 	 *  CreateBy: Natalie

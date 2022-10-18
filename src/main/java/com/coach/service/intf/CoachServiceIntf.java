@@ -12,7 +12,7 @@ public interface CoachServiceIntf {
 	
 	List<Coach> findAll();
 	
-	List<Coach> selectCoachByGymIdAndStartTime(Coach coach);
+	List<Coach> selectCoach(Coach coach);
 	
 	Coach findById(Coach coach);
 	

@@ -1,5 +1,6 @@
 package com.coach.vo;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.common.pojo.Common;
@@ -18,6 +19,9 @@ public class Coach extends Common {
 	private String gymName;
 	private String empName;
 	private Integer memId;
+	private LocalDate selectedDate;
+	private LocalDate dayOne;
+	private LocalDate daySeven;
 	
 	
 	public Integer getCoaId() {
@@ -85,6 +89,24 @@ public class Coach extends Common {
 	}
 	public void setMemId(Integer memId) {
 		this.memId = memId;
+	}
+	public LocalDate getSelectedDate() {
+		return selectedDate;
+	}
+	public void setSelectedDate(LocalDate selectedDate) {
+		this.selectedDate = selectedDate;
+	}
+	public LocalDate getDayOne() {
+		return dayOne;
+	}
+	public void setDayOne(LocalDate dayOne) {
+		this.dayOne = dayOne;
+	}
+	public LocalDate getDaySeven() {
+		return daySeven;
+	}
+	public void setDaySeven(LocalDate daySeven) {
+		this.daySeven = daySeven;
 	}
 
 	

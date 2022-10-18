@@ -8,12 +8,13 @@ public class OrderDaoSQL {
 	public static final String SELECT_BY_ID = 
 			"select order_id, mem_id, gym_id, amount, order_date, status from orders where order_id = ?";
 	public static final String SELECT_BY_MEM = 
-			"SELECT o.*, g.gym_name FROM orders o join gym g on o.gym_id = g.gym_id where mem_id=? order by order_id desc";
+			"SELECT o.*, g.gym_name FROM orders o join gym g on o.gym_id = g.gym_id where mem_id=? order by order_id desc limit ?, ?";
 	public static final String SELECT_BY_GYM = 
 			"select order_id, mem_id, gym_id, amount, order_date, status from orders where gym_id = ?";
 	public static final String UPDATE_STATUS = 
 			"update orders set status=? where order_id = ?";
-
+	public static final String SELECT_COUNT_BY_MEM =
+			"SELECT count(*) as count FROM orders where mem_id=?";
 	
 	public static final String DELETE =
 			"delete from orders where order_id = ?";

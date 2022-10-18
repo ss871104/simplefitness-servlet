@@ -156,7 +156,7 @@ public class OrderDaoImpl implements OrderDaoIntf {
 	}
 
 	@Override
-	public List<Order> SelectByMem(Integer memId) {
+	public List<Order> selectByMem(Integer memId, Integer pageNo, Integer pageSize) {
 		List<Order> list = new ArrayList<Order>();
 		Order order = null;
 
@@ -165,6 +165,8 @@ public class OrderDaoImpl implements OrderDaoIntf {
 			System.out.println("連線成功");
 
 			pstmt.setInt(1, memId);
+			pstmt.setInt(2, (pageNo-1)*pageSize);
+			pstmt.setInt(3, pageSize);
 
 			try (ResultSet rs = pstmt.executeQuery()) {
 
@@ -239,6 +241,28 @@ public class OrderDaoImpl implements OrderDaoIntf {
 	@Override
 	public boolean insert(Order vo) {
 		return false;
+	}
+
+	@Override
+	public Long findCountByMem(Integer memId) {
+		Long count = null;
+
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SELECT_COUNT_BY_MEM);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setInt(1, memId);
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+
+				if (rs.next()) {
+					count =rs.getLong("count");
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return count;
 	}
 
 }

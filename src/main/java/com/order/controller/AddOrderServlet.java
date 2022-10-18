@@ -38,7 +38,7 @@ public class AddOrderServlet extends HttpServlet {
 		order.setMemName(memName);
 		order.setMemEmail(memEmail);
 		
-		order = SERVICE.addOrder(order,order.getOrderList().get(0).getProdId());
+		order = SERVICE.addOrder(order);
 		
 		order.setMemName(memName);
 	

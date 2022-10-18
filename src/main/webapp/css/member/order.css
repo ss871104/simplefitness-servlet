@@ -5,7 +5,7 @@
 }
 .container{
     width: 90% !important;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.7);
     padding: 30px 50px 50px 50px;
     color: rgba(0, 0, 0, 0.719);
 }
@@ -21,4 +21,16 @@
 }
 .title1{
     background-color:rgba(225, 216, 122, 0.445)
+}
+.nav{
+    position: relative;
+}
+.pagination{
+    position:absolute;
+    right:10%;
+    margin: 0 !important;
+}
+.page-item.active .page-link {
+    background-color: rgba(89, 171, 172, 0.868);
+    border-color: rgba(89, 171, 172, 0.868);
 }

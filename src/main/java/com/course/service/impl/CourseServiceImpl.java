@@ -162,6 +162,23 @@ public class CourseServiceImpl implements CourseServiceIntf {
 		return _courseDao.selectById(course.getCourseId());
 	}
 
+	@Override
+	public Course deteleCourse(Course course) {
+
+		// 更新公開狀態 = 2:下架
+		try {
+			course.setCourseId(course.getCourseId());
+			course.setPubStatus("2");
+			_courseDao.updateCoursePublicStatus(course);
+			course.setSuccessful(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		return course;
+		
+	}
+
 	
 	
 

@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/boostrap/bootstrap.min.css">
-    <link rel="stylesheet" href="../../css/staff/course.css">
+    <link rel="stylesheet" href="../../css/staff/coach.css">
     <script src="../../js/jquery-3.6.0.min.js"></script>
     <script src="../../js/bootstrap.min.js"></script>
     <script src="../../js/moment.min.js"></script>
@@ -142,17 +142,21 @@
         </ul>
     </div>
 
-    <div class="course">
+    <div class="coach">
         <div class="contentTitle">
-            <p><i class="fa-solid fa-list-check"> 團課管理</i></p>
+            <p><i class="fa-solid fa-list-check"> 教練課管理</i></p>
             <select class="select" id="gym" name="gym">
                 <option value="0" selected>選擇場館</option>
                 <!-- getAllGym 拿場館 -->
             </select>
             <input type="date" class="select" id="dateRange">
+            <select class="select" id="coach" name="coach">
+                <option value="0" selected>選擇教練</option>
+                <!-- getAllCoach 拿教練 -->
+            </select>
             <div class="titleBtn">
-                <button type="submit" id="queryCourse" class="btn_submit">查詢課程</button>
-                <button type="button" id="newCourse" class="btn_submit" data-toggle="modal" data-target="#addCourse">新增團課</button>
+                <button type="submit" id="queryCoach" class="btn_submit">查詢課程</button>
+                <button type="button" id="addNewCoach" class="btn_submit" data-toggle="modal" data-target="#addCoach">新增教練課</button>
             </div>
         </div>
 
@@ -161,12 +165,12 @@
         </div>
     </div>
 
-    <!-- 新增團課Modal -->
-    <div class="modal fade" id="addCourse" tabindex="-1" role="dialog" aria-labelledby="addCourseTitle" aria-hidden="true">
+    <!-- 新增教練課Modal -->
+    <div class="modal fade" id="addCoach" tabindex="-1" role="dialog" aria-labelledby="addCoachTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="addCourseTitle">新增團課</h5>
+                    <h5 class="modal-title" id="addCoachTitle">新增團課</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -182,9 +186,6 @@
                         </select><br>
                         <input type="date" class="addselect" id="newCourseDate" name="newCourseDate">
                         <input type="time" class="addselect" id="newStartTime" name="newStartTime" value="06:00"><br>
-                        <select class="addselect" id="newCourseName" name="newCourseName">
-                            <option value="0" selected>課程名稱</option>
-                        </select>
                         <select class="addselect" id="newStatus" name="newStatus">
                             <option value="" selected>預約狀態</option>
                         </select>
@@ -201,12 +202,12 @@
         </div>
     </div>
 
-    <!-- 編輯團課Modal -->
-    <div class="modal fade" id="editCourse" tabindex="-1" role="dialog" aria-labelledby="editCourseTitle" aria-hidden="true">
+    <!-- 編輯教練課Modal -->
+    <div class="modal fade" id="editCoachData" tabindex="-1" role="dialog" aria-labelledby="editCoachTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editCourseTitle">編輯團課</h5>
+                    <h5 class="modal-title" id="editCoachTitle">編輯團課</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -222,9 +223,6 @@
                     </select><br>
                     <input type="date" class="addselect" id="editCourseDate" name="editCourseDate">
                     <input type="time" class="addselect" id="editStartTime" name="editStartTime" value="06:00"><br>
-                    <select class="addselect" id="editCourseName" name="editCourseName">
-                        <option value="0" >課程名稱</option>
-                    </select>
                     <select class="addselect" id="editStatus" name="editStatus">
                         <option value="" >預約狀態</option>
                     </select>
@@ -242,17 +240,17 @@
     </div>
 
     <!-- 刪除團課Modal -->
-    <div class="modal fade" id="deleteCourse" tabindex="-1" role="dialog" aria-labelledby="deleteCourseTitle" aria-hidden="true">
+    <div class="modal fade" id="deleteCoach" tabindex="-1" role="dialog" aria-labelledby="deleteCoachTitle" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteCourseTitle">刪除團課</h5>
+                    <h5 class="modal-title" id="deleteCoachTitle">刪除團課</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    你確定真的要刪除此團課嗎？
+                    你確定真的要刪除此教練課嗎？
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" id="cancel" data-dismiss="modal">等等！先不要刪！</button>
@@ -275,7 +273,7 @@
         integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
         crossorigin="anonymous"></script>
 
-    <script src="../../js/staff/course.js"></script>
+    <script src="../../js/staff/coach.js"></script>
 </body>
 
 </html>

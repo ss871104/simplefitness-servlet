@@ -1,7 +1,8 @@
 package com.mem.controller;
 
+import static com.common.util.GsonUtil.writePojo2Json;
+
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import static com.common.util.Constants.GSON;
 import com.mem.vo.Member;
 
 @WebServlet("/member/session")
@@ -22,8 +22,7 @@ public class SessionServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		Member member =  (Member) session.getAttribute("member");
 		
-		PrintWriter pw = response.getWriter();
-        pw.print(GSON.toJson(member));
+		writePojo2Json(response, member);
 	}
 
 }

@@ -18,11 +18,11 @@ import com.mem.vo.Member;
 @WebServlet("/member/getAll")
 public class GetAllMemberServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private MemServiceIntf SERVICE = new MemServiceImpl();
+	private MemServiceIntf service = new MemServiceImpl();
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		List<Member> member = SERVICE.findAll();
+		List<Member> member = service.findAll();
 		
 		writePojo2Json(response, member);
 	}

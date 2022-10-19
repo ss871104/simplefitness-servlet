@@ -18,11 +18,11 @@ import com.gym.vo.Gym;
 @WebServlet("/gym/getAllGym")
 public class GetAllGymServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private GymServiceIntf SERVICE = new GymServiceImpl();
+	private GymServiceIntf service = new GymServiceImpl();
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		List<Gym> gym = SERVICE.findAll();
+		List<Gym> gym = service.findAll();
 		
 		writePojo2Json(response, gym);
 	}

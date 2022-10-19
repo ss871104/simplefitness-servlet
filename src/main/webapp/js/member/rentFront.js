@@ -1,8 +1,8 @@
 const gymName = document.querySelector("#gymName");
 
 $("#gymName").change(function() {
+	
 	$(".item_list").html("");
-	console.log(gymName.value);
 	fetch("http://localhost:8080/simplefitness-servlet/product/selectByGym", {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
@@ -12,7 +12,7 @@ $("#gymName").change(function() {
 	})
 		.then(resp => resp.json())
 		.then(products => {
-			if(products == ""){
+			if(products == "" && gymName.value != 0){
 				alert("此場館無商品可借用，請選擇其他場館")
 			}
 

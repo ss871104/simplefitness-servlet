@@ -62,7 +62,6 @@ window.addEventListener("popstate", function() {
 });
 
 // 卡號欄位
-
 $(".cardNo").focus(function() {
 	$(".cardNo").keyup(function(e) {
 		if (e.which >= 48 && e.which <= 57 || e.which == 8) {
@@ -222,12 +221,14 @@ function displayCart() {
                     <div class="count">
                         <i class="bi bi-dash-square" id="minus"></i>
                         <span id="count"> ${item.inCart} </span>
-                        <i class="bi bi-plus-square" id="plus"></i>    
+                        <i class="bi bi-plus-square" id="plus"></i>
                     </div> 
                     <div class="amount">$${item.inCart * item.price}</div>
                     <div class="operate">
                         <button>刪除</button>
+                        <span class="msg"> </span>
                     </div>
+                     
                 </div>
                 `
 			totalCount += parseInt(item.inCart);
@@ -276,6 +277,7 @@ function deleteButtons() {
 function manageQuantity() {
 	let minusButtons = document.querySelectorAll("#minus");
 	let plusButtons = document.querySelectorAll("#plus");
+	let msgs = document.querySelectorAll(".msg");
 	let cartItems = sessionStorage.getItem("productsInCart");
 	//	let currentQuantity = 0;
 	let currentProduct = "";
@@ -305,6 +307,8 @@ function manageQuantity() {
 				cartNumbers(cartItems[currentProduct]);
 				sessionStorage.setItem("productsInCart", JSON.stringify(cartItems));
 				displayCart();
+			}else{
+				msgs[i].innerText="數量上限"
 			}
 		})
 	}

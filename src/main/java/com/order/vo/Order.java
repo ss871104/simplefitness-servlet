@@ -25,5 +25,7 @@ public class Order extends Common {
 	private String memName;
 	private String memEmail;
 	private List<CountVO> orderList;
+	private Long count;
+	private PageVo<?> page;
 	
 }

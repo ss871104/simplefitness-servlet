@@ -147,6 +147,12 @@ div.tab1 > ul{
     opacity: 0.5;
 }
 
+.msg{
+	color: red;
+	font-size:xx-small;
+	position: relative;
+}
+
 /* -------------------Step 2-------------------- */
 .tab2Area{
     margin: 1em;

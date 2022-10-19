@@ -18,7 +18,7 @@ public class CourseDaoSQL {
 																+ "	where public != 2 and gym_id = ? and start_time between ? and date_add(?,interval 1 day)"
 																+ "	order by start_time;";
 
-	public static final String SELECT_COURSE_BY_EMPID_AND_STARTTIME = "select emp_id, start_time, end_time from course where emp_id = ? and ? >= start_time and ? < end_time;";
+	public static final String SELECT_COURSE_BY_EMPID_AND_STARTTIME = "select emp_id, start_time, end_time from course where public != 2 and emp_id = ? and ? >= start_time and ? < end_time;";
 	
 	public static final String UPDATE_PUBLIC_STATUS_BY_ID = "update course set public = ? where cour_id = ?;";
 	

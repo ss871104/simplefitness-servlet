@@ -189,6 +189,7 @@ let CourseList = [];
             // 點擊編輯
             let courseData = course[i];
             INDEX = i;
+            const errMsg = document.querySelector("#editErrMsg");
             document.querySelector(`#edit${courseData.courseId}`).onclick = () => {
 
                 let id = document.querySelector(`#course${courseData.courseId}`)
@@ -282,10 +283,8 @@ let CourseList = [];
                       if (successful) {
                         alert("編輯成功 ^_^!");
 
-                        // let gymName = sessionStorage.getItem(`'gym${CourseList[INDEX].gymId}'`);
                         let gymName = sessionStorage.getItem(`'gym${body.gymId}'`);
                         let courseName = sessionStorage.getItem(`'courseList${courseListId}'`);
-                        // let empName = sessionStorage.getItem(`'emp${CourseList[INDEX].empId}'`);
                         let empName = sessionStorage.getItem(`'emp${body.empId}'`);
                         let statusData = statusList[body.status].value;
                         let public = publicStatusList[body.pubStatus].value;
@@ -294,6 +293,7 @@ let CourseList = [];
                 
                         id.innerHTML = EditTemplate(id,gymName,StartTime,endTime,courseName,empName,statusData,public)
                         CloseAlert('editCourse');
+                        errMsg.textContent = "";
                       } else {
                         errMsg.textContent = message;
                       }

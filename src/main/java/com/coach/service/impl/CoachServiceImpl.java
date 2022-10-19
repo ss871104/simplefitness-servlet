@@ -14,8 +14,6 @@ import com.course.dao.impl.CourseDaoImpl;
 import com.course.dao.intf.CourseDaoIntf;
 import com.course.vo.Course;
 
-import net.bytebuddy.utility.dispatcher.JavaDispatcher.IsConstructor;
-
 public class CoachServiceImpl implements CoachServiceIntf {
 
 	private CourseDaoIntf _courseDao;
@@ -84,6 +82,11 @@ public class CoachServiceImpl implements CoachServiceIntf {
 					return coach;
 				} 
 				
+				if (!listCourse.isEmpty() || !listCoach.isEmpty()) {
+					coach.setMessage("教練不會影分身啦!這個時間有課了!");
+					coach.setSuccessful(false);
+					return coach;
+				} 
 				// 新增選擇項目
 				_coachDao.insert(coach);
 				coach.setSuccessful(true);
@@ -105,6 +108,25 @@ public class CoachServiceImpl implements CoachServiceIntf {
 				return coach;
 			}
 			coach.setEndTime(coach.getStartTime().plusMinutes(60));
+			
+			Coach coachData = _coachDao.selectById(coach.getCoaId());
+			// 若教練或時間有更改，檢查課程是否已存在
+			if(coachData.getEmpId() != coach.getEmpId() || !coachData.getStartTime().equals(coach.getStartTime())) {
+				// 確認sql拿到的資料是否有值
+				List<Course> listCourse = new ArrayList<Course>();
+				listCourse = _courseDao.selectCourseByEmpIdAndStartTime(coach.getEmpId(), coach.getStartTime());
+				List<Coach> listCoach = new ArrayList<Coach>();
+				listCoach = _coachDao.selectCoachByEmpIdAndStartTime(coach.getEmpId(), coach.getStartTime());
+				
+				// 有值 = 已有課，不可edit
+				if (!listCourse.isEmpty() || !listCoach.isEmpty()) {
+					coach.setMessage("教練不會影分身啦!這個時間有課了!");
+					coach.setSuccessful(false);
+					return coach;
+				} 
+			}
+			
+			// 更新選擇項目
 			_coachDao.update(coach);
 			coach.setMessage("編輯成功");
 			coach.setSuccessful(true);
@@ -141,6 +163,7 @@ public class CoachServiceImpl implements CoachServiceIntf {
 				return list;
 			}
 			System.out.println(empId);
+			
 			// 條件沒選教練跑沒教練的dao
 			if(empId == null || empId == 0) {
 				list = _coachDao.selectCoachByGymIdAndStartTime(coach.getGymId(), coach.getDayOne(), coach.getDaySeven());				

@@ -13,7 +13,7 @@ public class CoachDaoSQL {
 	
 	public static final String SELECT_ALL = "select * from coach order by coa_id;";
 
-	public static final String SELECT_COACH_BY_EMPID_AND_STARTTIME = "select emp_id, start_time from coach where emp_id = ? and ? >= start_time and ? < end_time;";
+	public static final String SELECT_COACH_BY_EMPID_AND_STARTTIME = "select emp_id, start_time from coach where public != 2 and emp_id = ? and ? >= start_time and ? < end_time;";
 	
 	public static final String SELECT_BY_GYMID_AND_STARTTIME = "select c.coa_id, e.gym_id, c.start_time, c.emp_id, c.status, c.public"
 																+ " from coach c"

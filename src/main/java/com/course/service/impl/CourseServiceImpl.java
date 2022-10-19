@@ -136,12 +136,27 @@ public class CourseServiceImpl implements CourseServiceIntf {
 				course.setSuccessful(false);
 				return course;
 			}
-//			if (_courseDao.update(course) == false) {
-//				course.setMessage("新增發生錯誤!");
-//				course.setSuccessful(false);
-//				return course;
-//			}
+			
 			course.setEndTime(course.getStartTime().plusMinutes(60));
+			
+			Course courseData = _courseDao.selectById(course.getCourseId());
+			// 若教練或時間有更改，檢查課程是否已存在
+			if(courseData.getEmpId() != course.getEmpId() || !courseData.getStartTime().equals(course.getStartTime())) {
+				// 確認sql拿到的資料是否有值
+				List<Course> listCourse = new ArrayList<Course>();
+				listCourse = _courseDao.selectCourseByEmpIdAndStartTime(course.getEmpId(), course.getStartTime());
+				List<Coach> listCoach = new ArrayList<Coach>();
+				listCoach = _coachDao.selectCoachByEmpIdAndStartTime(course.getEmpId(), course.getStartTime());
+				
+				// 有值 = 已有課，不可insert
+				if (!listCourse.isEmpty() || !listCoach.isEmpty()) {
+					course.setMessage("教練不會影分身啦!這個時間有課了!");
+					course.setSuccessful(false);
+					return course;
+				}
+			}
+			 
+			// 更新選擇項目
 			_courseDao.update(course);
 			course.setMessage("編輯成功");
 			course.setSuccessful(true);

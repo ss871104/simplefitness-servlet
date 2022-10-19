@@ -167,10 +167,10 @@ let CourseList = [];
             // 點擊編輯
             let coachData = coach[i];
             INDEX = i;
+            const errMsg = document.querySelector("#editErrMsg");
             document.querySelector(`#edit${coach[i].coaId}`).onclick = () => {
 
                 let id = document.querySelector(`#course${coachData.coaId}`)
-
                 let date = moment(coachData.startTime).format("YYYY-MM-DD");
                 let startTime = moment(coachData.startTime).format("HH:mm");
 
@@ -252,11 +252,10 @@ let CourseList = [];
                       if (successful) {
                         alert("編輯成功 ^_^!");
 
- 
-                        let gymName = sessionStorage.getItem(`'gym${CoachList[INDEX].gymId}'`);
-                        let empName = sessionStorage.getItem(`'emp${CoachList[INDEX].empId}'`);
-                        let statusData = statusList[CoachList[INDEX].status].value
-                        let public = publicStatusList[CoachList[INDEX].pubStatus].value;
+                        let gymName = sessionStorage.getItem(`'gym${body.gymId}'`);
+                        let empName = sessionStorage.getItem(`'emp${body.empId}'`);
+                        let statusData = statusList[body.status].value
+                        let public = publicStatusList[body.pubStatus].value;
                         let StartTime = moment(startTime).format("HH:mm");
                         let endTime = moment(startTime).add(1, "hours").format("HH:mm");
                 

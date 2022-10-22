@@ -154,11 +154,11 @@ body {
 	display: inline-block;
 }
 
-.nav ul {
+.nav u.nav ul {
 	display: none;
 	left: 100%;
 	top: 6px;
-	background-color: rgb(130 59 11/ 20%);
+	background-color: rgba(41, 8, 111, 0.2);
 	box-shadow: 5px 5px 10px hsla(240, 40%, 15%, .6);
 }
 
@@ -167,11 +167,11 @@ body {
 }
 
 .nav li:hover {
-	background-color: rgb(130 59 11/ 20%);
+	background-color: rgb(41, 8, 111, 0.2);
 }
 
 .nav>li>a:hover {
-	background-color: rgba(4, 255, 226, 0.2) !important;
+	background-color: rgba(4, 104, 255, 0.2) !important;
 }
 
 /* 會員編輯 */

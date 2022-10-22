@@ -180,7 +180,7 @@ $(function () {
         //取得登入員工資料
         function getEmpId() {
             $.ajax({
-                url: "http://34.81.70.196:8080/simplefitness-servlet/staff/session",
+                url: "/simplefitness-servlet/staff/session",
                 type: "GET",
                 dataType: "json",
                 success: function (data) {
@@ -212,7 +212,7 @@ $(function () {
         function getEmpCourseList() {
             console.log("EMP:" + emp_id)
             $.ajax({
-                url: "http://34.81.70.196:8080/simplefitness-servlet/courseBooking/CheckCourseByEmpIdServlet",
+                url: "/simplefitness-servlet/courseBooking/CheckCourseByEmpIdServlet",
                 type: "POST",
                 data: JSON.stringify({
                     empId: emp_id
@@ -231,7 +231,7 @@ $(function () {
         //取得該教練的預約清單
         function getEmpCoachList() {
             $.ajax({
-                url: "http://34.81.70.196:8080/simplefitness-servlet/coachBooking/CheckCoachBookingByEmpIdServlet",
+                url: "/simplefitness-servlet/coachBooking/CheckCoachBookingByEmpIdServlet",
                 type: "POST",
                 data: JSON.stringify({
                     empId: emp_id
@@ -254,7 +254,7 @@ $(function () {
             console.log(item)
             if (moment(item.coachClass.startTime).isAfter(moment().format('YYYY/MM/DD HH:mm:ss'))) {
                 $.ajax({
-                    url: "http://34.81.70.196:8080/simplefitness-servlet/coachBooking/AcceptCoachServlet",
+                    url: "/simplefitness-servlet/coachBooking/AcceptCoachServlet",
                     type: "POST",
                     data: JSON.stringify({
                         coachbookId: item.coachbookId,
@@ -296,7 +296,7 @@ $(function () {
             console.log(item)
             if (moment(item.coachClass.startTime).isAfter(moment().format('YYYY/MM/DD HH:mm:ss'))) {
                 $.ajax({
-                    url: "http://34.81.70.196:8080/simplefitness-servlet/coachBooking/CancelCoachClassFromCoachServlet",
+                    url: "/simplefitness-servlet/coachBooking/CancelCoachClassFromCoachServlet",
                     type: "POST",
                     data: JSON.stringify({
                         coachbookId: item.coachbookId,

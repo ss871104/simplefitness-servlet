@@ -55,7 +55,9 @@
 				document.querySelector('#name-input').textContent = member.memName;
 				document.querySelector('#username-input').textContent = member.memUsername;
 				document.getElementById("email-input").value = member.memEmail;
-				document.getElementById("phone-input").value = member.memPhone;
+				if (member.memPhone != null) {
+					document.getElementById("phone-input").value = member.memPhone;
+				}
 				document.getElementById('start-input').value = member.memStart;
 				document.getElementById('expire-input').value = member.memExpire;
 				if (member.memStatus == "0") {

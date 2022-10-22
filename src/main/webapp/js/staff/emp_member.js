@@ -10,6 +10,9 @@
 			} else if (member[i].memStatus == "1") {
 				status = "有會籍"
 			}
+			if (member[i].memNickname == null) {
+				member[i].memNickname = "";
+			}
 		  let text = `
 		  	<tr>
 				<td>${member[i].memId}</td>

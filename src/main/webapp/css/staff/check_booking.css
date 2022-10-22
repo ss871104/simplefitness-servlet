@@ -155,7 +155,7 @@ body {
 	display: none;
 	left: 100%;
 	top: 6px;
-	background-color: rgb(130 59 11 / 20%);
+	background-color: rgba(41, 8, 111, 0.2);
 	box-shadow: 5px 5px 10px hsla(240, 40%, 15%, .6);
 }
 
@@ -164,7 +164,7 @@ body {
 }
 
 .nav li:hover {
-	background-color: rgb(130 59 11 / 20%);
+	background-color: rgb(41, 8, 111, 0.2);
 }
 
 .nav>li>a:hover {

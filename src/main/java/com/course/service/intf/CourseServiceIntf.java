@@ -3,19 +3,22 @@ package com.course.service.intf;
 import java.util.List;
 
 import com.course.vo.Course;
+import com.coursebooking.vo.CourseBooking;
 
 public interface CourseServiceIntf {
 	
-	Course addCourse(Course course);
+	public Course addCourse(Course course);
 	
-	Course editCourse(Course course);
+	public Course editCourse(Course course);
 	
-	List<Course> findAll();
+	public List<Course> findAll();
 	
-	List<Course> selectCourseByGymIdAndStartTime(Course course);
+	public List<Course> selectCourseByGymIdAndStartTime(Course course);
 	
-	Course findById(Course course);
+	public Course findById(Course course);
 	
-	Course deteleCourse(Course course);
+	public Course deteleCourse(Course course);
+	
+	public List<Course> selectBookedMemberByCourseId(Course course);
 	
 }

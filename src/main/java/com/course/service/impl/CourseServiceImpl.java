@@ -13,6 +13,7 @@ import com.course.dao.impl.CourseDaoImpl;
 import com.course.dao.intf.CourseDaoIntf;
 import com.course.service.intf.CourseServiceIntf;
 import com.course.vo.Course;
+import com.coursebooking.vo.CourseBooking;
 
 public class CourseServiceImpl implements CourseServiceIntf {
 
@@ -148,7 +149,7 @@ public class CourseServiceImpl implements CourseServiceIntf {
 				List<Coach> listCoach = new ArrayList<Coach>();
 				listCoach = _coachDao.selectCoachByEmpIdAndStartTime(course.getEmpId(), course.getStartTime());
 				
-				// 有值 = 已有課，不可insert
+				// 有值 = 已有課，不可edit
 				if (!listCourse.isEmpty() || !listCoach.isEmpty()) {
 					course.setMessage("教練不會影分身啦!這個時間有課了!");
 					course.setSuccessful(false);
@@ -195,8 +196,22 @@ public class CourseServiceImpl implements CourseServiceIntf {
 	}
 
 	
-	
-
+	@Override
+	public List<Course> selectBookedMemberByCourseId(Course course) {
+		List<Course> list = new ArrayList<Course>();
+		
+		try {
+			
+			list = _courseDao.selectBookedMemberByCourseId(course.getCourseId());
+			
+			return list;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+				
+	}
 	
 	
 }

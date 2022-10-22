@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.common.dao.CommonDao;
 import com.course.vo.Course;
+import com.coursebooking.vo.CourseBooking;
 
 
 public interface CourseDaoIntf extends CommonDao<Course, Integer> {
@@ -79,4 +80,12 @@ public interface CourseDaoIntf extends CommonDao<Course, Integer> {
 	 *  CreateDate: 2022/10/12
 	 * */
 	public boolean updateCoursePublicStatus(Course course);
+
+	/* *
+	 *  Function: 取得團課已預約會員清單
+	 *  CreateBy: Natalie
+	 *  CreateDate: 2022/10/21
+	 * */
+	public List<Course> selectBookedMemberByCourseId(Integer courseId);
+
 }

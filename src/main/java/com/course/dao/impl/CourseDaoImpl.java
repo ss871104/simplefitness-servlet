@@ -19,6 +19,7 @@ import javax.sql.DataSource;
 
 import com.course.dao.intf.CourseDaoIntf;
 import com.course.vo.Course;
+import com.coursebooking.vo.CourseBooking;
 
 public class CourseDaoImpl implements CourseDaoIntf {
 
@@ -508,5 +509,44 @@ public class CourseDaoImpl implements CourseDaoIntf {
 		}
 		return flag;
 	}
+
 	
+	/*
+	 * * Function: 取得團課已預約會員清單 CreateBy: Natalie CreateDate: 2022/10/21
+	 */
+	public List<Course> selectBookedMemberByCourseId(Integer courseId) {
+		List<Course> list = new ArrayList<Course>();
+		Course course = null;
+		
+		try (Connection con = ds.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(SELECT_BOOKED_MEMBER_BY_ID);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setInt(1, courseId);
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+				
+				while (rs.next()) {
+					course = new Course();
+					course.setCourseId(rs.getInt("cour_id"));
+					course.setEmpId(rs.getInt("emp_id"));
+					course.setGymId(rs.getInt("gym_id"));
+					course.setCourseName(rs.getString("cour_name"));
+					course.setStartTime(rs.getObject("start_time", LocalDateTime.class));
+					course.setEndTime(rs.getObject("end_time", LocalDateTime.class));
+					course.setMemName(rs.getString("mem_name"));
+					course.setMemGender(rs.getString("gender"));
+					course.setMemPhone(rs.getString("phone"));
+					course.setCoursebookTime(rs.getObject("booking_time",LocalDateTime.class));
+					course.setSuccessful(true);
+					list.add(course);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return list;
+	}
 }

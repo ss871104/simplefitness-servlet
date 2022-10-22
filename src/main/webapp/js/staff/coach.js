@@ -170,103 +170,101 @@ let CourseList = [];
             const errMsg = document.querySelector("#editErrMsg");
             document.querySelector(`#edit${coach[i].coaId}`).onclick = () => {
 
-                let id = document.querySelector(`#course${coachData.coaId}`)
-                let date = moment(coachData.startTime).format("YYYY-MM-DD");
-                let startTime = moment(coachData.startTime).format("HH:mm");
+              let id = document.querySelector(`#course${coachData.coaId}`);
+              let date = moment(coachData.startTime).format("YYYY-MM-DD");
+              let startTime = moment(coachData.startTime).format("HH:mm");
 
-                editStartTime.value = startTime;
-                editCourseDate.value = date;
-                editGym.value = coachData.gymId;
-                editCoach.value = coachData.empId;
-                editStatus.value = coachData.status;
-                editPubStatus.value = coachData.pubStatus;
+              editStartTime.value = startTime;
+              editCourseDate.value = date;
+              editGym.value = coachData.gymId;
+              editCoach.value = coachData.empId;
+              editStatus.value = coachData.status;
+              editPubStatus.value = coachData.pubStatus;
 
-                
-                
-                // 點擊儲存
-                document.querySelector("#editSave").onclick = () => {
-          
-                  // 檢查未填錯誤訊息
-                  if (editGym.value == 0) {
-                    alert("請選擇場館");
-                    return;
-                  }
-                  if (editCoach.value == 0) {
-                    alert("請選擇教練");
-                    return;
-                  }
-                  if (editCourseDate.value == 0) {
-                    alert("請選擇日期");
-                    return;
-                  }
-                  if (editStatus.value == '') {
-                    alert("請選擇預約狀態");
-                    return;
-                  }
-                  if (editPubStatus.value == '') {
-                    alert("請選擇公開狀態");
-                    return;
-                  }
+              // 點擊儲存
+              document.querySelector("#editSave").onclick = () => {
+        
+                // 檢查未填錯誤訊息
+                if (editGym.value == 0) {
+                  alert("請選擇場館");
+                  return;
+                }
+                if (editCoach.value == 0) {
+                  alert("請選擇教練");
+                  return;
+                }
+                if (editCourseDate.value == 0) {
+                  alert("請選擇日期");
+                  return;
+                }
+                if (editStatus.value == '') {
+                  alert("請選擇預約狀態");
+                  return;
+                }
+                if (editPubStatus.value == '') {
+                  alert("請選擇公開狀態");
+                  return;
+                }
 
-                  coachData.startTime = editCourseDate.value + "T" + editStartTime.value;
-                  coachData.gymId = editGym.value;
-                  coachData.empId = editCoach.value;
-                  coachData.status = editStatus.value;
-                  coachData.pubStatus = editPubStatus.value;
+                coachData.startTime = editCourseDate.value + "T" + editStartTime.value;
+                coachData.gymId = editGym.value;
+                coachData.empId = editCoach.value;
+                coachData.status = editStatus.value;
+                coachData.pubStatus = editPubStatus.value;
 
-                  let [
-                    empId,
-                    gymId,
-                    startTime,
-                    status,
-                    pubStatus,
-                    coaId
-                  ] = [
-                    coachData.empId,
-                    coachData.gymId,
-                    coachData.startTime,
-                    coachData.status,
-                    coachData.pubStatus,
-                    coachData.coaId
-                  ];
+                let [
+                  empId,
+                  gymId,
+                  startTime,
+                  status,
+                  pubStatus,
+                  coaId
+                ] = [
+                  coachData.empId,
+                  coachData.gymId,
+                  coachData.startTime,
+                  coachData.status,
+                  coachData.pubStatus,
+                  coachData.coaId
+                ];
 
-                  fetch(
-                    "http://localhost:8080/simplefitness-servlet/coach/editCoach",
-                    {
-                      method: "POST",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({
-                        empId,
-                        gymId,
-                        startTime,
-                        status,
-                        pubStatus,
-                        coaId
-                      }),
+                fetch(
+                  "http://localhost:8080/simplefitness-servlet/coach/editCoach",
+                  {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                      empId,
+                      gymId,
+                      startTime,
+                      status,
+                      pubStatus,
+                      coaId
+                    }),
+                  }
+                )
+                  .then((resp) => resp.json())
+                  .then((body) => {
+                    errMsg.textContent = "";
+                    const { successful, message } = body;
+                    if (successful) {
+                      alert("編輯成功 ^_^!");
+
+                      let gymName = sessionStorage.getItem(`'gym${body.gymId}'`);
+                      let empName = sessionStorage.getItem(`'emp${body.empId}'`);
+                      let statusData = statusList[body.status].value
+                      let public = publicStatusList[body.pubStatus].value;
+                      let StartTime = moment(startTime).format("HH:mm");
+                      let endTime = moment(startTime).add(1, 'hours').format("HH:mm");
+              
+                      id.innerHTML = EditTemplate(id,gymName,StartTime,endTime,empName,statusData,public)
+                      CloseAlert('editCoachData')
+                    } else {
+                      errMsg.textContent = message;
                     }
-                  )
-                    .then((resp) => resp.json())
-                    .then((body) => {
-                      errMsg.textContent = "";
-                      const { successful, message } = body;
-                      if (successful) {
-                        alert("編輯成功 ^_^!");
-
-                        let gymName = sessionStorage.getItem(`'gym${body.gymId}'`);
-                        let empName = sessionStorage.getItem(`'emp${body.empId}'`);
-                        let statusData = statusList[body.status].value
-                        let public = publicStatusList[body.pubStatus].value;
-                        let StartTime = moment(startTime).format("HH:mm");
-                        let endTime = moment(startTime).add(1, "hours").format("HH:mm");
-                
-                        id.innerHTML = EditTemplate(id,gymName,StartTime,endTime,empName,statusData,public)
-                        CloseAlert('editCoachData')
-                      } else {
-                        errMsg.textContent = message;
-                      }
-                    });
-                };
+                  });
               };
+            };
             
             // 點擊刪除
             document.querySelector(`#delete${coach[i].coaId}`).onclick = () => {
@@ -295,8 +293,7 @@ let CourseList = [];
                     }
                   });
               }
-            }
-              
+            } 
           }
           $("#courList" + selectedDate.value).collapse("show");
         } else {

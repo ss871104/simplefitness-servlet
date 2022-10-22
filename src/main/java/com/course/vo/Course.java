@@ -25,6 +25,10 @@ public class Course extends Common {
 	private LocalDate selectedDate;
 	private LocalDate dayOne;
 	private LocalDate daySeven;
+	private String memName;
+	private String memGender;
+	private String memPhone;
+	private LocalDateTime coursebookTime;
 
 	
 	public Integer getCourseId() {
@@ -125,9 +129,31 @@ public class Course extends Common {
 	public void setDaySeven(LocalDate daySeven) {
 		this.daySeven = daySeven;
 	}
-	
+	public String getMemName() {
+		return memName;
+	}
+	public void setMemName(String memName) {
+		this.memName = memName;
+	}
+	public String getMemGender() {
+		return memGender;
+	}
+	public void setMemGender(String memGender) {
+		this.memGender = memGender;
+	}
+	public String getMemPhone() {
+		return memPhone;
+	}
+	public void setMemPhone(String memPhone) {
+		this.memPhone = memPhone;
+	}
+	public LocalDateTime getCoursebookTime() {
+		return coursebookTime;
+	}
+	public void setCoursebookTime(LocalDateTime coursebookTime) {
+		this.coursebookTime = coursebookTime;
+	}
 	
 
-	
 	
 }

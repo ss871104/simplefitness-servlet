@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../css/boostrap/bootstrap.min.css">
+    <link rel="stylesheet" href="../../css/staff/course_member_list.css">
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+    <script src="../../js/moment.min.js"></script>
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>團課名單</title>
+</head>
+
+<body>
+
+    <div class="topnav">
+        <a class="img_link" href="http://localhost:5500/html/staff_home.html">
+            <img class="logoImg" src="../../img/Simple_Fitness-logos_white.png" alt="">
+        </a>
+
+        <ul class="list-inline">
+            <li>
+                <a class="topnavBtn" id="notice" href="#notice">
+                    <img class="icon" src="../../img/bell.png" alt="" title="通知中心">
+                </a>
+            </li>
+            <li class="dropdown">
+                <a class="topnavBtn" id="user" href="#user">
+                    <img class="icon" src="../../img/user.png" alt="" title="會員">
+                </a>
+                <div class="dropdown-content">
+                    <ul>
+                        <li><a href="#">登出</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+
+    <div class="side-menu">
+        <ul class="nav">
+            <li>
+                <a href="#">
+                    <i class="fa fa-users" aria-hidden="true"></i>
+                    會員資料管理
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-users" aria-hidden="true"></i>
+                    員工資料管理
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-wrench" aria-hidden="true"></i>
+                    上下架管理
+                </a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            用品管理
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            場館管理
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            團課種類管理
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            教練資訊管理
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-coins" aria-hidden="true"></i>
+                    租借用品
+                </a>
+            </li>
+            <!-- <li>
+                    <a href="#">
+                        <i class="fa fa-pencil" aria-hidden="true"></i>
+                        討論區管理
+                    </a>
+                </li> -->
+            <li>
+                <a href="#">
+                    <i class="fa fa-list" aria-hidden="true"></i>
+                    課程管理
+                </a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            團課管理
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            教練課管理
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            團課報名管理
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa-gavel" aria-hidden="true"></i>
+                    教練專區
+                </a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            預約回覆
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            個人課程行事曆
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <div class="course">
+        <div class="contentTitle">
+            <p><i class="fa-solid fa-list-check"> 團課名單</i></p>
+            <hr>
+
+                <table class="table table-striped" style="margin-top:5%;">
+
+                    <div>
+                        <label for="gym">課程場館：</label><span id="gym"></span><br>
+                        <label for="startTime">上課時間：</label><span id="startTime"></span><br>
+                        <label for="name">課程名稱：</label><span id="name"></span><br>
+                        <label for="emp">教練：</label><span id="emp"></span><br>
+                    </div>
+                    <thead>
+                        <tr>
+                            <th scope="col">會員名稱</th>
+                            <th scope="col">性別</th>
+                            <th scope="col">會員電話</th>
+                            <th scope="col">預約時間</th>
+                        </tr>
+                    </thead>
+                    <tbody class="info">
+                        <!-- GetCourseMemberList  -->
+                    </tbody>
+                    <button type="button" class="btn btn-secondary" value="返回" onclick="location.href='./course.html'">返回</button>
+                </table>
+        </div>
+    </div>    
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+
+    <script src="../../js/staff/course_member_list.js"></script>
+</body>
+
+</html>

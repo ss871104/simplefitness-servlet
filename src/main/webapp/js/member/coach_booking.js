@@ -83,7 +83,7 @@ $(function () {
         //取得登入會員資料
         function getMemberId() {
             $.ajax({
-                url: "http://34.81.70.196:8080/simplefitness-servlet/member/session",
+                url: "/simplefitness-servlet/member/session",
                 type: "GET",
                 dataType: "json",
                 success: function (data) {
@@ -96,7 +96,7 @@ $(function () {
         // 取得健身房下拉選單資訊
         function loadGymList() {
             $.ajax({
-                url: "http://34.81.70.196:8080/simplefitness-servlet/gym/getAllGym",
+                url: "/simplefitness-servlet/gym/getAllGym",
                 type: "GET",
                 dataType: "json",
                 success: function (data) {
@@ -116,7 +116,7 @@ $(function () {
         // 取得教練課下拉選單資訊
         function loadCoachList() {
             $.ajax({
-                url: "http://34.81.70.196:8080/simplefitness-servlet/coachBooking/SearchCoachByJobServlet",
+                url: "/simplefitness-servlet/coachBooking/SearchCoachByJobServlet",
                 type: "POST",
                 dataType: "json",
                 success: function (data) {
@@ -151,7 +151,7 @@ $(function () {
         //取得可預約課程清單
         function getCoachClassList() {
             $.ajax({
-                url: "http://34.81.70.196:8080/simplefitness-servlet/coachBooking/SearchCoachServlet",
+                url: "/simplefitness-servlet/coachBooking/SearchCoachServlet",
                 type: "POST",
                 data: JSON.stringify({
                     gymId: $('#classLocation').val(),
@@ -172,7 +172,7 @@ $(function () {
         //預約課程
         function checkBooking(item) {
             $.ajax({
-                url: "http://34.81.70.196:8080/simplefitness-servlet/coachBooking/CreateCoachBookingServlet",
+                url: "/simplefitness-servlet/coachBooking/CreateCoachBookingServlet",
                 type: "POST",
                 data: JSON.stringify({
                     coachId: item.coaId,

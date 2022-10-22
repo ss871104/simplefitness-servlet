@@ -156,7 +156,7 @@ $(function () {
         //取得登入會員資料
         function getMemberId() {
             $.ajax({
-                url: "http://34.81.70.196:8080/simplefitness-servlet/member/session",
+                url: "/simplefitness-servlet/member/session",
                 type: "GET",
                 dataType: "json",
                 success: function (data) {
@@ -169,7 +169,7 @@ $(function () {
         // 取得健身房下拉選單資訊
         function loadGymList() {
             $.ajax({
-                url: "http://34.81.70.196:8080/simplefitness-servlet/gym/getAllGym",
+                url: "/simplefitness-servlet/gym/getAllGym",
                 type: "GET",
                 dataType: "json",
                 success: function (data) {
@@ -201,7 +201,7 @@ $(function () {
         //取得此會員已預約團課清單
         function getMemberCourseList() {
             $.ajax({
-                url: "http://34.81.70.196:8080/simplefitness-servlet/courseBooking/CheckCourseServlet",
+                url: "/simplefitness-servlet/courseBooking/CheckCourseServlet",
                 type: "POST",
                 data: JSON.stringify({
                     gymId: $('#classLocation').val(),
@@ -221,7 +221,7 @@ $(function () {
         //取得此會員已預約教練課清單
         function getMemberCoachList() {
             $.ajax({
-                url: "http://34.81.70.196:8080/simplefitness-servlet/coachBooking/CheckCoachBookingByMemberIdServlet",
+                url: "/simplefitness-servlet/coachBooking/CheckCoachBookingByMemberIdServlet",
                 type: "POST",
                 data: JSON.stringify({
                     gymId: $('#classLocation').val(),
@@ -245,7 +245,7 @@ $(function () {
             
             if (moment(item.courseDetail.startTime).isAfter(moment().format('YYYY/MM/DD HH:mm:ss'))) {
                 $.ajax({
-                    url: "http://34.81.70.196:8080/simplefitness-servlet/courseBooking/CancelCourseServlet",
+                    url: "/simplefitness-servlet/courseBooking/CancelCourseServlet",
                     type: "POST",
                     data: JSON.stringify({
                         coursebookId: item.coursebookId,
@@ -286,7 +286,7 @@ $(function () {
             console.log(item)
             if (moment(item.coachClass.startTime).isAfter(moment().format('YYYY/MM/DD HH:mm:ss'))) {
                 $.ajax({
-                    url: "http://34.81.70.196:8080/simplefitness-servlet/coachBooking/CancelCoachServlet",
+                    url: "/simplefitness-servlet/coachBooking/CancelCoachServlet",
                     type: "POST",
                     data: JSON.stringify({
                         coachbookId: item.coachbookId,

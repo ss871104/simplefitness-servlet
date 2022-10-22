@@ -1,14 +1,10 @@
 $(function () {
-    var emp_id = 11;
+    var emp_id;
     var CourseList = [];
     var bookingCoachList = [];
     $(document).ready(function () {
 
-        // getEmpId();
-
-        getEmpCourseList();
-
-        getEmpCoachList();
+        getEmpId();
 
         //**參數設定開始**************************************************************************/
 
@@ -182,27 +178,41 @@ $(function () {
         //**參數設定結束**************************************************************************/
 
         //取得登入員工資料
-        // function getMemberId() {
-        //     $.ajax({
-        //         url: "http://localhost:8080/simplefitness-servlet/member/session",
-        //         type: "GET",
-        //         dataType: "json",
-        //         success: function (data) {
-        //             mem_id = data.memId;
-        //             // console.log(mem_id)
-        //         }
-        //     })
-        // }
+        function getEmpId() {
+            $.ajax({
+                url: "http://34.81.70.196:8080/simplefitness-servlet/staff/session",
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    if (data.job == "1") {
+                        emp_id = data.empId;
+                        getEmpCourseList();
+                        getEmpCoachList();
+                    } else {
+                        swal({
+                            title: "教練專區",
+                            html: "您不是教練，不能進入教練專區喔!",
+                            type: "error",//success,error,warning
+                            confirmButtonText: "確認",
+                        }).then(
+                            function () {
+                                window.location.href = "staff_home.html"
+                            });
+                    }
+                }
+            })
+        }
 
         //點擊登出觸發事件
-        // $("#logout").click(function(){
-        //     logout();
-        // })
+        $("#logout").click(function(){
+            logout();
+        })
 
         //取得此教練的團課清單
         function getEmpCourseList() {
+            console.log("EMP:" + emp_id)
             $.ajax({
-                url: "http://localhost:8080/simplefitness-servlet/courseBooking/CheckCourseByEmpIdServlet",
+                url: "http://34.81.70.196:8080/simplefitness-servlet/courseBooking/CheckCourseByEmpIdServlet",
                 type: "POST",
                 data: JSON.stringify({
                     empId: emp_id
@@ -221,7 +231,7 @@ $(function () {
         //取得該教練的預約清單
         function getEmpCoachList() {
             $.ajax({
-                url: "http://localhost:8080/simplefitness-servlet/coachBooking/CheckCoachBookingByEmpIdServlet",
+                url: "http://34.81.70.196:8080/simplefitness-servlet/coachBooking/CheckCoachBookingByEmpIdServlet",
                 type: "POST",
                 data: JSON.stringify({
                     empId: emp_id
@@ -244,7 +254,7 @@ $(function () {
             console.log(item)
             if (moment(item.coachClass.startTime).isAfter(moment().format('YYYY/MM/DD HH:mm:ss'))) {
                 $.ajax({
-                    url: "http://localhost:8080/simplefitness-servlet/coachBooking/AcceptCoachServlet",
+                    url: "http://34.81.70.196:8080/simplefitness-servlet/coachBooking/AcceptCoachServlet",
                     type: "POST",
                     data: JSON.stringify({
                         coachbookId: item.coachbookId,
@@ -286,7 +296,7 @@ $(function () {
             console.log(item)
             if (moment(item.coachClass.startTime).isAfter(moment().format('YYYY/MM/DD HH:mm:ss'))) {
                 $.ajax({
-                    url: "http://localhost:8080/simplefitness-servlet/coachBooking/CancelCoachClassFromCoachServlet",
+                    url: "http://34.81.70.196:8080/simplefitness-servlet/coachBooking/CancelCoachClassFromCoachServlet",
                     type: "POST",
                     data: JSON.stringify({
                         coachbookId: item.coachbookId,

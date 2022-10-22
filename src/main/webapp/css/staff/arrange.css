@@ -26,7 +26,7 @@ body {
 	left: 0;
 	background-color: #2f4858;
 	height: 10%;
-	z-index: 9999;
+	z-index: 1;
 }
 
 .logoImg {
@@ -50,10 +50,10 @@ body {
 }
 
 .topnav a {
-	float: left;
+	float: left;	
 	padding: 21px 16px;
 	text-decoration: none;
-	/* font-size: 17px; */
+	font-size: 17px;
 	/* color: #f2f2f2; */
 	/* text-align: center; */
 }
@@ -70,7 +70,6 @@ body {
 .topnav a:hover {
 	background-color: #ddd;
 	/* color: black; */
-
 }
 
 .dropdown {
@@ -91,6 +90,7 @@ body {
 	justify-content: center;
 	display: grid;
 	padding: 0;
+
 }
 
 .dropdown:hover .dropdown-content {
@@ -100,6 +100,7 @@ body {
 }
 
 
+
 /* sidebars */
 .side-menu {
 	width: 15%;
@@ -107,7 +108,7 @@ body {
 	padding: 50px 0;
 	box-sizing: border-box;
 	position: fixed;
-	top: 10%;
+	top: 4em;
 	left: 0;
 	background-color: #86bbd8;
 	display: flex;
@@ -171,51 +172,68 @@ body {
 	background-color: rgba(4, 104, 255, 0.2) !important;
 }
 
-/* 預約 */
-.check_booking {
+/* 課程預約 */
+.arrngement {
 	width: 85%;
 	height: 90%;
 	padding: 20px 50px;
 	/* box-sizing: border-box; */
 	position: absolute;
+	top: 15em;
 	right: 0em;
 	font-size: 20px;
 	color: #2f4858;
-	overflow: scroll;
 	/* z-index: -1; */
 }
 
-.select {
-	width: 200px;
-	height: 40px;
-	background-color: #bde1f4;
-	border: 1px solid #ccc;
-	border-radius: 5px;
+.arrnge_imgback{
+	margin: auto;
+	background-color: #2f4858;
+	border-radius: 200px;
+	width: 180px;
+	height: 180px;
+	box-sizing: border-box;
+    padding: 0!important;
+}
+
+.arrnge_icon{
+	display: block;
+	margin: auto;
+	padding-top: 30px;
+	width: 120px;
+	height: auto;
+}
+
+.arrnge {
+	list-style: none;
+	margin: 0;
+	display: flex;
+	position: sticky;
+	top: 20em;
+	flex-wrap: wrap;	
+}
+
+.arrnge>li {
+	width: calc((100% - 480px)/2);
+	margin-right: 120px;
+	margin-bottom: 20px;
+}
+
+.arrnge>li:nth-child(2n) {
+	margin-right: 120px;
+}
+
+.arrnge>li:nth-child(1) {
+	margin-left: 120px;
+}
+
+.arrnge>li a {
+	display: block;
+	text-decoration: none;
+	color: #2f4858 !important;
+	font-size: 24px;
+	font-weight: 800;
+	text-align: center;
+	margin-top: 20px;
 	cursor: pointer;
 }
-
-.btn_submit {
-	width: 5em;
-	height: 40px;
-	/* position: absolute; */
-	/* right: 0; */
-	background-color: #8ac6e7;
-	border: 1px solid #ccc;
-	border-radius: 5px;
-}
-
-.contentTitle .titleBtn {
-	display: inline-block;
-    /* padding-right: 1em; */
-    float: right;
-}
-
-.contentBody {
-	padding-top: 3em;
-	/* padding-right: 3em; */
-}
-.calendarArea {
-	color: black;
-    background-color: white;
-}
-

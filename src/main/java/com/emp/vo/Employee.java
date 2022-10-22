@@ -36,9 +36,11 @@ public class Employee extends CommonHibernate{
 	private String empName;
 	private String nickname;
 	private String username;
-	@Column(name = "pass", insertable = false)
+	@Column(name = "pass")
 	private String password;
+	@Column(insertable = false)
 	private String phone;
+	@Column(insertable = false)
 	private String email;
 	private String job;
 	private String gender;

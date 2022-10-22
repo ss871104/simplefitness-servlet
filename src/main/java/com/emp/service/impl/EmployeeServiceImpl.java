@@ -69,16 +69,6 @@ public class EmployeeServiceImpl implements EmployeeServiceIntf{
 				emp.setSuccessful(false);
 				return emp;
 			}
-			if (emp.getEmail().isEmpty()) {
-				emp.setMessage("信箱未輸入");
-				emp.setSuccessful(false);
-				return emp;
-			}
-			if (!emp.getEmail().contains("@")) {
-				emp.setMessage("信箱未符合格式");
-				emp.setSuccessful(false);
-				return emp;
-			}
 			if (emp.getJob().isEmpty()) {
 				emp.setMessage("職位未選取");
 				emp.setSuccessful(false);
@@ -99,6 +89,7 @@ public class EmployeeServiceImpl implements EmployeeServiceIntf{
 				emp.setSuccessful(false);
 				return emp;
 			}
+			emp.setPassword("password");
 			if (dao.insert(emp) == false) {
 				emp.setMessage("新增發生錯誤!");
 				emp.setSuccessful(false);

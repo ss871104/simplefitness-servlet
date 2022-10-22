@@ -64,7 +64,6 @@
 	const nickname = document.querySelector('#nickname-input');
 	const username = document.querySelector('#username-input');
 	const gym = document.getElementById('gym');
-	const email = document.querySelector('#email-input');
 	const job = document.getElementsByName('job');
 	const gender = document.getElementsByName('gender');
 	const birth = document.querySelector('#birth-input');
@@ -120,7 +119,6 @@
 				nickname: nickname.value,
 				username: username.value,
 				gymId: gym.value,
-				email: email.value,
 				job: selected_job.value,
 				gender: selected_gender.value,
 				birth: birth.value,

@@ -46,9 +46,13 @@
 				document.querySelector('#status').textContent = "";
 			}
 			document.getElementById("name-input").value = member.memName;
-			document.getElementById("nickname-input").value = member.memNickname;
+			if (member.memNickname != null) {
+				document.getElementById("nickname-input").value = member.memNickname;
+			}
 			document.getElementById("email-input").value = member.memEmail;
-			document.getElementById("phone-input").value = member.memPhone;
+			if (member.memPhone != null) {
+				document.getElementById("phone-input").value = member.memPhone;
+			}
 			if (member.memGender == "0") {
 				document.getElementById("male-input").checked = true;
 			} else if (member.memGender == "1") {

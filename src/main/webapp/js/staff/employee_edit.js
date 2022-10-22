@@ -79,8 +79,12 @@
 
 				document.querySelector('#name-input').value = emp.empName;
 				document.querySelector('#nickname-input').value = emp.nickname;
-				document.querySelector('#email-input').value = emp.email;
-				document.querySelector('#phone-input').value = emp.phone;
+				if (emp.email != null) {
+					document.querySelector('#email-input').value = emp.email;
+				}
+				if (emp.phone != null) {
+					document.querySelector('#phone-input').value = emp.phone;
+				}
 				if (emp.job == "0") {
 					document.getElementById("staff-input").checked = true;
 				} else if (emp.job == "1") {

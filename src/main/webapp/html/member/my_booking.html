@@ -46,74 +46,76 @@
                 </a>
                 <div class="dropdown-content">
                     <ul>
-                        <li><a  href="../guest/login.html" id="logout">登出</a></li>
+                        <li><a href="../guest/login.html" id="logout">登出</a></li>
                     </ul>
                 </div>
             </li>
         </ul>
     </div>
+    <div class="contentArea">
+        <div class="side-menu">
+            <ul class="nav">
+                <li>
+                    <a href="member_edit.html">
+                        <i class="fa fa-users" aria-hidden="true"></i>
+                        會員資料編輯
+                    </a>
+                </li>
+                <li>
+                    <a href="booking.html">
+                        <i class="fa fa-gavel" aria-hidden="true"></i>
+                        課程預約
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="course_booking.html">
+                                預約團課
+                            </a>
+                        </li>
+                        <li>
+                            <a href="coach_booking.html">
+                                預約教練課
+                            </a>
+                        </li>
+                        <li>
+                            <a href="my_booking.html">
+                                我的預約
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="rentFront.html">
+                        <i class="fa fa-coins" aria-hidden="true"></i>
+                        租借用品
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="order.html">
+                                我的租借清單
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
 
-    <div class="side-menu">
-        <ul class="nav">
-            <li>
-                <a href="member_edit.html">
-                    <i class="fa fa-users" aria-hidden="true"></i>
-                    會員資料編輯
-                </a>
-            </li>
-            <li>
-                <a href="booking.html">
-                    <i class="fa fa-gavel" aria-hidden="true"></i>
-                    課程預約
-                </a>
-                <ul>
-                    <li>
-                        <a href="course_booking.html">
-                            預約團課
-                        </a>
-                    </li>
-                    <li>
-                        <a href="coach_booking.html">
-                            預約教練課
-                        </a>
-                    </li>
-                    <li>
-                        <a href="my_booking.html">
-                            我的預約
-                        </a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="rentFront.html">
-                    <i class="fa fa-coins" aria-hidden="true"></i>
-                    租借用品
-                </a>
-                <ul>
-                    <li>
-                        <a href="order.html">
-                            我的租借清單
-                        </a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-
-    <div class="my_booking">
-        <div class="contentTitle">
-            <p><i class="fa-solid fa-list-check"> 我的預約</i></p>
-            <select class="select" id="classLocation" name="classLocation">
-                <option value="" selected>選擇場館</option>
-            </select>
-            <div class="titleBtn">
-                <button type="submit" id="queryBooking" class="btn_submit">查詢預約</button>
+        <div class="my_booking">
+            <div class="contentTitle">
+                <p><i class="fa-solid fa-list-check"> 我的預約</i></p>
+                <select class="select" id="classLocation" name="classLocation">
+                    <option value="" selected>選擇場館</option>
+                </select>
+                <div class="titleBtn">
+                    <button type="submit" id="queryBooking" class="btn_submit">查詢預約</button>
+                </div>
+            </div>
+            <div class="contentBody">
+                <div id="example" class="calendarArea"></div>
             </div>
         </div>
-        <div class="contentBody">
-            <div id="example" class="calendarArea"></div>
-        </div>
     </div>
+
 
 
 

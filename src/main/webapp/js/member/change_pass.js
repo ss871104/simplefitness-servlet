@@ -32,7 +32,7 @@
 			errMsg.textContent = '密碼與確認密碼不相符';
 			return;
 		}
-		fetch('http://localhost:8080/simplefitness-servlet/member/changePass', {
+		fetch('/simplefitness-servlet/member/changePass', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
@@ -52,10 +52,4 @@
 			});
 	});
 
-	document.getElementById('logout').addEventListener('click', () => {
-		fetch("http://localhost:8080/simplefitness-servlet/member/logout")
-			.then(body => {
-				location = '../guest/home.html';
-			});
-	});
 })();

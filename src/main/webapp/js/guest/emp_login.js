@@ -8,7 +8,7 @@
 	  }
 	});
 	document.getElementById('login').addEventListener('click', () => {
-		fetch('http://localhost:8080/simplefitness-servlet/staff/login', {
+		fetch('/simplefitness-servlet/staff/login', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({

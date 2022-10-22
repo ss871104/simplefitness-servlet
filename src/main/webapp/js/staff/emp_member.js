@@ -1,6 +1,6 @@
 (() => {
 	// 一進來get all
-	fetch("http://localhost:8080/simplefitness-servlet/member/getAll")
+	fetch("/simplefitness-servlet/member/getAll")
 	.then(resp => resp.json())
 	.then(member => {
 		for (i = 0; i < member["length"]; i++){

@@ -6,7 +6,7 @@
 	document.getElementById('send').addEventListener('click', () => {
 		console.log(username.value);
 		console.log(email.value);
-		fetch('http://localhost:8080/simplefitness-servlet/member/forgetpass', {
+		fetch('/simplefitness-servlet/member/forgetpass', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({

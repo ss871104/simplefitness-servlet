@@ -1,13 +1,10 @@
 (() => {
-	$('#myModal').on('shown.bs.modal', function() {
-		$('#myInput').trigger('focus')
-	});
 	
 	// GET ById 出現資料庫資料
 	var gymId = sessionStorage.getItem('gym');
 	gymId = parseInt(gymId);
 	console.log(gymId);
-	fetch("http://localhost:8080/simplefitness-servlet/gym/getGymById", {
+	fetch("/simplefitness-servlet/gym/getGymById", {
 	method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
@@ -98,7 +95,7 @@
 		// } else {
 		// 	picBase64 = picBase64.src;
 		// }
-		fetch('http://localhost:8080/simplefitness-servlet/gym/edit', {
+		fetch('/simplefitness-servlet/gym/edit', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
@@ -126,10 +123,4 @@
 			});
 	});
 
-	document.getElementById('logout').addEventListener('click', () => {
-		fetch("http://localhost:8080/simplefitness-servlet/member/logout")
-			.then(body => {
-				location = '../guest/home.html';
-			});
-	});
 })();

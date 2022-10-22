@@ -1,12 +1,9 @@
 (() => {
-	$('#myModal').on('shown.bs.modal', function() {
-		$('#myInput').trigger('focus')
-	});
 	
 	// GET ById 出現資料庫資料
 	var memId = sessionStorage.getItem('member');
 	memId = parseInt(memId);
-	fetch("http://localhost:8080/simplefitness-servlet/member/getMemById", {
+	fetch("/simplefitness-servlet/member/getMemById", {
 	method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
@@ -86,7 +83,7 @@
 			errMsg.textContent = '狀態未選';
 			return;
 		}
-		fetch('http://localhost:8080/simplefitness-servlet/member/empEditMember', {
+		fetch('/simplefitness-servlet/member/empEditMember', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
@@ -110,10 +107,4 @@
 			});
 	});
 
-	document.getElementById('logout').addEventListener('click', () => {
-		fetch("http://localhost:8080/simplefitness-servlet/member/logout")
-			.then(body => {
-				location = '../guest/home.html';
-			});
-	});
 })();

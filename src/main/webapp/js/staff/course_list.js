@@ -1,6 +1,6 @@
 (() => {
 	// 一進來get all
-	fetch("http://localhost:8080/simplefitness-servlet/courseList/getAllCourse")
+	fetch("/simplefitness-servlet/courseList/getAllCourse")
 	.then(resp => resp.json())
 	.then(course => {
 		for (i = 0; i < course["length"]; i++){
@@ -56,7 +56,7 @@
 			errMsg.textContent = '狀態未選';
 			return;
 		}
-		fetch('http://localhost:8080/simplefitness-servlet/courseList/addCourseList', {
+		fetch('/simplefitness-servlet/courseList/addCourseList', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({

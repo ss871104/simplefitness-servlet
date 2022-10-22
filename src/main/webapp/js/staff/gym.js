@@ -1,6 +1,6 @@
 (() => {
 	// 一進來get all
-	fetch("http://localhost:8080/simplefitness-servlet/gym/getAllGym")
+	fetch("/simplefitness-servlet/gym/getAllGym")
 	.then(resp => resp.json())
 	.then(gym => {
 		for (i = 0; i < gym["length"]; i++){
@@ -44,7 +44,7 @@
 			errMsg.textContent = '人數上限未填';
 			return;
 		}
-		fetch('http://localhost:8080/simplefitness-servlet/gym/addGym', {
+		fetch('/simplefitness-servlet/gym/addGym', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({

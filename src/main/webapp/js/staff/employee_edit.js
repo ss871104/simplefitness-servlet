@@ -1,10 +1,7 @@
 (() => {
-	$('#myModal').on('shown.bs.modal', function() {
-		$('#myInput').trigger('focus')
-	});
 	
 	// 一進來get gym
-	fetch("http://localhost:8080/simplefitness-servlet/gym/getAllGym")
+	fetch("/simplefitness-servlet/gym/getAllGym")
 	.then(resp => resp.json())
 	.then(gym => {
 		for (i = 0; i < gym["length"]; i++){
@@ -22,7 +19,7 @@
 	// GET ById 出現資料庫資料
 	var empId = sessionStorage.getItem('emp');
 	empId = parseInt(empId);
-	fetch("http://localhost:8080/simplefitness-servlet/staff/getEmpById", {
+	fetch("/simplefitness-servlet/staff/getEmpById", {
 	method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
@@ -200,7 +197,7 @@
 			errMsg.textContent = '生日未填';
 			return;
 		}
-		fetch('http://localhost:8080/simplefitness-servlet/staff/edit', {
+		fetch('/simplefitness-servlet/staff/edit', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
@@ -230,10 +227,4 @@
 			});
 	});
 
-	document.getElementById('logout').addEventListener('click', () => {
-		fetch("http://localhost:8080/simplefitness-servlet/member/logout")
-			.then(body => {
-				location = '../guest/home.html';
-			});
-	});
 })();

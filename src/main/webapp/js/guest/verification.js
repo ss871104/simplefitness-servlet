@@ -2,7 +2,7 @@
 	const ver_code = document.querySelector('#ver-code');
 	const errMsg = document.querySelector('#errMsg');
 	document.getElementById('confirm').addEventListener('click', () => {
-		fetch('http://localhost:8080/simplefitness-servlet/member/verification', {
+		fetch('/simplefitness-servlet/member/verification', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({

@@ -4,7 +4,7 @@
 	});
 	
 	// GET session 出現資料庫資料
-	fetch("http://localhost:8080/simplefitness-servlet/member/session")
+	fetch("/simplefitness-servlet/member/session")
 		.then(resp => resp.json())
 		.then(member => {
 			if (member.memPicBase64 != null) {
@@ -119,7 +119,7 @@
 			errMsg.textContent = '生日未填';
 			return;
 		}
-		fetch('http://localhost:8080/simplefitness-servlet/member/edit', {
+		fetch('/simplefitness-servlet/member/edit', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
@@ -144,10 +144,4 @@
 			});
 	});
 
-	document.getElementById('logout').addEventListener('click', () => {
-		fetch("http://localhost:8080/simplefitness-servlet/member/logout")
-			.then(body => {
-				location = '../guest/home.html';
-			});
-	});
 })();

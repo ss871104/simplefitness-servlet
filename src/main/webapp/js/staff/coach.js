@@ -7,6 +7,7 @@ const editCourseDate = document.querySelector("#editCourseDate");
 const editStartTime = document.querySelector("#editStartTime");
 const editStatus = document.querySelector("#editStatus");
 const editPubStatus = document.querySelector("#editPubStatus");
+const now = moment().subtract(1, 'day').format('YYYY-MM-DD');
 let INDEX = -1;
 let CourseList = [];
 (() => {
@@ -26,7 +27,7 @@ let CourseList = [];
   ];
 
   // 拿場館
-  fetch("http://localhost:8080/simplefitness-servlet/gym/getAllGym")
+  fetch("/simplefitness-servlet/gym/getAllGym")
     .then((resp) => resp.json())
     .then((gym) => {
       for (i = 0; i < gym["length"]; i++) {
@@ -40,7 +41,7 @@ let CourseList = [];
     });
 
   // 拿教練名稱
-  fetch("http://localhost:8080/simplefitness-servlet/coachBooking/SearchCoachByJobServlet", {
+  fetch("/simplefitness-servlet/coachBooking/SearchCoachByJobServlet", {
     method: "POST"
     }
   )
@@ -84,7 +85,7 @@ let CourseList = [];
     }
 
     // 列出現有課程
-    fetch("http://localhost:8080/simplefitness-servlet/coach/searchCoach", {
+    fetch("/simplefitness-servlet/coach/searchCoach", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -228,41 +229,42 @@ let CourseList = [];
                   coachData.coaId
                 ];
 
-                fetch(
-                  "http://localhost:8080/simplefitness-servlet/coach/editCoach",
-                  {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                      empId,
-                      gymId,
-                      startTime,
-                      status,
-                      pubStatus,
-                      coaId
-                    }),
-                  }
-                )
-                  .then((resp) => resp.json())
-                  .then((body) => {
-                    errMsg.textContent = "";
-                    const { successful, message } = body;
-                    if (successful) {
-                      alert("編輯成功 ^_^!");
+                if(moment(editCourseDate.value).isAfter(now)) {
+                  fetch("/simplefitness-servlet/coach/editCoach", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({
+                        empId,
+                        gymId,
+                        startTime,
+                        status,
+                        pubStatus,
+                        coaId
+                      }),
+                    })
+                    .then((resp) => resp.json())
+                    .then((body) => {
+                      errMsg.textContent = "";
+                      const { successful, message } = body;
+                      if (successful) {
+                        alert("編輯成功 ^_^!");
 
-                      let gymName = sessionStorage.getItem(`'gym${body.gymId}'`);
-                      let empName = sessionStorage.getItem(`'emp${body.empId}'`);
-                      let statusData = statusList[body.status].value
-                      let public = publicStatusList[body.pubStatus].value;
-                      let StartTime = moment(startTime).format("HH:mm");
-                      let endTime = moment(startTime).add(1, 'hours').format("HH:mm");
-              
-                      id.innerHTML = EditTemplate(id,gymName,StartTime,endTime,empName,statusData,public)
-                      CloseAlert('editCoachData')
-                    } else {
-                      errMsg.textContent = message;
-                    }
-                  });
+                        let gymName = sessionStorage.getItem(`'gym${body.gymId}'`);
+                        let empName = sessionStorage.getItem(`'emp${body.empId}'`);
+                        let statusData = statusList[body.status].value
+                        let public = publicStatusList[body.pubStatus].value;
+                        let StartTime = moment(startTime).format("HH:mm");
+                        let endTime = moment(startTime).add(1, 'hours').format("HH:mm");
+                
+                        id.innerHTML = EditTemplate(id,gymName,StartTime,endTime,empName,statusData,public)
+                        CloseAlert('editCoachData')
+                      } else {
+                        errMsg.textContent = message;
+                      }
+                    });
+                } else {
+                  alert("只能排今天日期之後的課唷!!");
+                }
               };
             };
             
@@ -270,8 +272,7 @@ let CourseList = [];
             document.querySelector(`#delete${coach[i].coaId}`).onclick = () => {
               // 確定刪除
               document.querySelector("#delete").onclick = () => {
-                fetch(
-                  "http://localhost:8080/simplefitness-servlet/coach/deleteCoach",
+                fetch("/simplefitness-servlet/coach/deleteCoach",
                   {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -335,29 +336,33 @@ let CourseList = [];
       return;
     }
 
-    let start_time = newCourseDate.value + "T" + newStartTime.value;
-    fetch("http://localhost:8080/simplefitness-servlet/coach/addCoach", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        gymId: newGym.value,
-        empId: newCoach.value,
-        startTime: start_time,
-        status: newStatus.value,
-        pubStatus: newPubStatus.value,
-      }),
-    })
-      .then((resp) => resp.json())
-      .then((body) => {
-        errMsg.textContent = "";
-        const { successful, message } = body;
-        if (successful) {
-          alert("新增成功 ^_^!");
-          history.go();
-        } else {
-          errMsg.textContent = message;
-        }
-      });
+    if(moment(newCourseDate.value).isAfter(now)) {
+      let start_time = newCourseDate.value + "T" + newStartTime.value;
+      fetch("/simplefitness-servlet/coach/addCoach", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          gymId: newGym.value,
+          empId: newCoach.value,
+          startTime: start_time,
+          status: newStatus.value,
+          pubStatus: newPubStatus.value,
+        }),
+      })
+        .then((resp) => resp.json())
+        .then((body) => {
+          errMsg.textContent = "";
+          const { successful, message } = body;
+          if (successful) {
+            alert("新增成功 ^_^!");
+            history.go();
+          } else {
+            errMsg.textContent = message;
+          }
+        });
+    } else {
+      alert("只能排今天日期之後的課唷!!");
+    }  
   });
 })();
 

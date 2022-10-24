@@ -21,10 +21,6 @@ public class GetOrderDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private OrderDetailServiceIntf SERVICE =new OrderDetailServiceImpl();
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	}
-	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		OrderDetail orderDetail = json2Pojo(request, OrderDetail.class);

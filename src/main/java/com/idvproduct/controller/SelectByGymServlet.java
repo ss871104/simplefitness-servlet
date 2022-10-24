@@ -27,10 +27,6 @@ public class SelectByGymServlet extends HttpServlet {
 	private IdvProductServiceIntf IDV_SERVICE =new IdvProductServiceImpl();
 	private ProductServiceIntf PRODUCT_SERVICE =new ProductServiceImpl();
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-	}
-	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/json;charset=UTF-8");
 		
@@ -50,7 +46,6 @@ public class SelectByGymServlet extends HttpServlet {
         for (int i = 0; i < idvProducts.size(); i++) {
         	products.get(i).setCount(idvProducts.get(i).getCount());
         }
-        
         
         PrintWriter pw = response.getWriter();
         pw.print(GSON.toJson(products));

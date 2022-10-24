@@ -16,6 +16,7 @@ import com.order.vo.Order;
 import com.order.vo.PageVo;
 import com.orderdetail.dao.impl.OrderDetailDaoImpl;
 import com.orderdetail.dao.intf.OrderDetailDaoIntf;
+import com.orderdetail.vo.OrderDetail;
 
 import ecpay.payment.integration.AllInOne;
 import ecpay.payment.integration.domain.AioCheckOutALL;
@@ -76,7 +77,7 @@ public class OrderServiceImpl implements OrderServiceIntf {
 		JavaMailThread.ch_name = order.getMemName();
 		JavaMailThread.messageText = "Hello! " + JavaMailThread.ch_name + "租借成功，租借金額 $" + order.getAmount() + "<br>"
 				+ "請至會員中心查看" + "<br>"
-				+ "<a href=\"/simplefitness-servlet/html/member/order.html\"> 查詢我的訂單 </a>";
+				+ "<a href=\"http://localhost:8080/simplefitness-servlet/html/member/order.html\"> 查詢我的訂單 </a>";
 		JavaMailThread jmt = new JavaMailThread();
 		jmt.start();
 		
@@ -93,7 +94,12 @@ public class OrderServiceImpl implements OrderServiceIntf {
 	@Override
 	public boolean CancelOrder(Order order) {
 		order.setStatus("0");
-		return dao.UpdateStatus(order);
+		dao.UpdateStatus(order);
+		List<OrderDetail> idvIds = detailDao.selectIdvId(order.getOrderId());
+		for(int i = 0; i < idvIds.size(); i++) {
+			idvDao.UpdateStatus("1", idvIds.get(i).getIdvId());
+		}
+		return true;
 	}
 
 	@Override

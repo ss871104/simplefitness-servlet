@@ -18,9 +18,6 @@ import com.order.vo.Order;
 public class CancelOrderServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private OrderServiceIntf SERVICE = new OrderServiceImpl();
-       
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Order order = json2Pojo(request, Order.class);

@@ -3,7 +3,7 @@ const gymName = document.querySelector("#gymName");
 $("#gymName").change(function() {
 	
 	$(".item_list").html("");
-	fetch("http://localhost:8080/simplefitness-servlet/product/selectByGym", {
+	fetch("/simplefitness-servlet/product/selectByGym", {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({

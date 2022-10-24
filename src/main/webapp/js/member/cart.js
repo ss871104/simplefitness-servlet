@@ -61,53 +61,6 @@ window.addEventListener("popstate", function() {
 	tab_active();
 });
 
-// 卡號欄位
-$(".cardNo").focus(function() {
-	$(".cardNo").keyup(function(e) {
-		if (e.which >= 48 && e.which <= 57 || e.which == 8) {
-			return true;
-		} else {
-			$(this).val("")
-		}
-	});
-
-	$("#cardNo_1").keyup(function() {
-		if ($(this).val().length == 4)
-			$("#cardNo_1").next().focus();
-	})
-	$("#cardNo_2").keyup(function() {
-		if ($(this).val().length == 4)
-			$("#cardNo_2").next().focus();
-	})
-	$("#cardNo_3").keyup(function() {
-		if ($(this).val().length == 4)
-			$("#cardNo_3").next().focus();
-	})
-});
-
-
-$("#date").keyup(function(e) {
-
-	if ($(this).val().length == 2) {
-		$(this).val($(this).val() + "/")
-	}
-	if (e.which >= 48 && e.which <= 57 || e.which == 8) {
-		return true;
-	} else {
-		$(this).val("")
-	}
-});
-
-$("#cvv").keyup(function(e) {
-
-	if (e.which >= 48 && e.which <= 57 || e.which == 8) {
-		return true;
-	} else {
-		$(this).val("")
-	}
-});
-
-
 
 /*------- 購物相關操作 -------*/
 
@@ -116,7 +69,6 @@ function onLoadCartNumbers() {
 	let productNumbers = sessionStorage.getItem("cartNumbers");
 	if (productNumbers) {
 		document.querySelector("#cart span").textContent = productNumbers;
-
 	}
 }
 
@@ -188,15 +140,11 @@ $(".cash").on("click", function() {
 $(".card").on("click", function() {
 	sessionStorage.setItem("payfor", "信用卡支付");
 });
-$(".tab2_btn").on("click", function() {
-	$(".lastPay").text(sessionStorage.getItem("payfor"));
-});
 
 // 新增至購物車頁面
 function displayCart() {
 	let cartItems = sessionStorage.getItem("productsInCart");
 	cartItems = JSON.parse(cartItems);
-
 	let productContainer = document.querySelector(".item_body");
 	let rentList = document.querySelector(".prdList");
 	let gymName = sessionStorage.getItem("gymName");
@@ -210,7 +158,6 @@ function displayCart() {
 		let totalCost = 0;
 		Object.values(cartItems).map(item => {
 			productContainer.innerHTML += `
-
                 <div class="product">
                     <div class="prdImg">
                       <img id="prdImg" src="${item.img}" alt="">
@@ -228,7 +175,6 @@ function displayCart() {
                         <button>刪除</button>
                         <span class="msg"> </span>
                     </div>
-                     
                 </div>
                 `
 			totalCount += parseInt(item.inCart);
@@ -241,7 +187,6 @@ function displayCart() {
 		});
 		document.querySelector("#totalCount").innerText = `${totalCount}`;
 		document.querySelector("#totalCost").innerText = `${totalCost}`;
-		document.querySelector(".lastGym").innerText = `${gymName}`;
 		sessionStorage.setItem("totalCost", totalCost);
 		sessionStorage.setItem("cartNumbers", totalCount);
 	}
@@ -279,7 +224,6 @@ function manageQuantity() {
 	let plusButtons = document.querySelectorAll("#plus");
 	let msgs = document.querySelectorAll(".msg");
 	let cartItems = sessionStorage.getItem("productsInCart");
-	//	let currentQuantity = 0;
 	let currentProduct = "";
 	cartItems = JSON.parse(cartItems);
 
@@ -314,10 +258,8 @@ function manageQuantity() {
 	}
 }
 
-
 onLoadCartNumbers();
 displayCart();
-
 
 
 /*------- 訂單成立 -------*/
@@ -326,21 +268,20 @@ $(".tab2_btn").on("click", function() {
 	let gymId = sessionStorage.getItem("gymId");
 	let cartItems = sessionStorage.getItem("productsInCart");
 	cartItems = JSON.parse(cartItems);
-//	console.log(Object.values(cartItems).map(item => item.id))
-//	console.log(cartItems);
 	var a = Object.keys(cartItems);
 	var prodsInCart = [];
 	var obj = {};
 	for (let i = 0; i < a.length; i++) {
 		obj.prodId = cartItems[a[i]].id;
 		obj.inCart = cartItems[a[i]].inCart;
+		obj.prodName = cartItems[a[i]].name;
 		obj.gymId = gymId;
 		prodsInCart.push({ ...obj });
 	}
 	
 	if (sessionStorage.getItem("payfor") !== null) {
-
-		fetch('http://localhost:8080/simplefitness-servlet/member/checkout', {
+		
+		fetch('/simplefitness-servlet/member/checkout', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify(prodsInCart),
@@ -349,32 +290,50 @@ $(".tab2_btn").on("click", function() {
 			.then(body => {
 				if (body.msg !== "success") {
 					alert("租借數量大於庫存，請重新選取");
-					sessionStorage.removeItem("productsInCart");
-					sessionStorage.removeItem("cartNumbers");
+					sessionStorage.clear();
 					location = "./rentFront.html";
 				} else {
 					let amount = sessionStorage.getItem("totalCost");
 					let gymId = sessionStorage.getItem("gymId");
-					fetch('http://localhost:8080/simplefitness-servlet/order/addOrder', {
+					let payfor = sessionStorage.getItem("payfor");
+					fetch('/simplefitness-servlet/order/addOrder', {
 						method: 'POST',
 						headers: { 'Content-Type': 'application/json' },
 						body: JSON.stringify({
-							
 							gymId: gymId,
 							amount: amount,
-							orderList:prodsInCart
+							orderList: prodsInCart,
+							payfor: payfor
 						}),
 					})
 						.then(resp => resp.json())
 						.then(body => {
-							sessionStorage.clear();
-							document.querySelector("#cart span").textContent = 0
-							$(".tab").removeClass("-on");
-							$("a.tab[data-target= tab3]").addClass("-on");
-							$("div.tab3").addClass("-on");
-							history.pushState(null, null, "#" + "tab3");
-							$(".startTime").text(body.orderDate.replace("T"," "));
-							$(".memName").text(body.memName);
+							if(payfor === "信用卡支付"){
+								document.querySelector("#cart span").textContent = 0;
+								sessionStorage.clear();
+                  				$("#pay").html(body.message);
+							}else{
+								$(".detail").html(`
+								<li>租借人：<span class="memName"></span></li>
+			                    <li>租借場館：<span class="lastGym"></span></li>
+			                    <li>付款方式：<span class="lastPay"></span></li>
+			                    <li>租借日期：<span class="startTime"></span></li>
+			                    <li>請於24小時內取貨</li>
+			                    <br>
+			                    <li>通知信已寄出，請至個人信箱查看！</li>`);
+								document.querySelector("#cart span").textContent = 0;
+								$(".tab").removeClass("-on");
+								$("a.tab[data-target= tab3]").addClass("-on");
+								$("div.tab3").addClass("-on");
+								history.pushState(null, null, "#" + "tab3");
+								$(".startTime").text(body.orderDate.replace("T", " "));
+								$(".memName").text(body.memName);
+								$(".lastPay").text(sessionStorage.getItem("payfor"));
+								let gymName = sessionStorage.getItem("gymName");
+								document.querySelector(".lastGym").innerText = `${gymName}`;
+								sessionStorage.clear();
+							}
+							
 						});
 				}
 

@@ -8,7 +8,7 @@ $(function() {
 });
 
 function skipPage(pageNo) {
-	fetch("http://localhost:8080/simplefitness-servlet/order/getMemOrder", {
+	fetch("/simplefitness-servlet/order/getMemOrder", {
 		method: 'POST',
 		headers: { 'Content-Type': 'application/json' },
 		body: JSON.stringify({
@@ -97,7 +97,7 @@ function skipPage(pageNo) {
 						let check = confirm('確定取消訂單？');
 						if (check) {
 							orderId = cancels[i].closest(".order").children[0].textContent;
-							fetch('http://localhost:8080/simplefitness-servlet/order/CancelOrder', {
+							fetch('/simplefitness-servlet/order/CancelOrder', {
 								method: 'POST',
 								headers: { 'Content-Type': 'application/json' },
 								body: JSON.stringify({
@@ -122,7 +122,7 @@ function skipPage(pageNo) {
 				let orders = document.getElementById(`${order.content[i].orderId}`);
 				orders.addEventListener("click", () => {
 					orderId = orders.children[0].textContent;
-					fetch("http://localhost:8080/simplefitness-servlet/orderDetail/getOrderDetail", {
+					fetch("/simplefitness-servlet/orderDetail/getOrderDetail", {
 						method: 'POST',
 						headers: { 'Content-Type': 'application/json' },
 						body: JSON.stringify({

@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class CountVO {
 	
 	private Integer inCart; 
-	
 	private Integer prodId;
+	private String prodName;
 }

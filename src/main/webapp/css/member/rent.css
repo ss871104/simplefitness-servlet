@@ -25,7 +25,7 @@ body {
 	top: 0;
 	left: 0;
 	background-color: #2c6e49;
-	height: 4.1em;
+	height: 65.6px;
 	z-index: 9;
 }
 
@@ -37,6 +37,13 @@ body {
 	cursor: pointer;
 }
 
+.img_link{
+	box-sizing: border-box;
+    margin: 0;
+    padding: 0!important;
+    display: contents;
+}
+
 .icon {
 	width: 30px;
 	height: 30px;
@@ -44,7 +51,7 @@ body {
 
 .topnav a {
 	float: left;
-	padding: 18px 16px;
+	padding: 15.8px 16px;
 	text-decoration: none;
 	font-size: 17px;
 }

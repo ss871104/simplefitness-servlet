@@ -15,9 +15,13 @@
 .modal-header{
     position: relative;
 }
+.modal-title{
+	text-align: center;
+}
 .close{
-    position:absolute;
-    right:20px;
+    position: absolute;
+    right: 20px;
+    top: 15px;
 }
 .title1{
     background-color:rgba(225, 216, 122, 0.445)

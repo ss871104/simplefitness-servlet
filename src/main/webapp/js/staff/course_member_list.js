@@ -8,7 +8,7 @@
 
    // getById拿有預約該團課的會員
   const courseId = parseInt(sessionStorage.getItem('course'));
-	fetch("http://localhost:8080/simplefitness-servlet/course/GetCourseMemberList", {
+	fetch("/simplefitness-servlet/course/GetCourseMemberList", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({

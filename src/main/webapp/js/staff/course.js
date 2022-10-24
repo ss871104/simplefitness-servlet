@@ -7,6 +7,7 @@ const editStartTime = document.querySelector("#editStartTime");
 const editCourseName = document.querySelector("#editCourseName");
 const editStatus = document.querySelector("#editStatus");
 const editPubStatus = document.querySelector("#editPubStatus");
+const now = moment().subtract(1, 'day').format('YYYY-MM-DD');
 let INDEX = -1;
 let CourseList = [];
 (() => {
@@ -207,7 +208,7 @@ let CourseList = [];
               editCourseName.value = courseData.courseListId.toString();
               editStatus.value = courseData.status;
               editPubStatus.value = courseData.pubStatus;
-
+              
               
               
               // 點擊儲存
@@ -245,6 +246,7 @@ let CourseList = [];
                 courseData.courseListId = editCourseName.value;
                 courseData.status = editStatus.value;
                 courseData.pubStatus = editPubStatus.value;
+                
 
                 let [
                   empId,
@@ -263,8 +265,10 @@ let CourseList = [];
                   courseData.pubStatus,
                   courseData.courseId,
                 ];
-                
-                fetch("http://localhost:8080/simplefitness-servlet/course/editCourse",
+                console.log(editCourseDate.value);
+                console.log(now);
+                if(moment(editCourseDate.value).isAfter(now)) {
+                  fetch("http://localhost:8080/simplefitness-servlet/course/editCourse",
                   {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -277,8 +281,7 @@ let CourseList = [];
                       pubStatus,
                       courseId
                     }),
-                  }
-                )
+                  })
                   .then((resp) => resp.json())
                   .then((body) => {
                     errMsg.textContent = "";
@@ -301,6 +304,9 @@ let CourseList = [];
                       errMsg.textContent = message;
                     }
                   });
+                } else {
+                  alert("只能排今天日期之後的課唷!!")
+                }               
               };
             };
             
@@ -386,30 +392,34 @@ let CourseList = [];
       return;
     }
 
-    let start_time = newCourseDate.value + "T" + newStartTime.value;
-    fetch("http://localhost:8080/simplefitness-servlet/course/addCourse", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        gymId: newGym.value,
-        empId: newCoach.value,
-        startTime: start_time,
-        courseListId: newCourseName.value,
-        status: newStatus.value,
-        pubStatus: newPubStatus.value,
-      }),
-    })
-      .then((resp) => resp.json())
-      .then((body) => {
-        errMsg.textContent = "";
-        const { successful, message } = body;
-        if (successful) {
-          alert("新增成功 ^_^!");
-          history.go();
-        } else {
-          errMsg.textContent = message;
-        }
-      });
+    if(moment(newCourseDate.value).isAfter(now)) {
+      let start_time = newCourseDate.value + "T" + newStartTime.value;
+      fetch("http://localhost:8080/simplefitness-servlet/course/addCourse", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          gymId: newGym.value,
+          empId: newCoach.value,
+          startTime: start_time,
+          courseListId: newCourseName.value,
+          status: newStatus.value,
+          pubStatus: newPubStatus.value,
+        }),
+      })
+        .then((resp) => resp.json())
+        .then((body) => {
+          errMsg.textContent = "";
+          const { successful, message } = body;
+          if (successful) {
+            alert("新增成功 ^_^!");
+            history.go();
+          } else {
+            errMsg.textContent = message;
+          }
+        });
+    } else {
+      alert("只能排今天日期之後的課唷!!")
+    }
   });
 })();
 

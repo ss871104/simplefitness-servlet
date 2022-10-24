@@ -150,9 +150,13 @@ function skipPage(pageNo) {
 
 								if (detail[i].pickupTime == undefined) {
 									detail[i].pickupTime = "-"
+								} else {
+									detail[i].pickupTime = detail[i].pickupTime.replace('T', " ");
 								}
 								if (detail[i].returnTime == undefined) {
 									detail[i].returnTime = "-"
+								} else {
+									detail[i].returnTime = detail[i].returnTime.replace('T', " ");
 								}
 
 								let html = `

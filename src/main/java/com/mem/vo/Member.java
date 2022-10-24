@@ -1,6 +1,6 @@
 package com.mem.vo;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.common.pojo.Common;
@@ -16,10 +16,10 @@ public class Member extends Common {
 	private String memPhone;
 	private String memEmail;
 	private String memGender;
-	private Date memBirth;
-	private Date memRegister;
-	private Date memStart;
-	private Date memExpire;
+	private LocalDate memBirth;
+	private LocalDate memRegister;
+	private LocalDate memStart;
+	private LocalDate memExpire;
 	private LocalDateTime memLogin;
 	private String memStatus;
 	private byte[] memPic;
@@ -118,28 +118,28 @@ public class Member extends Common {
 	public void setMemGender(String memGender) {
 		this.memGender = memGender;
 	}
-	public Date getMemBirth() {
+	public LocalDate getMemBirth() {
 		return memBirth;
 	}
-	public void setMemBirth(Date memBirth) {
+	public void setMemBirth(LocalDate memBirth) {
 		this.memBirth = memBirth;
 	}
-	public Date getMemRegister() {
+	public LocalDate getMemRegister() {
 		return memRegister;
 	}
-	public void setMemRegister(Date memRegister) {
+	public void setMemRegister(LocalDate memRegister) {
 		this.memRegister = memRegister;
 	}
-	public Date getMemStart() {
+	public LocalDate getMemStart() {
 		return memStart;
 	}
-	public void setMemStart(Date memStart) {
+	public void setMemStart(LocalDate memStart) {
 		this.memStart = memStart;
 	}
-	public Date getMemExpire() {
+	public LocalDate getMemExpire() {
 		return memExpire;
 	}
-	public void setMemExpire(Date memExpire) {
+	public void setMemExpire(LocalDate memExpire) {
 		this.memExpire = memExpire;
 	}
 	public LocalDateTime getMemLogin() {

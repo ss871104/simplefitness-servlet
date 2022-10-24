@@ -13,7 +13,7 @@ import com.google.gson.GsonBuilder;
 public class Constants {
 	
 	public static final Gson GSON = new GsonBuilder()
-			.setDateFormat("yyyy-MM-dd")
+			.setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
 			.registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
 			.registerTypeAdapter(LocalTime.class, new LocalTimeAdapter())
 			.registerTypeAdapter(LocalDate.class, new LocalDateAdapter())

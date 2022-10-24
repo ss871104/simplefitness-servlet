@@ -1,6 +1,5 @@
 package com.mem.service.impl;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -142,8 +141,6 @@ public class MemServiceImpl implements MemServiceIntf {
 	public Member empEdit(Member mem) {
 		final String phone = mem.getMemPhone();
 		final String email = mem.getMemEmail();
-		final Date start = mem.getMemStart();
-		final Date expire = mem.getMemExpire();
 		final String status = mem.getMemStatus();
 		
 		if ("".equals(phone)) {

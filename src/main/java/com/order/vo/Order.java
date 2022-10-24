@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.common.pojo.Common;
 
+import ecpay.payment.integration.domain.AioCheckOutALL;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,5 +28,7 @@ public class Order extends Common {
 	private List<CountVO> orderList;
 	private Long count;
 	private PageVo<?> page;
+	private AioCheckOutALL aio;
+	private String payfor;
 	
 }

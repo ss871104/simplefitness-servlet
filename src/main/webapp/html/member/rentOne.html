@@ -13,50 +13,23 @@
       integrity="sha384-xeJqLiuOvjUBq3iGOjvSQSIlwrpqjSHXpduPd6rQpuiM3f5/ijby8pCsnbu5S81n"
       crossorigin="anonymous"
     />
-    <script src="../../js/jquery-3.6.0.min.js"></script>
   </head>
   <body>
     <div style="height: auto">
       <div class="topnav">
-        <img
-          class="logoImg"
-          href="#home"
-          src="../../img/Simple_Fitness-logos_white.png"
-          alt=""
-        />
+        <a class="img_link" href="../guest/home.html">
+            <img class="logoImg" src="../../img/Simple_Fitness-logos_white.png" alt="">
+        </a>
 
         <ul class="list-inline">
-          <li class="dropdown">
-            <a class="topnavBtn" id="home" href="#home">
-              <img class="icon" src="../../img/home.png" alt="" title="首頁" />
-            </a>
-            <div class="dropdown-content">
-              <ul>
-                <li><a href="#">最新消息</a></li>
-                <li><a href="#">場館資訊</a></li>
-                <li><a href="#">課程資訊</a></li>
-                <li><a href="#">收費方式</a></li>
-              </ul>
-            </div>
-          </li>
+         <li class="dropdown">
+                <a class="topnavBtn" id="home" href="../guest/home.html">
+                    <img class="icon" src="../../img/home.png" alt="" title="首頁">
+                </a>
+            </li>
           <li>
-            <a class="topnavBtn" id="cart" href="./cart.html">
-              <img
-                class="icon"
-                src="../../img/cart.png"
-                alt=""
-                title="購物車"
-              /><span>0</span>
-            </a>
-          </li>
-          <li>
-            <a class="topnavBtn" id="notice" href="#notice">
-              <img
-                class="icon"
-                src="../../img/bell.png"
-                alt=""
-                title="通知中心"
-              />
+            <a class="topnavBtn" id="cart" href="cart.html">
+              <img class="icon" src="../../img/cart.png" alt="" title="購物車"/><span>0</span>
             </a>
           </li>
           <li class="dropdown">
@@ -65,7 +38,7 @@
             </a>
             <div class="dropdown-content">
               <ul>
-                <li><a href="#">登出</a></li>
+                 <li><a  href="../guest/login.html" id="logout">登出</a></li>
               </ul>
             </div>
           </li>
@@ -78,25 +51,20 @@
         <div class="side-menu">
           <ul class="nav">
             <li>
-              <a href="#">
-                <i class="fa fa-users" aria-hidden="true"></i>
-                會員資料編輯
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <i class="fa fa-gavel" aria-hidden="true"></i>
-                課程預約
-              </a>
-              <ul>
-                <li>
-                  <a href="#"> 我的預約 </a>
-                </li>
-                <li>
-                  <a href="#"> 預約團課/教練課 </a>
-                </li>
-              </ul>
-            </li>
+				<a href="member_edit.html"> <i class="fa fa-users"
+					aria-hidden="true"></i> 會員資料編輯
+				</a>
+			</li>
+			<li>
+				<a href="booking.html"> <i class="fa fa-gavel"
+					aria-hidden="true"></i> 課程預約
+				</a>
+				<ul>
+					<li><a href="course_booking.html"> 預約團課 </a></li>
+					<li><a href="coach_booking.html"> 預約教練課 </a></li>
+					<li><a href="my_booking.html"> 我的預約 </a></li>
+				</ul>
+			</li>
             <li>
               <a href="./rentFront.html" style="background-color: #7bb593">
                 <i class="fa fa-coins" aria-hidden="true"></i>
@@ -147,7 +115,7 @@
         </main>
       </div>
     </div>
-
+    <script src="../../js/jquery-3.6.0.min.js"></script>
     <script src="../../js/member/rentFront.js"></script>
     <script src="../../js/member/rentOne.js"></script>
     <script src="../../js/member/cart.js"></script>

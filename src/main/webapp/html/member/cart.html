@@ -13,49 +13,26 @@
       integrity="sha384-xeJqLiuOvjUBq3iGOjvSQSIlwrpqjSHXpduPd6rQpuiM3f5/ijby8pCsnbu5S81n"
       crossorigin="anonymous"
     />
-    <script src="../../js/jquery-3.6.0.min.js"></script>
   </head>
-  <body>
+  <body id="pay">
   
     <!-- header -->
 
     <div style="height: auto">
       <div class="topnav">
-        <img
-          class="logoImg"
-          href="#home"
-          src="../../img/Simple_Fitness-logos_white.png"
-          alt=""
-        />
+       <a class="img_link" href="../guest/home.html">
+            <img class="logoImg" src="../../img/Simple_Fitness-logos_white.png" alt="">
+        </a>
 
         <ul class="list-inline">
-          <li class="dropdown">
-            <a class="topnavBtn" id="home" href="#home">
-              <img class="icon" src="../../img/home.png" alt="" title="首頁" />
-            </a>
-            <div class="dropdown-content">
-              <ul>
-                <li><a href="#">最新消息</a></li>
-                <li><a href="#">場館資訊</a></li>
-                <li><a href="#">課程資訊</a></li>
-                <li><a href="#">收費方式</a></li>
-              </ul>
-            </div>
-          </li>
+         <li class="dropdown">
+                <a class="topnavBtn" id="home" href="../guest/home.html">
+                    <img class="icon" src="../../img/home.png" alt="" title="首頁">
+                </a>
+            </li>
           <li>
-            <a class="topnavBtn" id="cart" href="./cart.html">
-              <img
-                class="icon"
-                src="../../img/cart.png"
-                alt=""
-                title="購物車"
-              />
-              <span>0</span>
-            </a>
-          </li>
-          <li>
-            <a class="topnavBtn" id="notice" href="#notice">
-              <img class="icon" src="../../img/bell.png" alt="" title="通知中心" />
+            <a class="topnavBtn" id="cart" href="cart.html">
+              <img class="icon" src="../../img/cart.png" alt="" title="購物車"/><span>0</span>
             </a>
           </li>
           <li class="dropdown">
@@ -64,7 +41,7 @@
             </a>
             <div class="dropdown-content">
               <ul>
-                <li><a href="#">登出</a></li>
+                 <li><a  href="../guest/login.html" id="logout">登出</a></li>
               </ul>
             </div>
           </li>
@@ -79,25 +56,20 @@
         <div class="side-menu">
           <ul class="nav">
             <li>
-              <a href="#">
-                <i class="fa fa-users" aria-hidden="true"></i>
-                會員資料編輯
-              </a>
-            </li>
-            <li>
-              <a href="#">
-                <i class="fa fa-gavel" aria-hidden="true"></i>
-                課程預約
-              </a>
-              <ul>
-                <li>
-                  <a href="#"> 我的預約 </a>
-                </li>
-                <li>
-                  <a href="#"> 預約團課/教練課 </a>
-                </li>
-              </ul>
-            </li>
+				<a href="member_edit.html"> <i class="fa fa-users"
+					aria-hidden="true"></i> 會員資料編輯
+				</a>
+			</li>
+			<li>
+				<a href="booking.html"> <i class="fa fa-gavel"
+					aria-hidden="true"></i> 課程預約
+				</a>
+				<ul>
+					<li><a href="course_booking.html"> 預約團課 </a></li>
+					<li><a href="coach_booking.html"> 預約教練課 </a></li>
+					<li><a href="my_booking.html"> 我的預約 </a></li>
+				</ul>
+			</li>
             <li>
               <a href="./rentFront.html" style="background-color: #7bb593">
                 <i class="fa fa-coins" aria-hidden="true"></i>
@@ -154,56 +126,34 @@
       
               <div class="tab tab2">
                 <div class="tab2Area">
-                  <p>付款方式</p>
-
-                  <label for="cash" class="cash"><input type="radio" id="cash" name="pay" class="cash" value="1">  臨櫃支付</label>
-                  <br>
+					<h3>付款方式</h3>
+                  	<br>
+                 	 <label for="cash" class="cash"><input type="radio" id="cash" name="pay" class="cash" value="1"> 臨櫃支付 <i class="bi bi-piggy-bank-fill"></i></label>
+                 	 <br>
+                 	 <br>
+                 	 <label for="card" class="card"><input type="radio" id="card" name="pay" class="card" value="2"> 信用卡支付 <i class="bi bi-credit-card-2-back-fill"></i></label>
                   
-                  <label for="card" class="card"><input type="radio" id="card" name="pay" class="card" value="2"> 線上信用卡支付</label>
-                  
-
-                  <div class="cardArea">
-                    
-                    <div class="cardNo">
-                      信用卡號
-                      <input type="tel" autocomplete="off" maxlength="4" size="1" class="cardNo" id="cardNo_1" name="cardNo_1"> -
-                      <input type="tel" autocomplete="off" maxlength="4" size="1" class="cardNo" id="cardNo_2" name="cardNo_2"> -
-                      <input type="tel" autocomplete="off" maxlength="4" size="1" class="cardNo" id="cardNo_3" name="cardNo_3"> -
-                      <input type="tel" autocomplete="off" maxlength="4" size="1" class="cardNo" id="cardNo_4" name="cardNo_4">
-                      
-                    </div>
-                    <div class="date">
-                      有效期限
-                      <input type="tel" maxlength="5" size="3"  id="date" name="date" placeholder="MM/YY">
-                    </div>
-                    <div>
-                      安全驗證碼
-                      <input type="tel" maxlength="3" size="1"  id="cvv" name="cvv">
-                    </div>
-                    
-                  </div>
-                  
-                  <button class="tab2_btn">確認結帳</button>
+                 	 <button class="tab2_btn">確認結帳</button>
 
                 </div>
                 
               </div>
       
               <div class="tab tab3">
-                <h4>租借成功！</h4>
+                <h4><i class="bi bi-check2-circle"></i> 租借成功</h4>
                 <div>
                   <ul class="prdList">
                     
                   </ul>
                   
-                  <ul>
-                    <li>租借人：<span class="memName"></span></li>
-                    <li>租借場館：<span class="lastGym"></span></li>
-                    <li>付款方式：<span class="lastPay"></span></li>
-                    <li>租借日期：<span class="startTime"></span></li>
+                  <ul class="detail">
+                  
+                    <li>付款方式：<span class="lastPay">信用卡支付</span></li>
                     <li>請於24小時內取貨</li>
                     <br>
                     <li>通知信已寄出，請至個人信箱查看！</li>
+                  
+
                   </ul>
                   <ul class="prdInfo">
                   </ul>
@@ -215,6 +165,7 @@
         </main>
       </div>
     </div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
     <script src="../../js/member/cart.js"></script>
   </body>
 </html>

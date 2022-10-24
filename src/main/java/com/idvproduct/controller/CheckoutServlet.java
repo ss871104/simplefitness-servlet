@@ -28,9 +28,6 @@ public class CheckoutServlet extends HttpServlet {
 	Gson gson = new Gson(); 
 	 
 	Type idvProductListType = new TypeToken<ArrayList<IdvProduct>>(){}.getType();
-       
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		JsonObject respObject = new JsonObject();

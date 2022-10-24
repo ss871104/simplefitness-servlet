@@ -11,5 +11,6 @@ public interface OrderDetailDaoIntf extends CommonDao<OrderDetail, Integer>{
 	public boolean UpdateStatus(OrderDetail ordetailVo);
 	public boolean UpdatePickup(OrderDetail ordetailVo);
 	public boolean UpdateReturn(OrderDetail ordetailVo);
-	Integer insert2(Integer orderId, Integer gymId, Integer prodId);
+	public Integer insert2(Integer orderId, Integer gymId, Integer prodId);
+	public List<OrderDetail> selectIdvId(Integer orderId);
 }

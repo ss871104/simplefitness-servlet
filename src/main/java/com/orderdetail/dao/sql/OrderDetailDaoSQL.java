@@ -22,5 +22,7 @@ public class OrderDetailDaoSQL {
 			"update order_detail set pickup_time=?, status=? where order_code = ?";
 	public static final String UPDATE_RETURN = 
 			"update order_detail set return_time=?, status=? where order_code = ?";
+	public static final String SELECT_IVDID = 
+			"select idv_id from order_detail where order_id = ?";
 
 }

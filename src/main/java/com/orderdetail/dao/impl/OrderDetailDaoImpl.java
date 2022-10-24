@@ -215,4 +215,29 @@ public class OrderDetailDaoImpl implements OrderDetailDaoIntf {
 		return false;
 	}
 
+	@Override
+	public List<OrderDetail> selectIdvId(Integer orderId) {
+		List<OrderDetail> list = new ArrayList<OrderDetail>();
+		OrderDetail orderdetail = null;
+
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SELECT_IVDID);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setInt(1, orderId);
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+
+				while (rs.next()) {
+					orderdetail = new OrderDetail();
+					orderdetail.setIdvId(rs.getInt("idv_id"));
+					list.add(orderdetail);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 }

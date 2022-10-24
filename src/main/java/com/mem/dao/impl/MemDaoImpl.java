@@ -1,11 +1,25 @@
 package com.mem.dao.impl;
 
-import static com.mem.dao.sql.MemDaoSQL.*;
+import static com.mem.dao.sql.MemDaoSQL.DELETE;
+import static com.mem.dao.sql.MemDaoSQL.INSERT;
+import static com.mem.dao.sql.MemDaoSQL.SELECT_ALL;
+import static com.mem.dao.sql.MemDaoSQL.SELECT_BY_EMAIL;
+import static com.mem.dao.sql.MemDaoSQL.SELECT_BY_ID;
+import static com.mem.dao.sql.MemDaoSQL.SELECT_BY_USERNAME;
+import static com.mem.dao.sql.MemDaoSQL.SELECT_FOR_LOGIN;
+import static com.mem.dao.sql.MemDaoSQL.SELECT_FOR_PASS;
+import static com.mem.dao.sql.MemDaoSQL.SELECT_PASS_BY_USERNAME;
+import static com.mem.dao.sql.MemDaoSQL.UPDATE;
+import static com.mem.dao.sql.MemDaoSQL.UPDATE_BY_MEM;
+import static com.mem.dao.sql.MemDaoSQL.UPDATE_IMG;
+import static com.mem.dao.sql.MemDaoSQL.UPDATE_LAST_LOGIN;
+import static com.mem.dao.sql.MemDaoSQL.UPDATE_PASS_BY_USERNAME;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -64,8 +78,8 @@ public class MemDaoImpl implements MemDaoIntf {
 			
 			pstmt.setString(1, memVo.getMemPhone());
 			pstmt.setString(2, memVo.getMemEmail());
-			pstmt.setDate(3, memVo.getMemStart());
-			pstmt.setDate(4, memVo.getMemExpire());
+			pstmt.setObject(3, memVo.getMemStart());
+			pstmt.setObject(4, memVo.getMemExpire());
 			pstmt.setString(5, memVo.getMemStatus());
 			pstmt.setInt(6, memVo.getMemId());
 			
@@ -117,10 +131,10 @@ public class MemDaoImpl implements MemDaoIntf {
 					mem.setMemPhone(rs.getString("phone"));
 					mem.setMemEmail(rs.getString("email"));
 					mem.setMemGender(rs.getString("gender"));
-					mem.setMemBirth(rs.getDate("birth"));
-					mem.setMemRegister(rs.getDate("register_date"));
-					mem.setMemStart(rs.getDate("start_date"));
-					mem.setMemExpire(rs.getDate("expire_date"));
+					mem.setMemBirth(rs.getObject("birth", LocalDate.class));
+					mem.setMemRegister(rs.getObject("register_date", LocalDate.class));
+					mem.setMemStart(rs.getObject("start_date", LocalDate.class));
+					mem.setMemExpire(rs.getObject("expire_date", LocalDate.class));
 					mem.setMemLogin(rs.getObject("last_login", LocalDateTime.class));
 					mem.setMemStatus(rs.getString("status"));
 					mem.setMemPic(rs.getBytes("pic"));
@@ -154,10 +168,10 @@ public class MemDaoImpl implements MemDaoIntf {
 					mem.setMemPhone(rs.getString("phone"));
 					mem.setMemEmail(rs.getString("email"));
 					mem.setMemGender(rs.getString("gender"));
-					mem.setMemBirth(rs.getDate("birth"));
-					mem.setMemRegister(rs.getDate("register_date"));
-					mem.setMemStart(rs.getDate("start_date"));
-					mem.setMemExpire(rs.getDate("expire_date"));
+					mem.setMemBirth(rs.getObject("birth", LocalDate.class));
+					mem.setMemRegister(rs.getObject("register_date", LocalDate.class));
+					mem.setMemStart(rs.getObject("start_date", LocalDate.class));
+					mem.setMemExpire(rs.getObject("expire_date", LocalDate.class));
 					mem.setMemLogin(rs.getObject("last_login", LocalDateTime.class));
 					mem.setMemStatus(rs.getString("status"));
 					mem.setMemPic(rs.getBytes("pic"));
@@ -195,10 +209,10 @@ public class MemDaoImpl implements MemDaoIntf {
 					mem.setMemPhone(rs.getString("phone"));
 					mem.setMemEmail(rs.getString("email"));
 					mem.setMemGender(rs.getString("gender"));
-					mem.setMemBirth(rs.getDate("birth"));
-					mem.setMemRegister(rs.getDate("register_date"));
-					mem.setMemStart(rs.getDate("start_date"));
-					mem.setMemExpire(rs.getDate("expire_date"));
+					mem.setMemBirth(rs.getObject("birth", LocalDate.class));
+					mem.setMemRegister(rs.getObject("register_date", LocalDate.class));
+					mem.setMemStart(rs.getObject("start_date", LocalDate.class));
+					mem.setMemExpire(rs.getObject("expire_date", LocalDate.class));
 					mem.setMemLogin(rs.getObject("last_login", LocalDateTime.class));
 					mem.setMemStatus(rs.getString("status"));
 					mem.setMemPic(rs.getBytes("pic"));
@@ -237,10 +251,10 @@ public class MemDaoImpl implements MemDaoIntf {
 					mem.setMemPhone(rs.getString("phone"));
 					mem.setMemEmail(rs.getString("email"));
 					mem.setMemGender(rs.getString("gender"));
-					mem.setMemBirth(rs.getDate("birth"));
-					mem.setMemRegister(rs.getDate("register_date"));
-					mem.setMemStart(rs.getDate("start_date"));
-					mem.setMemExpire(rs.getDate("expire_date"));
+					mem.setMemBirth(rs.getObject("birth", LocalDate.class));
+					mem.setMemRegister(rs.getObject("register_date", LocalDate.class));
+					mem.setMemStart(rs.getObject("start_date", LocalDate.class));
+					mem.setMemExpire(rs.getObject("expire_date", LocalDate.class));
 					mem.setMemLogin(rs.getObject("last_login", LocalDateTime.class));
 					mem.setMemStatus(rs.getString("status"));
 					mem.setMemPic(rs.getBytes("pic"));
@@ -280,10 +294,10 @@ public class MemDaoImpl implements MemDaoIntf {
 					mem.setMemPhone(rs.getString("phone"));
 					mem.setMemEmail(rs.getString("email"));
 					mem.setMemGender(rs.getString("gender"));
-					mem.setMemBirth(rs.getDate("birth"));
-					mem.setMemRegister(rs.getDate("register_date"));
-					mem.setMemStart(rs.getDate("start_date"));
-					mem.setMemExpire(rs.getDate("expire_date"));
+					mem.setMemBirth(rs.getObject("birth", LocalDate.class));
+					mem.setMemRegister(rs.getObject("register_date", LocalDate.class));
+					mem.setMemStart(rs.getObject("start_date", LocalDate.class));
+					mem.setMemExpire(rs.getObject("expire_date", LocalDate.class));
 					mem.setMemLogin(rs.getObject("last_login", LocalDateTime.class));
 					mem.setMemStatus(rs.getString("status"));
 					mem.setMemPic(rs.getBytes("pic"));
@@ -314,7 +328,7 @@ public class MemDaoImpl implements MemDaoIntf {
 			pstmt.setString(3, memVo.getMemPhone());
 			pstmt.setString(4, memVo.getMemEmail());
 			pstmt.setString(5, memVo.getMemGender());
-			pstmt.setDate(6, memVo.getMemBirth());
+			pstmt.setObject(6, memVo.getMemBirth());
 			pstmt.setString(7, memVo.getMemUsername());
 			
 			rowCount = pstmt.executeUpdate();		
@@ -368,10 +382,10 @@ public class MemDaoImpl implements MemDaoIntf {
 					mem.setMemPhone(rs.getString("phone"));
 					mem.setMemEmail(rs.getString("email"));
 					mem.setMemGender(rs.getString("gender"));
-					mem.setMemBirth(rs.getDate("birth"));
-					mem.setMemRegister(rs.getDate("register_date"));
-					mem.setMemStart(rs.getDate("start_date"));
-					mem.setMemExpire(rs.getDate("expire_date"));
+					mem.setMemBirth(rs.getObject("birth", LocalDate.class));
+					mem.setMemRegister(rs.getObject("register_date", LocalDate.class));
+					mem.setMemStart(rs.getObject("start_date", LocalDate.class));
+					mem.setMemExpire(rs.getObject("expire_date", LocalDate.class));
 					mem.setMemLogin(rs.getObject("last_login", LocalDateTime.class));
 					mem.setMemStatus(rs.getString("status"));
 					mem.setMemPic(rs.getBytes("pic"));

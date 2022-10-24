@@ -53,7 +53,7 @@ public class SearchCoachServlet extends HttpServlet {
 				.collect(Collectors.toList());
 		// 將課程中有出現在編號清單中的課程過濾掉
 		coachBookingResult = coachBookingResult.stream()
-				.filter(item -> !bookedCoachIdList.contains(item.getCoaId())).toList();
+				.filter(item -> !bookedCoachIdList.contains(item.getCoaId())).collect(Collectors.toList());
 
 		PrintWriter pw = response.getWriter();
 		pw.print(GSON.toJson(coachBookingResult));

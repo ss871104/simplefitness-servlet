@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
@@ -52,7 +53,7 @@ public class SearchCourseServlet extends HttpServlet {
 				.collect(Collectors.toList());
 		// 將課程中有出現在編號清單中的課程過濾掉
 		courseBookingResult = courseBookingResult.stream()
-				.filter(item -> !bookedCourseIdList.contains(item.getCourseId())).toList();
+				.filter(item -> !bookedCourseIdList.contains(item.getCourseId())).collect(Collectors.toList());
 
 		PrintWriter pw = response.getWriter();
 		pw.print(GSON.toJson(courseBookingResult));

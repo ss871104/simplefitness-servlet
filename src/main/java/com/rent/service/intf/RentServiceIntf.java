@@ -9,6 +9,7 @@ import com.orderdetail.vo.OrderDetail;
 public interface RentServiceIntf {
 	
 	public List<Order> selectByMemId(Integer memId);
-	public OrderDetail orderStatusEdit(OrderDetail orderStatus);
+	public OrderDetail orderDetailStatusEdit(OrderDetail orderStatus);
+	public Order orderStatusEdit(Order order);
 	
 }

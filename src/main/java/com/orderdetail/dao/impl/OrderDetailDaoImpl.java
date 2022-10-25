@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -82,8 +83,8 @@ public class OrderDetailDaoImpl implements OrderDetailDaoIntf {
 					orderdetail.setOrderCode(rs.getInt("order_code"));
 					orderdetail.setOrderId(rs.getInt("order_id"));
 					orderdetail.setIdvId(rs.getInt("idv_id"));
-					orderdetail.setPickupTime(rs.getTimestamp("pickup_time"));
-					orderdetail.setReturnTime(rs.getTimestamp("return_time"));
+					orderdetail.setPickupTime(rs.getObject("pickup_time", LocalDateTime.class));
+					orderdetail.setReturnTime(rs.getObject("return_time", LocalDateTime.class));
 					orderdetail.setStatus(rs.getString("status"));
 					list.add(orderdetail);
 				}
@@ -112,8 +113,8 @@ public class OrderDetailDaoImpl implements OrderDetailDaoIntf {
 					orderdetail.setOrderCode(rs.getInt("order_code"));
 					orderdetail.setOrderId(rs.getInt("order_id"));
 					orderdetail.setIdvId(rs.getInt("idv_id"));
-					orderdetail.setPickupTime(rs.getTimestamp("pickup_time"));
-					orderdetail.setReturnTime(rs.getTimestamp("return_time"));
+					orderdetail.setPickupTime(rs.getObject("pickup_time", LocalDateTime.class));
+					orderdetail.setReturnTime(rs.getObject("return_time", LocalDateTime.class));
 					orderdetail.setStatus(rs.getString("status"));
 				}
 			}
@@ -141,8 +142,8 @@ public class OrderDetailDaoImpl implements OrderDetailDaoIntf {
 					orderdetail.setOrderCode(rs.getInt("order_code"));
 					orderdetail.setOrderId(rs.getInt("order_id"));
 					orderdetail.setIdvId(rs.getInt("idv_id"));
-					orderdetail.setPickupTime(rs.getTimestamp("pickup_time"));
-					orderdetail.setReturnTime(rs.getTimestamp("return_time"));
+					orderdetail.setPickupTime(rs.getObject("pickup_time", LocalDateTime.class));
+					orderdetail.setReturnTime(rs.getObject("return_time", LocalDateTime.class));
 					orderdetail.setStatus(rs.getString("status"));
 					orderdetail.setProdName(rs.getString("prod_name"));
 					list.add(orderdetail);
@@ -180,7 +181,7 @@ public class OrderDetailDaoImpl implements OrderDetailDaoIntf {
 
 			System.out.println("連線成功");
 
-			pstmt.setTimestamp(1, orderDetailVo.getPickupTime());
+			pstmt.setObject(1, orderDetailVo.getPickupTime());
 			pstmt.setString(2, orderDetailVo.getStatus());
 			pstmt.setInt(3, orderDetailVo.getOrderCode());
 
@@ -199,7 +200,7 @@ public class OrderDetailDaoImpl implements OrderDetailDaoIntf {
 
 			System.out.println("連線成功");
 
-			pstmt.setTimestamp(1, orderDetailVo.getReturnTime());
+			pstmt.setObject(1, orderDetailVo.getReturnTime());
 			pstmt.setString(2, orderDetailVo.getStatus());
 			pstmt.setInt(3, orderDetailVo.getOrderCode());
 

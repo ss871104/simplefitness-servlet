@@ -94,7 +94,7 @@ public class OrderServiceImpl implements OrderServiceIntf {
 	@Override
 	public boolean CancelOrder(Order order) {
 		order.setStatus("0");
-		dao.UpdateStatus(order);
+		dao.updateStatus(order);
 		List<OrderDetail> idvIds = detailDao.selectIdvId(order.getOrderId());
 		for(int i = 0; i < idvIds.size(); i++) {
 			idvDao.updateStatus("1", idvIds.get(i).getIdvId());

@@ -2,6 +2,7 @@ package com.orderdetail.vo;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import com.common.pojo.Common;
 
@@ -11,15 +12,15 @@ public class OrderDetail extends Common implements Serializable{
 	private Integer orderCode;
 	private Integer orderId;
 	private Integer idvId;
-	private Timestamp pickupTime;
-	private Timestamp returnTime;
+	private LocalDateTime pickupTime;
+	private LocalDateTime returnTime;
 	private String status;
 	private Integer gymId;
 	private Integer prodId;
 	private Integer inCart;
 	private String prodName;
 	
-	public OrderDetail(Integer orderCode, Integer orderId, Integer idvId, Timestamp pickupTime, Timestamp returnTime,
+	public OrderDetail(Integer orderCode, Integer orderId, Integer idvId, LocalDateTime pickupTime, LocalDateTime returnTime,
 			String status) {
 		super();
 		this.orderCode = orderCode;
@@ -57,19 +58,19 @@ public class OrderDetail extends Common implements Serializable{
 		this.idvId = idvId;
 	}
 
-	public Timestamp getPickupTime() {
+	public LocalDateTime getPickupTime() {
 		return pickupTime;
 	}
 
-	public void setPickupTime(Timestamp pickupTime) {
+	public void setPickupTime(LocalDateTime pickupTime) {
 		this.pickupTime = pickupTime;
 	}
 
-	public Timestamp getReturnTime() {
+	public LocalDateTime getReturnTime() {
 		return returnTime;
 	}
 
-	public void setReturnTime(Timestamp returnTime) {
+	public void setReturnTime(LocalDateTime returnTime) {
 		this.returnTime = returnTime;
 	}
 

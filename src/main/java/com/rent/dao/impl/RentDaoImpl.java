@@ -16,6 +16,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import com.order.vo.Order;
+import com.orderdetail.vo.OrderDetail;
 import com.rent.dao.intf.RentDaoIntf;
 import static com.rent.dao.sql.RentDaoSQL.*;
 
@@ -90,20 +91,38 @@ public class RentDaoImpl implements RentDaoIntf{
 	}
 
 	@Override
-	public boolean updateStatus(String status, Integer id) {
+	public boolean updateStatus(OrderDetail orderDetail) {
 		int rowCount = 0;
+		if (orderDetail.getReturnTime() == null) {
+			try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(UPDATE_STATUS_P);) {
 
-		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(UPDATE_STATUS);) {
+				System.out.println("連線成功");
 
-			System.out.println("連線成功");
+				pstmt.setString(1, orderDetail.getStatus());
+				pstmt.setObject(2, orderDetail.getPickupTime());
+				pstmt.setInt(3, orderDetail.getOrderCode());
 
-			pstmt.setString(1, status);
-			pstmt.setInt(2, id);
+				rowCount = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return rowCount != 0;
+		} else {
+			try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(UPDATE_STATUS_P_R);) {
 
-			rowCount = pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
+				System.out.println("連線成功");
+
+				pstmt.setString(1, orderDetail.getStatus());
+				pstmt.setObject(2, orderDetail.getPickupTime());
+				pstmt.setObject(3, orderDetail.getReturnTime());
+				pstmt.setInt(4, orderDetail.getOrderCode());
+
+				rowCount = pstmt.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			return rowCount != 0;
 		}
-		return rowCount != 0;
+		
 	}
 }

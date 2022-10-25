@@ -221,7 +221,7 @@ public class OrderDaoImpl implements OrderDaoIntf {
 	}
 
 	@Override
-	public boolean UpdateStatus(Order orderVo) {
+	public boolean updateStatus(Order orderVo) {
 		int rowCount = 0;
 
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(UPDATE_STATUS);) {

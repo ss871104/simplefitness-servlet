@@ -6,14 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/boostrap/bootstrap.min.css">
-    <link rel="stylesheet" href="../../css/staff/emp_change_pass.css">
+    <link rel="stylesheet" href="../../css/staff/rent.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-    <title>員工更改密碼</title>
+    <title>租借用品</title>
 
- 
+
 </head>
 
 <body>
+
 
     <div class="topnav">
 
@@ -113,27 +115,71 @@
             </ul>
         </div>
 
-        <div class="change-pass">
+        <div class="order-body">
             <div class="content-body">
-                <div class="pass-input">
-                    <h4>更改密碼</h4>
-                    舊密碼
-                    <input type="password" class="form-control" placeholder="舊密碼" id="oPassword"><br>
-                    新密碼
-                    <input type="password" class="form-control" placeholder="新密碼" id="nPassword"><br>
-                    確認新密碼
-                    <input type="password" class="form-control" placeholder="確認新密碼" id="confirm-nPassword"><br>
-                    <button type="button" class="btn-submit" id="change">確認</button>
-                    <div id="errMsg" class="error" style="color: red;"></div>
+                <div class="order-block">
+                    <p><i class="fa-solid fa-list-check"> 租借用品</i></p>
+                    <hr>
+                    <input type="text" id="memId" name="orderId" placeholder="請輸入會員編號">
+                    <button id="search">查詢</button>
+                    <table class="table table-striped" style="margin-top:5%;">
+                        <thead>
+                        <tr>
+                            <th scope="col">訂單編號</th>
+                            <th scope="col">訂單狀態</th>
+                            <th scope="col">編輯</th>
+                            <th scope="col">訂單明細</th>
+                        </tr>
+                        </thead>
+                        <tbody class="info">
+                            <!-- get all 進來 -->
+                        </tbody>
+                        
+                    </table>
                 </div>
-                    
+                 
+            </div>
+
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">個別產品資料編輯</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="status">訂單編號：</label>
+                        <span id="id-input"></span><br>
+                        <label for="status">訂單狀態：</label>
+                        <input type="radio" name="status" value="0" id="zero-input">已取消
+                        <input type="radio" name="status" value="1" id="one-input">已付款
+                        <input type="radio" name="status" value="2" id="two-input">未付款<br>
+                        <div id="errMsg" class="error" style="color: red;"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                        <button type="button" class="btn btn-primary" id="edit" >儲存</button>
+                    </div>
+                </div>
             </div>
         </div>
 
-    </div>
+    </div>   
 
-    <script src="../../js/staff/emp_change_pass.js"></script>
+            
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="../../js/staff/rent.js"></script>
     <script src="../../js/member/logout.js"></script>
+
 
 </body>
 

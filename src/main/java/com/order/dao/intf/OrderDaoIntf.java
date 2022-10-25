@@ -10,7 +10,7 @@ public interface OrderDaoIntf extends CommonDao<Order, Integer>{
 	
     public List<Order> selectByMem(Integer memId, Integer pageNo, Integer pageSize);
     public List<Order> SelectByGym(Integer gymId);
-    public boolean UpdateStatus(Order orderVo);
+    public boolean updateStatus(Order orderVo);
     public Integer insertGetOrderId(Order orderVo);
     public Long findCountByMem(Integer memId);
 }

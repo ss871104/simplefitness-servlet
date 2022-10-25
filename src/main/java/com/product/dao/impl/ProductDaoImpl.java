@@ -31,21 +31,66 @@ public class ProductDaoImpl implements ProductDaoIntf {
 	}
 
 	@Override
-	public boolean insert(Product vo) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean insert(Product prodVo) {
+
+		int rowCount = 0;
+
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(INSERT);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setString(1, prodVo.getProdName());
+			pstmt.setInt(2, prodVo.getPrice());
+			pstmt.setString(3, prodVo.getIntro());
+			pstmt.setBytes(4, prodVo.getProdPic());
+
+			rowCount = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rowCount != 0;
+
 	}
 
 	@Override
-	public boolean update(Product vo) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean update(Product prodVo) {
+
+		int rowCount = 0;
+
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(UPDATE);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setString(1, prodVo.getProdName());
+			pstmt.setInt(2, prodVo.getPrice());
+			pstmt.setString(3, prodVo.getIntro());
+			pstmt.setInt(4, prodVo.getProdId());
+
+			rowCount = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rowCount != 0;
+
 	}
 
 	@Override
-	public boolean delete(Integer id) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean delete(Integer prodId) {
+
+		int rowCount = 0;
+
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(DELETE);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setInt(1, prodId);
+
+			rowCount = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rowCount != 0;
+
 	}
 
 	@Override
@@ -83,8 +128,6 @@ public class ProductDaoImpl implements ProductDaoIntf {
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SELECT_ALL);) {
 			try (ResultSet rs = pstmt.executeQuery()) {
 
-				
-
 				while (rs.next()) {
 					Product product = new Product();
 					product.setProdId(rs.getInt("prod_id"));
@@ -104,6 +147,12 @@ public class ProductDaoImpl implements ProductDaoIntf {
 			return null;
 		}
 		return list;
+	}
+
+	@Override
+	public Product selectByProdName(String prodName) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -13,6 +13,10 @@ public interface IdvProductDaoIntf extends CommonDao<IdvProduct, Integer> {
 	
 	public List<IdvProduct> selectByGym(Integer gymId);
 	public IdvProduct selectCount(Integer gymId, Integer prodId);
-	public boolean UpdateStatus(String status, Integer id);
+//	public List<IdvProduct> selectByGym2(Integer gymId, Integer prodId);
+	public boolean updateStatus(String status, Integer id);
+	public boolean updateGym(Integer gymId, Integer idvId);
+	public boolean editProdGym(IdvProduct idvprod);
+	public List<IdvProduct> selectGymGetProd(Integer prodId,Integer gymId);
 	
 }

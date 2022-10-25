@@ -1,6 +1,6 @@
 package com.product.controller;
 
-import static com.common.util.GsonUtil.writePojo2Json;
+import static com.common.util.GsonUtil.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,22 +11,33 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.common.util.GsonUtil;
 import com.product.service.impl.ProductServiceImpl;
 import com.product.service.intf.ProductServiceIntf;
 import com.product.vo.Product;
 
-@WebServlet("/product/getAllProduct")
-public class GetAllProductServlet extends HttpServlet {
+
+@WebServlet("/product/SelectById")
+public class SelectByIdProductServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	private ProductServiceIntf service = new ProductServiceImpl();
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		setHeaders(response);
-		List<Product> list = service.getAll();
+		
+		Product product = json2Pojo(request, Product.class);
+//		接前端資料 用Product.class(vo)接
+		product = service.selectById(product.getProdId());
+//		32行product為30行呼叫service的更新版product
+		
+//		ProductServiceImpl 第29行prod = 32行的product
+		
+//		第二種寫法
+//		product = service.selectById(product);
 
-		writePojo2Json(response, list);
+		writePojo2Json(response, product);
 	}
 
 	@Override
@@ -47,5 +58,5 @@ public class GetAllProductServlet extends HttpServlet {
 		response.addHeader("Access-Control-Allow-Headers", "*");
 		response.addHeader("Access-Control-Max-Age", "86400");
 	}
-
+	
 }

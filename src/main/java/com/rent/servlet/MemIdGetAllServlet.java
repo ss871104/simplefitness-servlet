@@ -1,8 +1,10 @@
-package com.product.controller;
+package com.rent.servlet;
 
+import static com.common.util.GsonUtil.json2Pojo;
 import static com.common.util.GsonUtil.writePojo2Json;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -11,30 +13,36 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.product.service.impl.ProductServiceImpl;
-import com.product.service.intf.ProductServiceIntf;
-import com.product.vo.Product;
+import com.order.vo.Order;
+import com.rent.service.impl.RentServiceImpl;
+import com.rent.service.intf.RentServiceIntf;
 
-@WebServlet("/product/getAllProduct")
-public class GetAllProductServlet extends HttpServlet {
+@WebServlet("/rent/MemIdGetAllServlet")
+public class MemIdGetAllServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
-	private ProductServiceIntf service = new ProductServiceImpl();
-
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	private RentServiceIntf service = new RentServiceImpl();
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		setHeaders(response);
-		List<Product> list = service.getAll();
-
+		
+		Order order = json2Pojo(request, Order.class);
+		
+		List<Order> list = new ArrayList<Order>();
+		
+		list = service.SelectByMemId(order.getMemId());
+		
 		writePojo2Json(response, list);
+		
 	}
-
+	
 	@Override
 	protected void doOptions(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		setHeaders(response);
 	}
-
+	
 	private void setHeaders(HttpServletResponse response) {
 
 		response.setContentType("application/json;charset=UTF-8"); // 重要
@@ -47,5 +55,6 @@ public class GetAllProductServlet extends HttpServlet {
 		response.addHeader("Access-Control-Allow-Headers", "*");
 		response.addHeader("Access-Control-Max-Age", "86400");
 	}
-
+	
+	
 }

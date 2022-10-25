@@ -1,8 +1,10 @@
-package com.product.controller;
+package com.idvproduct.controller;
 
+import static com.common.util.GsonUtil.json2Pojo;
 import static com.common.util.GsonUtil.writePojo2Json;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -11,30 +13,36 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.product.service.impl.ProductServiceImpl;
-import com.product.service.intf.ProductServiceIntf;
-import com.product.vo.Product;
+import com.idvproduct.service.impl.IdvProductServiceImpl;
+import com.idvproduct.service.intf.IdvProductServiceIntf;
+import com.idvproduct.vo.IdvProduct;
 
-@WebServlet("/product/getAllProduct")
-public class GetAllProductServlet extends HttpServlet {
+@WebServlet("/idvProduct/SelectGymGetProd")
+public class SelectGymGetProdServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
-	private ProductServiceIntf service = new ProductServiceImpl();
-
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	private IdvProductServiceIntf service = new IdvProductServiceImpl();
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		setHeaders(response);
-		List<Product> list = service.getAll();
-
+		
+		IdvProduct idvProduct = json2Pojo(request, IdvProduct.class);
+		
+		List<IdvProduct> list = new ArrayList<IdvProduct>();
+		
+		list = service.selectGymGetProd(idvProduct.getProdId(),idvProduct.getGymId());
+		
 		writePojo2Json(response, list);
+		
 	}
-
+	
 	@Override
 	protected void doOptions(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		setHeaders(response);
 	}
-
+	
 	private void setHeaders(HttpServletResponse response) {
 
 		response.setContentType("application/json;charset=UTF-8"); // 重要
@@ -47,5 +55,6 @@ public class GetAllProductServlet extends HttpServlet {
 		response.addHeader("Access-Control-Allow-Headers", "*");
 		response.addHeader("Access-Control-Max-Age", "86400");
 	}
-
+	
+	
 }

@@ -1,7 +1,7 @@
 package com.idvproduct.dao.impl;
 
 import static com.idvproduct.dao.sql.IdvProductDaoSQL.*;
-
+import static com.product.dao.sql.ProductDaoSQL.UPDATE;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,10 +21,8 @@ import com.idvproduct.dao.intf.IdvProductDaoIntf;
 import com.idvproduct.vo.IdvProduct;
 import com.product.vo.Product;
 
+public class IdvProductDaoImpl implements IdvProductDaoIntf {
 
-
-public class IdvProductDaoImpl  implements IdvProductDaoIntf{
-	
 	private static DataSource ds = null;
 
 	static {
@@ -42,9 +40,60 @@ public class IdvProductDaoImpl  implements IdvProductDaoIntf{
 	}
 
 	@Override
-	public boolean update(IdvProduct vo) {
-		return false;
+	public boolean update(IdvProduct idvProdVo) {
+		int rowCount = 0;
+
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(UPDATE);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setInt(1, idvProdVo.getCount());
+			pstmt.setInt(2, idvProdVo.getGymId());
+
+			rowCount = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rowCount != 0;
 	}
+
+	@Override
+	public boolean editProdGym(IdvProduct idvprod) {
+		int rowCount = 0;
+
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(UPDATE_PROD_GYM);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setString(1, idvprod.getStatus());
+			pstmt.setInt(2, idvprod.getGymId());
+			pstmt.setInt(3, idvprod.getIdvId());
+
+			rowCount = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rowCount != 0;
+
+	}
+//	@Override
+//	public boolean updateStatus2(IdvProduct idvProd) {
+//		int rowCount = 0;
+//
+//		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(UPDATE_STATUS2);) {
+//
+//			System.out.println("連線成功");
+//
+//			pstmt.setString(1,idvProd.getStatus());
+//			pstmt.setInt(2, idvProd.getGymId());
+//			pstmt.setInt(3, idvProd.getIdvId());
+//
+//			rowCount = pstmt.executeUpdate();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return rowCount != 0;
+//	}
 
 	@Override
 	public boolean delete(Integer id) {
@@ -63,16 +112,17 @@ public class IdvProductDaoImpl  implements IdvProductDaoIntf{
 
 	@Override
 	public List<IdvProduct> selectByGym(Integer gymId) {
-		
+
 		List<IdvProduct> list = new ArrayList<IdvProduct>();
 		IdvProduct idvProduct = null;
-		
-		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(SELECT_COUNT_BY_GYM);) {
+
+		try (Connection con = ds.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(SELECT_COUNT_BY_GYM);) {
 
 			System.out.println("連線成功");
-			
+
 			pstmt.setInt(1, gymId);
-			
+
 			try (ResultSet rs = pstmt.executeQuery()) {
 
 				while (rs.next()) {
@@ -88,17 +138,48 @@ public class IdvProductDaoImpl  implements IdvProductDaoIntf{
 		return list;
 	}
 
+//	@Override
+//	public List<IdvProduct> selectByGym2(Integer gymId, Integer prodId) {
+//
+//		List<IdvProduct> list = new ArrayList<IdvProduct>();
+//		IdvProduct idvProduct = null;
+//
+//		try (Connection con = ds.getConnection();
+//				PreparedStatement pstmt = con.prepareStatement(FIND_ALL_PRODUCT_BY_GYM2);) {
+//
+//			System.out.println("連線成功");
+//
+//			pstmt.setInt(1, gymId);
+//			pstmt.setInt(2, prodId);
+//
+//			try (ResultSet rs = pstmt.executeQuery()) {
+//
+//				while (rs.next()) {
+//					idvProduct = new IdvProduct();
+//					idvProduct.setIdvId(rs.getInt("idv_id"));
+//					idvProduct.setGymId(rs.getInt("gym_id"));
+//					idvProduct.setProdId(rs.getInt("prod_id"));
+//					idvProduct.setStatus(rs.getString("status"));
+//
+//					list.add(idvProduct);
+//				}
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return list;
+//	}
 
 	@Override
 	public IdvProduct selectCount(Integer prodId) {
 		IdvProduct idvProduct = null;
-		
+
 		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(FIND_COUNT);) {
 
 			System.out.println("連線成功");
-			
+
 			pstmt.setInt(1, prodId);
-			
+
 			try (ResultSet rs = pstmt.executeQuery()) {
 
 				if (rs.next()) {
@@ -113,10 +194,10 @@ public class IdvProductDaoImpl  implements IdvProductDaoIntf{
 	}
 
 	@Override
-	public boolean UpdateStatus(String status, Integer id) {
+	public boolean updateStatus(String status, Integer id) {
 		int rowCount = 0;
 
-		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(UPDATE_STATUS);) {
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(UPDATE_GYM);) {
 
 			System.out.println("連線成功");
 
@@ -129,7 +210,53 @@ public class IdvProductDaoImpl  implements IdvProductDaoIntf{
 		}
 		return rowCount != 0;
 	}
-	
 
-	
+	@Override
+	public boolean updateGym(Integer gymId, Integer idvId) {
+		int rowCount = 0;
+
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(UPDATE_GYM);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setInt(1, gymId);
+			pstmt.setInt(2, idvId);
+
+			rowCount = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rowCount != 0;
+	}
+
+	@Override
+	public List<IdvProduct> selectGymGetProd(Integer prodId, Integer gymId) {
+
+		List<IdvProduct> list = new ArrayList<IdvProduct>();
+		IdvProduct idvProduct = null;
+
+		try (Connection con = ds.getConnection();
+				PreparedStatement pstmt = con.prepareStatement(SELECT_GYM_GET_PROD);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setInt(1, prodId);
+			pstmt.setInt(2, gymId);
+
+			try (ResultSet rs = pstmt.executeQuery()) {
+
+				while (rs.next()) {
+					idvProduct = new IdvProduct();
+					idvProduct.setIdvId(rs.getInt("idv_id"));
+					idvProduct.setGymId(rs.getInt("gym_id"));
+					idvProduct.setStatus(rs.getString("status"));
+					list.add(idvProduct);
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+
 }

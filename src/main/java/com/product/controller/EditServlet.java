@@ -1,34 +1,45 @@
 package com.product.controller;
 
+import static com.common.util.Constants.GSON;
+import static com.common.util.GsonUtil.json2Pojo;
 import static com.common.util.GsonUtil.writePojo2Json;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.mem.vo.Member;
+import com.product.dao.intf.ProductDaoIntf;
 import com.product.service.impl.ProductServiceImpl;
 import com.product.service.intf.ProductServiceIntf;
 import com.product.vo.Product;
 
-@WebServlet("/product/getAllProduct")
-public class GetAllProductServlet extends HttpServlet {
+@WebServlet("/product/edit")
+public class EditServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ProductServiceIntf service = new ProductServiceImpl();
 
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
 		setHeaders(response);
-		List<Product> list = service.getAll();
 
-		writePojo2Json(response, list);
+		Product product = json2Pojo(request, Product.class);
+
+		product = service.prodEdit(product);
+//		product = service.prodEdit(product.getrPrice());
+//		product = service.prodEdit(product.getIntro());
+//		product = service.prodEdit(product.getCount());
+		
+		writePojo2Json(response, product);
 	}
-
+	
 	@Override
 	protected void doOptions(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -47,5 +58,4 @@ public class GetAllProductServlet extends HttpServlet {
 		response.addHeader("Access-Control-Allow-Headers", "*");
 		response.addHeader("Access-Control-Max-Age", "86400");
 	}
-
 }

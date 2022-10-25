@@ -1,13 +1,10 @@
 (() => {
-	$('#myModal').on('shown.bs.modal', function() {
-		$('#myInput').trigger('focus')
-	});
 	
 	// selectById
 	var prodId = sessionStorage.getItem('product');
 	prodId = parseInt(prodId);
 	console.log(prodId);
-	fetch("http://localhost:8080/simplefitness-servlet/product/SelectById", {
+	fetch("/simplefitness-servlet/product/SelectById", {
 	method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
@@ -73,11 +70,10 @@
 		} else {
 			picBase64 = picBase64.src;
 		}
-		fetch('http://localhost:8080/simplefitness-servlet/product/edit', {
+		fetch('/simplefitness-servlet/product/edit', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
-				// memPicBase64: picBase64,
 				prodName: Pname.value,
 				price: price.value,
 				intro: intro.value,
@@ -96,10 +92,4 @@
 			});
 	});
 
-	document.getElementById('logout').addEventListener('click', () => {
-		fetch("http://localhost:8080/simplefitness-servlet/member/logout")
-			.then(body => {
-				location = '../guest/home.html';
-			});
-	});
 })();

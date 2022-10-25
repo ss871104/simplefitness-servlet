@@ -1,6 +1,6 @@
 (() => {
 	// 一進來get gym
-	fetch("http://localhost:8080/simplefitness-servlet/gym/getAllGym")
+	fetch("/simplefitness-servlet/gym/getAllGym")
 		.then(resp => resp.json())
 		.then(gym => {
 			for (i = 0; i < gym["length"]; i++) {
@@ -21,7 +21,7 @@
 	$("#gym-input").change(function() {
 		$(".info").html("");
 
-		fetch("http://localhost:8080/simplefitness-servlet/idvProduct/SelectGymGetProd", {
+		fetch("/simplefitness-servlet/idvProduct/SelectGymGetProd", {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
@@ -32,7 +32,7 @@
 			.then(resp => resp.json())
 			.then(body => {
 
-				for (i = 0; i < body["length"]; i++)  {
+				for (i = 0; i < body["length"]; i++) {
 					let gymName = sessionStorage.getItem(`'gym${body[i].gymId}'`);
 					let idvStatus = "";
 					if (body[i].status == "0") {
@@ -103,7 +103,7 @@
 						return;
 					}
 					console.log(gym.value);
-					fetch('http://localhost:8080/simplefitness-servlet/idvProduct/editIdvProdGym', {
+					fetch('/simplefitness-servlet/idvProduct/editIdvProdGym', {
 						method: 'POST',
 						headers: { 'Content-Type': 'application/json' },
 						body: JSON.stringify({
@@ -128,19 +128,6 @@
 
 			})
 
-		// var statusinput = $('input[name="status"]').filter(':checked').val();
-		// console.log(statusinput);
-		// var gyminput=('#gym-input option:selected').val(); 
-		// console.log(gyminput);
-
-		// fetch("http://localhost:8080/simplefitness-servlet/idvProduct/SelectGymGetProd", {
-		//     method: 'POST',
-		//     headers: { 'Content-Type': 'application/json' },
-		//     body: JSON.stringify({
-		//         gymId: gyminput,
-		//         status: statusinput
-		//     })
-		// })
 	})
 
 	// 新增資料
@@ -167,8 +154,7 @@
 			errMsg.textContent = '狀態未更新';
 			return;
 		}
-		console.log(gym.value);
-		fetch('http://localhost:8080/simplefitness-servlet/idvProduct/idvProdInsert', {
+		fetch('/simplefitness-servlet/idvProduct/idvProdInsert', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({

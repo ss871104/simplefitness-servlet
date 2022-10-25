@@ -105,6 +105,10 @@
 		} else {
 			picBase64 = picBase64.src;
 		}
+		if (phone.value.length > 10) {
+			errMsg.textContent = '電話號碼不能超過十碼';
+			return;
+		}
 		let selected_gender;
 		if (gender[0].checked == true) {
 			selected_gender = gender[0];

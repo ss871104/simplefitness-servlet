@@ -163,6 +163,10 @@
 			errMsg.textContent = '所屬健身房未選';
 			return;
 		}
+		if (phone.value.length > 10) {
+			errMsg.textContent = '電話號碼不能超過十碼';
+			return;
+		}
 		let selected_job;
 		if (job[0].checked == true) {
 			selected_job = job[0];

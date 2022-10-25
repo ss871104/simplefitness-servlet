@@ -1,10 +1,10 @@
 (() => {
 	// 一進來get all
-	fetch("http://localhost:8080/simplefitness-servlet/product/getAllProduct")
-	.then(resp => resp.json())
-	.then(product => {
-		for (i = 0; i < product["length"]; i++){
-		  let text = `
+	fetch("/simplefitness-servlet/product/getAllProduct")
+		.then(resp => resp.json())
+		.then(product => {
+			for (i = 0; i < product["length"]; i++) {
+				let text = `
 		  	<tr>
 				<td>${product[i].prodId}</td>
 				<td>${product[i].prodName}</td>
@@ -12,63 +12,63 @@
 				<td><button type="button" class="btn btn-secondary" id="idv${product[i].prodId}" value="${product[i].prodId}">進入</button></td>
 				<td><button type="button" class="btn btn-secondary" id="product${product[i].prodId}" value="${product[i].prodId}">進入</button></td>
 	  		</tr>`;
-		// 反引號 錢字號 大括號 三個為一包 出現在html 中的js
-			$(".info").append(text);
-		}
-		
-		// 點擊進入編輯
-		for (i = 0; i < product["length"]; i++){
-		const button = document.querySelector(`#product${product[i].prodId}`);
+				// 反引號 錢字號 大括號 三個為一包 出現在html 中的js
+				$(".info").append(text);
+			}
 
-			button.addEventListener('click', () => {
-				sessionStorage.setItem('product', button.value);
-				location = './product_edit.html';
-			});
-		}
+			// 點擊進入編輯
+			for (i = 0; i < product["length"]; i++) {
+				const button = document.querySelector(`#product${product[i].prodId}`);
 
-		// 點擊進入個別產品
-		for (i = 0; i < product["length"]; i++){
-			const button = document.querySelector(`#idv${product[i].prodId}`);
-			// js基本語法, id與class, 抓id要用#來抓
+				button.addEventListener('click', () => {
+					sessionStorage.setItem('product', button.value);
+					location = './product_edit.html';
+				});
+			}
+
+			// 點擊進入個別產品
+			for (i = 0; i < product["length"]; i++) {
+				const button = document.querySelector(`#idv${product[i].prodId}`);
+				// js基本語法, id與class, 抓id要用#來抓
 				button.addEventListener('click', () => {
 					sessionStorage.setItem('product', button.value);
 					location = './idvproduct.html';
 				});
 			}
-	});
+		});
 
-// 彈窗選擇圖片的預覽圖片
-window.addEventListener("load", function() {
-	var the_file_element = document.getElementById("pic");
-	the_file_element.addEventListener("change", function(e) {
+	// 彈窗選擇圖片的預覽圖片
+	window.addEventListener("load", function() {
+		var the_file_element = document.getElementById("pic");
+		the_file_element.addEventListener("change", function(e) {
 
-		var preview_pic = document.getElementById("preview-pic");
-		
-		preview_pic.innerHTML = ""; // 讓預覽圖消失
+			var preview_pic = document.getElementById("preview-pic");
 
-		// 跑使用者選的檔案
-		let reader = new FileReader(); // 用來讀取檔案
-		reader.readAsDataURL(this.files[0]); // 讀取檔案
-		reader.addEventListener("load", function() {
+			preview_pic.innerHTML = ""; // 讓預覽圖消失
+
+			// 跑使用者選的檔案
+			let reader = new FileReader(); // 用來讀取檔案
+			reader.readAsDataURL(this.files[0]); // 讀取檔案
+			reader.addEventListener("load", function() {
 				console.log(reader.result);
 				let pic_html = `
 			<img src="${reader.result}" id="new-pic">
 		  `;
-				  preview_pic.insertAdjacentHTML("beforeend", pic_html); // 加進節點
+				preview_pic.insertAdjacentHTML("beforeend", pic_html); // 加進節點
 			});
-			
+
+		});
+
 	});
-	
-});
 
 
-// 點擊新增
+	// 點擊新增
 	const Pname = document.querySelector('#name-input');
 	const price = document.querySelector('#price-input');
 	const intro = document.querySelector('#intro-input');
 	const preview_pic = document.querySelector('#preview-pic');
 	const errMsg = document.querySelector('#errMsg');
-	
+
 	document.getElementById('add').addEventListener('click', () => {
 		let picBase64 = document.querySelector('#new-pic');
 		if (preview_pic.innerHTML == "") {
@@ -78,7 +78,7 @@ window.addEventListener("load", function() {
 		}
 		console.log(picBase64);
 
-		fetch('http://localhost:8080/simplefitness-servlet/product/addItem', {
+		fetch('/simplefitness-servlet/product/addItem', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({
@@ -100,48 +100,5 @@ window.addEventListener("load", function() {
 			});
 	});
 
-	})();
-	
+})();
 
-	// 點擊新增
-// 	const name = document.querySelector('#name-input');
-// 	const address = document.querySelector('#address-input');
-// 	const phone = document.querySelector('#phone-input');
-// 	const open_date = document.querySelector('#publish-input');
-// 	const open_time = document.querySelector('#open-input');
-// 	const close_time = document.querySelector('#close-input');
-// 	const count = document.querySelector('#count-input');
-// 	const intro = document.querySelector('#intro-input');
-// 	const errMsg = document.querySelector('#errMsg');
-// 	document.getElementById('add').addEventListener('click', () => {
-// 		if (count.value == "") {
-// 			errMsg.textContent = '人數上限未填';
-// 			return;
-// 		}
-// 		fetch('http://localhost:8080/simplefitness-servlet/product/addItem', {
-// 			method: 'POST',
-// 			headers: { 'Content-Type': 'application/json' },
-// 			body: JSON.stringify({
-// 				gymName: name.value,
-// 				address: address.value,
-// 				phone: phone.value,
-// 				openDate: open_date.value,
-// 				openTime: open_time.value,
-// 				closeTime: close_time.value,
-// 				maxPeople: count.value,
-// 				intro: intro.value
-// 			}),
-// 		})
-// 			.then(resp => resp.json())
-// 			.then(body => {
-// 				errMsg.textContent = '';
-// 				const { successful, message } = body;
-// 				if (successful) {
-// 					location = './product.html';
-// 				} else {
-// 					errMsg.textContent = message;
-// 				}
-// 			});
-// 	});
-	
-// })();

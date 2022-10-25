@@ -10,5 +10,6 @@ import com.order.vo.Order;
 public interface RentDaoIntf extends CommonDao<Order, Integer>{
 
 	public List<Order> selectByMemId(Integer memId);
+	public boolean updateStatus(String status, Integer id);
 	
 }

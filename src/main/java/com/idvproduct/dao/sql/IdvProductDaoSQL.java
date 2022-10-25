@@ -19,4 +19,6 @@ public class IdvProductDaoSQL {
 		
 	public static final String SELECT_GYM_GET_PROD = "select * from idv_prod where prod_id=? and gym_id=? ;";
 	
+	public static final String INSERT_IDVPROD = "insert into idv_prod(prod_id, status, gym_id) values (?, ?, ?);"; 
+	
 }

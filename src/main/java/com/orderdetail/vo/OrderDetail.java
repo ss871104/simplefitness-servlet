@@ -3,9 +3,9 @@ package com.orderdetail.vo;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
-import com.idvproduct.vo.IdvProduct;
+import com.common.pojo.Common;
 
-public class OrderDetail implements Serializable{
+public class OrderDetail extends Common implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private Integer orderCode;

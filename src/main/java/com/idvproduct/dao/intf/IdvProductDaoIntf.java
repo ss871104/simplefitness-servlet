@@ -18,5 +18,6 @@ public interface IdvProductDaoIntf extends CommonDao<IdvProduct, Integer> {
 	public boolean updateGym(Integer gymId, Integer idvId);
 	public boolean editProdGym(IdvProduct idvprod);
 	public List<IdvProduct> selectGymGetProd(Integer prodId,Integer gymId);
+	public boolean insertIdvProd(IdvProduct idvProduct);
 	
 }

@@ -15,4 +15,5 @@ public interface IdvProductServiceIntf {
 	public IdvProduct idvProdGymEdit(IdvProduct prodGym);
 	public List<IdvProduct> selectGymGetProd(Integer prodId,Integer gymId);
 	public IdvProduct editIdvProdGym(IdvProduct idvprodGym);
+	public IdvProduct idvProdInsert(IdvProduct idvproduct);
 }

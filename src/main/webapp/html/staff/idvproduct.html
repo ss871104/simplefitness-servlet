@@ -125,7 +125,7 @@
                         <option value="0">請選擇場館</option>
                         <!-- get gym -->
                     </select><br>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter" id="insert">新增</button>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addIdvProduct" id="insert">新增</button>
                     <table class="table table-striped" style="margin-top:5%;">
                         <thead>
                         <tr>
@@ -145,9 +145,40 @@
             </div>
 
         </div>
+        
+        <!-- Modal (add) -->
+        <div class="modal fade" id="addIdvProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">個別產品資料新增</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="status">產品狀態：</label>
+                        <input type="radio" name="status2" value="0" id="zero-input2">報廢
+                        <input type="radio" name="status2" value="1" id="one-input2">庫存中
+                        <input type="radio" name="status2" value="2" id="two-input2">借出中
+                        <input type="radio" name="status2" value="3" id="three-input2">維修中<br>
+                        <label for="status">產品所在場館：</label>
+                        <select name="gym" id="gym-input3" class="gym">
+                            <option value="0">請選擇場館</option>
+                            <!-- get gym -->
+                        </select><br>
+                        <div id="errMsg" class="error" style="color: red;"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+                        <button type="button" class="btn btn-primary" id="add">新增</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <!-- Modal (edit) -->
+        <div class="modal fade" id="editIdvProduct" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">

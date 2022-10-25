@@ -81,4 +81,35 @@ public class IdvProductServiceImpl implements IdvProductServiceIntf {
 		idvprodGym.setSuccessful(true);
 		return idvprodGym;
 	}
+
+	@Override
+	public IdvProduct idvProdInsert(IdvProduct idvproduct) {
+		final Integer gymId = idvproduct.getGymId();
+		final String status = idvproduct.getStatus();
+
+		
+		if("".equals(status)) {
+			idvproduct.setMessage("狀態未輸入");
+			idvproduct.setSuccessful(false);
+			return idvproduct;
+		}
+//		if(idvproduct.getGymId() == null) {
+////			idvproduct.setMessage("個別產品編號未輸入");
+////			idvproduct.setSuccessful(false);
+////			return idvproduct;
+//		}
+//		if(idvproduct.getIdvId() == null) {
+//			idvproduct.setMessage("個別產品編號未輸入");
+//			idvproduct.setSuccessful(false);
+//			return idvproduct;
+//		}
+
+		if (dao.insertIdvProd(idvproduct) == false) {
+			idvproduct.setMessage("新增失敗,請聯絡管理員");
+			idvproduct.setSuccessful(false);
+			return idvproduct;
+		}
+		idvproduct.setSuccessful(true);
+		return idvproduct;
+	}
 }

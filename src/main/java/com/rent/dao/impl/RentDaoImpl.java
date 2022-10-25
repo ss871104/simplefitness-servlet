@@ -1,5 +1,6 @@
 package com.rent.dao.impl;
 
+import static com.idvproduct.dao.sql.IdvProductDaoSQL.UPDATE_GYM;
 import static com.order.dao.sql.OrderDaoSQL.DELETE;
 
 import java.sql.Connection;
@@ -86,5 +87,23 @@ public class RentDaoImpl implements RentDaoIntf{
 	public List<Order> selectAll() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean updateStatus(String status, Integer id) {
+		int rowCount = 0;
+
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(UPDATE_STATUS);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setString(1, status);
+			pstmt.setInt(2, id);
+
+			rowCount = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rowCount != 0;
 	}
 }

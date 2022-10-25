@@ -2,10 +2,13 @@ package com.rent.service.intf;
 
 import java.util.List;
 
+import com.idvproduct.vo.IdvProduct;
 import com.order.vo.Order;
+import com.orderdetail.vo.OrderDetail;
 
 public interface RentServiceIntf {
 	
-	public List<Order> SelectByMemId(Integer memId);
-
+	public List<Order> selectByMemId(Integer memId);
+	public OrderDetail orderStatusEdit(OrderDetail orderStatus);
+	
 }

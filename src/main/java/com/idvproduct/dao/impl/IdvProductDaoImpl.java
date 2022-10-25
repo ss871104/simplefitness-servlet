@@ -262,4 +262,26 @@ public class IdvProductDaoImpl implements IdvProductDaoIntf {
 		return list;
 	}
 
+	@Override
+	public boolean insertIdvProd(IdvProduct idvProduct) {
+	
+		int rowCount = 0;
+
+		try (Connection con = ds.getConnection(); PreparedStatement pstmt = con.prepareStatement(INSERT_IDVPROD);) {
+
+			System.out.println("連線成功");
+
+			pstmt.setInt(1, idvProduct.getProdId());
+			pstmt.setString(2, idvProduct.getStatus());
+			pstmt.setInt(3, idvProduct.getGymId());
+			
+
+			rowCount = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rowCount != 0;
+
+	}
+
 }

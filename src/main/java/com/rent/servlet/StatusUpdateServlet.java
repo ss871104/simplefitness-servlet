@@ -4,8 +4,6 @@ import static com.common.util.GsonUtil.json2Pojo;
 import static com.common.util.GsonUtil.writePojo2Json;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,27 +11,25 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.order.vo.Order;
+import com.orderdetail.vo.OrderDetail;
 import com.rent.service.impl.RentServiceImpl;
 import com.rent.service.intf.RentServiceIntf;
 
-@WebServlet("/rent/MemIdGetAllServlet")
-public class MemIdGetAllServlet extends HttpServlet{
+@WebServlet("/rent/statusUpdateServlet")
+public class StatusUpdateServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
-	private RentServiceIntf service = new RentServiceImpl();
+	private RentServiceIntf serviceIntf = new RentServiceImpl();
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
 		setHeaders(response);
 		
-		Order order = json2Pojo(request, Order.class);
+		OrderDetail orderdetail = json2Pojo(request, OrderDetail.class);
+				
+		orderdetail = serviceIntf.orderStatusEdit(orderdetail);
 		
-		List<Order> list = new ArrayList<Order>();
-		
-		list = service.selectByMemId(order.getMemId());
-		
-		writePojo2Json(response, list);
+		writePojo2Json(response, orderdetail);
 		
 	}
 	
@@ -56,5 +52,5 @@ public class MemIdGetAllServlet extends HttpServlet{
 		response.addHeader("Access-Control-Max-Age", "86400");
 	}
 	
-	
+
 }

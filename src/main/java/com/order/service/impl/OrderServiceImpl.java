@@ -67,7 +67,7 @@ public class OrderServiceImpl implements OrderServiceIntf {
 		for (int i = 0; i < order.getOrderList().size(); i++) {
 			for (int j = 0; j < order.getOrderList().get(i).getInCart(); j++) {
 				orderCode = detailDao.insert2(orderId, order.getGymId(), order.getOrderList().get(i).getProdId());
-				idvDao.UpdateStatus("2", detailDao.selectById(orderCode).getIdvId());
+				idvDao.updateStatus("2", detailDao.selectById(orderCode).getIdvId());
 			}
 		}
 		
@@ -97,7 +97,7 @@ public class OrderServiceImpl implements OrderServiceIntf {
 		dao.UpdateStatus(order);
 		List<OrderDetail> idvIds = detailDao.selectIdvId(order.getOrderId());
 		for(int i = 0; i < idvIds.size(); i++) {
-			idvDao.UpdateStatus("1", idvIds.get(i).getIdvId());
+			idvDao.updateStatus("1", idvIds.get(i).getIdvId());
 		}
 		return true;
 	}

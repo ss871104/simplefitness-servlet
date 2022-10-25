@@ -1,7 +1,7 @@
 package com.gym.vo;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,7 +33,7 @@ public class Gym extends CommonHibernate {
 	private String address;
 	private String phone;
 	@Column(name = "open_date")
-	private Date openDate;
+	private LocalDate openDate;
 	@Column(name = "open_time")
 	private LocalTime openTime;
 	@Column(name = "close_time")

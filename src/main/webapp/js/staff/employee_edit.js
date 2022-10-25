@@ -100,7 +100,9 @@
 				} else if (emp.status == "2") {
 					document.getElementById("hold-input").checked = true;
 				}
-				document.querySelector('#intro-input').value = emp.intro;
+				if (emp.intro != null) {
+					document.querySelector('#intro-input').value = emp.intro;
+				}
 				
 				document.getElementById('edit-form').addEventListener('click', () => {
 					document.getElementById(`gym${emp.gymId}`).setAttribute('selected', 'selected');
@@ -142,7 +144,7 @@
 	const nickname = document.querySelector('#nickname-input');
 	const gym = document.getElementById('gym-input');
 	const email = document.querySelector('#email-input');
-	const phone = document.querySelector('#nickname-input');
+	const phone = document.querySelector('#phone-input');
 	const job = document.getElementsByName('job');
 	const gender = document.getElementsByName('gender');
 	const birth = document.querySelector('#birth-input');

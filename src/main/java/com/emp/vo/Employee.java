@@ -1,5 +1,6 @@
 package com.emp.vo;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -45,9 +46,9 @@ public class Employee extends CommonHibernate{
 	private String job;
 	private String gender;
 	@Column(insertable = false)
-	private Date birth;
+	private LocalDate birth;
 	@Column(name = "employ_date", insertable = false)
-	private Date employDate;
+	private LocalDate employDate;
 	@Column(insertable = false)
 	private String intro;
 	@Column(name = "`status`")
